@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#0e1117" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>다이빙 투어 패킹</title>
+  <link rel="manifest" href="manifest.json" />
+  <style>
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #262730;
+      --subtext-color: #555867;
+      --card-bg: #f8f9fb;
+      --border-color: #e6eaf1;
+      --info-bg: #e8f2fc;
+      --info-text: #004280;
+      --info-border: #b8daff;
+      --accent: #ff4b4b;
+      --green: #09ab3b;
+      --green-bg: rgba(9, 171, 59, 0.12);
+      --red: #ff2b2b;
+      --red-bg: rgba(255, 43, 43, 0.12);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-color: #0e1117;
+        --text-color: #fafafa;
+        --subtext-color: #a3a8b8;
+        --card-bg: #1a1c24;
+        --border-color: #2b2f3e;
+        --info-bg: #112a46;
+        --info-text: #8ec8f6;
+        --info-border: #1d4ed8;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      padding: env(safe-area-inset-top, 16px) 16px env(safe-area-inset-bottom, 32px) 16px;
+      font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 640px;
+      margin: 0 auto;
+      padding-top: 12px;
+    }
+
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 1.55rem;
+      font-weight: 700;
+      margin: 0;
+      letter-spacing: -0.02em;
+    }
+
+    .reset-btn {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--subtext-color);
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .reset-btn:active {
+      opacity: 0.7;
+    }
+
+    .info-box {
+      background-color: var(--info-bg);
+      color: var(--info-text);
+      border: 1px solid var(--info-border);
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      margin-bottom: 18px;
+      font-weight: 500;
+    }
+
+    /* 상단 고정 대시보드 */
+    .metrics-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background-color: var(--bg-color);
+      padding: 8px 0 12px 0;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 20px;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .metric-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+
+    .metric-label {
+      font-size: 0.85rem;
+      color: var(--subtext-color);
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+
+    .metric-value {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .metric-delta {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background-color: var(--green-bg);
+      color: var(--green);
+    }
+
+    .metric-delta.over {
+      background-color: var(--red-bg);
+      color: var(--red);
+    }
+
+    h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin: 24px 0 10px 0;
+      padding-bottom: 6px;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .item-row {
+      display: grid;
+      grid-template-columns: 36px 1fr auto;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 8px;
+      border-bottom: 1px solid var(--border-color);
+      transition: background-color 0.15s;
+    }
+
+    .item-row.checked-row {
+      background-color: var(--card-bg);
+      border-radius: 8px;
+    }
+
+    .checkbox-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    input[type="checkbox"] {
+      width: 22px;
+      height: 22px;
+      accent-color: var(--accent);
+      cursor: pointer;
+      margin: 0;
+    }
+
+    .item-info {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .item-name {
+      font-weight: 600;
+      font-size: 0.98rem;
+      display: block;
+    }
+
+    .item-weight {
+      font-size: 0.84rem;
+      color: var(--subtext-color);
+    }
+
+    /* 위탁/기내 세그먼트 라디오 버튼 */
+    .bag-toggle {
+      display: inline-flex;
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 2px;
+    }
+
+    .bag-option {
+      position: relative;
+    }
+
+    .bag-option input {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .bag-option span {
+      display: block;
+      padding: 5px 10px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      border-radius: 6px;
+      color: var(--subtext-color);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .bag-option input:checked + span {
+      background-color: var(--accent);
+      color: #ffffff;
+    }
+
+    .fixed-badge {
+      font-size: 0.82rem;
+      font-style: italic;
+      color: var(--subtext-color);
+      padding: 4px 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header-row">
+      <h1>🤿 오키나와 투어 패킹 (11.12 ~ 15)</h1>
+      <button class="reset-btn" onclick="resetItems()">초기화</button>
+    </div>
+
+    <div class="info-box">
+      예상 수온: 25 ~ 26°C | 항공: 위탁 23.0kg / 기내 10.0kg
+    </div>
+
+    <div class="metrics-wrapper">
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-label">위탁 수하물</div>
+          <div class="metric-value" id="checked-val">0.0 kg</div>
+          <div class="metric-delta" id="checked-delta">23.0 kg 여유</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">기내 수하물</div>
+          <div class="metric-value" id="carryon-val">0.0 kg</div>
+          <div class="metric-delta" id="carryon-delta">10.0 kg 여유</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="items-container"></div>
+  </div>
+
+  <script>
+    const DEFAULT_ITEMS = [
+      { name: "포스 주황색 90L 백", cat: "가방류", weight: 1.5, bag: "위탁", fixed: true, checked: false },
+      { name: "OMS 메쉬 파우치", cat: "가방류", weight: 0.3, bag: "위탁", fixed: false, checked: false },
+      { name: "OMS 프로엘리트 BC", cat: "핵심 장비", weight: 7.25, bag: "위탁", fixed: false, checked: false },
+      { name: "포스 프로테우스 3mm", cat: "핵심 장비", weight: 1.65, bag: "위탁", fixed: false, checked: false },
+      { name: "아펙스 XTX200 세트", cat: "핵심 장비", weight: 3.25, bag: "기내", fixed: false, checked: false },
+      { name: "다이브프로 S40 V2", cat: "조명/촬영", weight: 0.6, bag: "기내", fixed: false, checked: false },
+      { name: "리튬이온 배터리 5알", cat: "조명/촬영", weight: 0.3, bag: "기내", fixed: true, checked: false },
+      { name: "리튬 4구 충전기", cat: "조명/촬영", weight: 0.4, bag: "기내", fixed: false, checked: false },
+      { name: "스파이더코 H2 커터", cat: "공구/케어", weight: 0.1, bag: "위탁", fixed: true, checked: false }
+    ];
+
+    const STORAGE_KEY = "okinawa_diving_packing_v1";
+    let items = loadItems();
+
+    function loadItems() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          return JSON.parse(saved);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+      return JSON.parse(JSON.stringify(DEFAULT_ITEMS));
+    }
+
+    function saveItems() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function resetItems() {
+      if (confirm("체크 상태와 가방 설정을 초기 상태로 되돌릴까요?")) {
+        items = JSON.parse(JSON.stringify(DEFAULT_ITEMS));
+        saveItems();
+        render();
+      }
+    }
+
+    function toggleCheck(idx) {
+      items[idx].checked = !items[idx].checked;
+      saveItems();
+      render();
+    }
+
+    function changeBag(idx, newBag) {
+      items[idx].bag = newBag;
+      saveItems();
+      render();
+    }
+
+    function updateMetrics() {
+      const checkedW = items
+        .filter(i => i.checked && i.bag === "위탁")
+        .reduce((acc, cur) => acc + cur.weight, 0);
+      const carryonW = items
+        .filter(i => i.checked && i.bag === "기내")
+        .reduce((acc, cur) => acc + cur.weight, 0);
+
+      const checkedRem = 23.0 - checkedW;
+      const carryonRem = 10.0 - carryonW;
+
+      document.getElementById("checked-val").textContent = `${checkedW.toFixed(1)} kg`;
+      const checkedDeltaEl = document.getElementById("checked-delta");
+      if (checkedRem >= 0) {
+        checkedDeltaEl.textContent = `↑ ${checkedRem.toFixed(1)} kg 여유`;
+        checkedDeltaEl.classList.remove("over");
+      } else {
+        checkedDeltaEl.textContent = `↓ ${Math.abs(checkedRem).toFixed(1)} kg 초과`;
+        checkedDeltaEl.classList.add("over");
+      }
+
+      document.getElementById("carryon-val").textContent = `${carryonW.toFixed(1)} kg`;
+      const carryonDeltaEl = document.getElementById("carryon-delta");
+      if (carryonRem >= 0) {
+        carryonDeltaEl.textContent = `↑ ${carryonRem.toFixed(1)} kg 여유`;
+        carryonDeltaEl.classList.remove("over");
+      } else {
+        carryonDeltaEl.textContent = `↓ ${Math.abs(carryonRem).toFixed(1)} kg 초과`;
+        carryonDeltaEl.classList.add("over");
+      }
+    }
+
+    function render() {
+      updateMetrics();
+
+      const categories = [...new Set(items.map(i => i.cat))].sort((a, b) => a.localeCompare(b, "ko"));
+      const container = document.getElementById("items-container");
+      container.innerHTML = "";
+
+      categories.forEach(cat => {
+        const header = document.createElement("h2");
+        header.textContent = cat;
+        container.appendChild(header);
+
+        items.forEach((item, idx) => {
+          if (item.cat !== cat) return;
+
+          const row = document.createElement("div");
+          row.className = `item-row ${item.checked ? "checked-row" : ""}`;
+
+          // 1. 체크박스
+          const chkWrap = document.createElement("div");
+          chkWrap.className = "checkbox-wrap";
+          const chk = document.createElement("input");
+          chk.type = "checkbox";
+          chk.checked = item.checked;
+          chk.addEventListener("change", () => toggleCheck(idx));
+          chkWrap.appendChild(chk);
+
+          // 2. 장비 이름 및 무게 (클릭해도 체크 토글)
+          const info = document.createElement("div");
+          info.className = "item-info";
+          info.addEventListener("click", () => toggleCheck(idx));
+          info.innerHTML = `
+            <span class="item-name">${item.name}</span>
+            <span class="item-weight">(${item.weight}kg)</span>
+          `;
+
+          // 3. 위탁/기내 토글버튼 (고정 품목 제외)
+          const actionWrap = document.createElement("div");
+          if (!item.fixed) {
+            actionWrap.innerHTML = `
+              <div class="bag-toggle">
+                <label class="bag-option">
+                  <input type="radio" name="bag_${idx}" value="위탁" ${item.bag === "위탁" ? "checked" : ""} />
+                  <span>위탁</span>
+                </label>
+                <label class="bag-option">
+                  <input type="radio" name="bag_${idx}" value="기내" ${item.bag === "기내" ? "checked" : ""} />
+                  <span>기내</span>
+                </label>
+              </div>
+            `;
+            actionWrap.querySelectorAll("input").forEach(radio => {
+              radio.addEventListener("change", (e) => changeBag(idx, e.target.value));
+            });
+          } else {
+            actionWrap.innerHTML = `<span class="fixed-badge">${item.bag} 고정</span>`;
+          }
+
+          row.appendChild(chkWrap);
+          row.appendChild(info);
+          row.appendChild(actionWrap);
+          container.appendChild(row);
+        });
+      });
+    }
+
+    render();
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("sw.js").catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>

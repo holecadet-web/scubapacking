@@ -1,0 +1,11 @@
+{
+  "name": "okinawa-diving-packing",
+  "version": "1.0.0",
+  "private": true,
+  "description": "오키나와 다이빙 투어 패킹 체크리스트 앱",
+  "dependencies": {
+    "@capacitor/android": "^6.0.0",
+    "@capacitor/cli": "^6.0.0",
+    "@capacitor/core": "^6.0.0"
+  }
+}

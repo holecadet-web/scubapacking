@@ -1,0 +1,6 @@
+{
+  "appId": "com.okinawa.divingpacking",
+  "appName": "다이빙 투어 패킹",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}

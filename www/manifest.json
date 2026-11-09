@@ -1,0 +1,18 @@
+{
+  "name": "오키나와 다이빙 투어 패킹",
+  "short_name": "다이빙 패킹",
+  "description": "오키나와 투어 패킹 (11.12 ~ 15) 수하물 무게 체크리스트",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0e1117",
+  "theme_color": "#0e1117",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
