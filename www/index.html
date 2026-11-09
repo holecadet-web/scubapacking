@@ -49,7 +49,7 @@
 
     body {
       margin: 0;
-      padding: env(safe-area-inset-top, 16px) 14px env(safe-area-inset-bottom, 40px) 14px;
+      padding: env(safe-area-inset-top, 16px) 14px env(safe-area-inset-bottom, 80px) 14px;
       font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       background-color: var(--bg-color);
       color: var(--text-color);
@@ -65,26 +65,27 @@
     .header-row {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: center;
       gap: 8px;
-      margin-bottom: 10px;
+      margin-bottom: 14px;
     }
 
     .app-brand {
       display: flex;
       align-items: center;
       gap: 10px;
+      min-width: 0;
     }
 
     .app-logo {
-      width: 36px;
-      height: 36px;
-      border-radius: 9px;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
       flex-shrink: 0;
     }
 
     h1 {
-      font-size: 1.32rem;
+      font-size: 1.28rem;
       font-weight: 700;
       margin: 0;
       letter-spacing: -0.02em;
@@ -102,14 +103,15 @@
       border: 1px solid var(--border-color);
       color: var(--text-color);
       border-radius: 8px;
-      padding: 6px 10px;
-      font-size: 0.78rem;
+      padding: 7px 11px;
+      font-size: 0.8rem;
       font-weight: 600;
       cursor: pointer;
       white-space: nowrap;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      justify-content: center;
+      gap: 5px;
     }
 
     .btn:active {
@@ -119,6 +121,12 @@
     .btn-primary {
       background-color: var(--accent);
       border-color: var(--accent);
+      color: #ffffff;
+    }
+
+    .btn-save {
+      background-color: var(--green);
+      border-color: var(--green);
       color: #ffffff;
     }
 
@@ -132,6 +140,134 @@
       background: linear-gradient(135deg, #0284c7, #6366f1);
       border: none;
       color: #ffffff;
+    }
+
+    /* 메인 화면 투어 카드 */
+    .section-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin: 18px 0 10px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .tour-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 15px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: transform 0.12s, border-color 0.15s;
+    }
+
+    .tour-card:active {
+      transform: scale(0.99);
+    }
+
+    .tour-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .tour-card-title {
+      font-size: 1.08rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .tour-card-sub {
+      font-size: 0.82rem;
+      color: var(--subtext-color);
+      margin-bottom: 10px;
+    }
+
+    .tour-card-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .badge {
+      font-size: 0.76rem;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: var(--bg-color);
+      border: 1px solid var(--border-color);
+    }
+
+    .badge.ok {
+      background: var(--green-bg);
+      color: var(--green);
+      border-color: transparent;
+    }
+
+    .badge.over {
+      background: var(--red-bg);
+      color: var(--red);
+      border-color: transparent;
+    }
+
+    .tour-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border-color);
+      font-size: 0.76rem;
+      color: var(--subtext-color);
+    }
+
+    /* 메인 화면 안내 카드 (제미나이 연결 & 사용법) */
+    .guide-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 15px;
+      margin-bottom: 14px;
+    }
+
+    .guide-card h3 {
+      margin: 0 0 8px 0;
+      font-size: 0.98rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .guide-step {
+      font-size: 0.83rem;
+      color: var(--text-color);
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+
+    .guide-step strong {
+      color: #38bdf8;
+    }
+
+    .status-pill {
+      font-size: 0.74rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+
+    .status-pill.connected {
+      background: var(--green-bg);
+      color: var(--green);
+    }
+
+    .status-pill.disconnected {
+      background: var(--red-bg);
+      color: var(--red);
     }
 
     .info-box {
@@ -170,7 +306,6 @@
     }
 
     .toolbar .btn {
-      justify-content: center;
       padding: 9px 10px;
       font-size: 0.82rem;
     }
@@ -380,6 +515,50 @@
       white-space: nowrap;
     }
 
+    /* 하단 고정 저장 바 */
+    .bottom-save-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--card-bg);
+      border-top: 1px solid var(--border-color);
+      padding: 10px 14px calc(env(safe-area-inset-bottom, 10px) + 6px) 14px;
+      z-index: 50;
+      display: none;
+    }
+
+    .bottom-save-inner {
+      max-width: 640px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 8px;
+    }
+
+    .bottom-save-inner .btn {
+      padding: 11px;
+      font-size: 0.9rem;
+    }
+
+    /* 토스트 메시지 */
+    .toast {
+      position: fixed;
+      bottom: 76px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #10b981;
+      color: #ffffff;
+      padding: 9px 18px;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      z-index: 200;
+      display: none;
+      white-space: nowrap;
+    }
+
     /* 모달 스타일 */
     .modal-backdrop {
       position: fixed;
@@ -476,62 +655,148 @@
     .help-link {
       color: #38bdf8;
       text-decoration: underline;
-      font-size: 0.78rem;
+      font-size: 0.8rem;
+      font-weight: 600;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="header-row">
-      <div class="app-brand">
-        <img src="icon.svg" alt="Scuba Icon" class="app-logo" />
-        <h1 id="tour-title-display">오키나와 투어 패킹 (11.12 ~ 15)</h1>
-      </div>
-      <div class="top-actions">
-        <button class="btn" onclick="checkAllActive(true)">전체체크</button>
-        <button class="btn" onclick="resetAll()">초기화</button>
-      </div>
-    </div>
-
-    <div class="info-box">
-      <div id="tour-info-display">
-        예상 수온: 25 ~ 26°C | 항공: 위탁 23.0kg / 기내 10.0kg
-      </div>
-      <button class="info-edit-btn" onclick="openTourModal()">✏️ 일정/항공 편집</button>
-    </div>
-
-    <div class="toolbar">
-      <button class="btn btn-ai" onclick="openAiModal()">📸 사진으로 장비 추가</button>
-      <button class="btn" onclick="openItemModal(-1)">➕ 직접 추가</button>
-      <button class="btn" id="edit-mode-btn" onclick="toggleEditMode()">⚙️ 장비/무게 편집</button>
-    </div>
-
-    <div class="metrics-wrapper">
-      <div class="metrics-grid">
-        <div class="metric-card">
-          <div class="metric-label">
-            <span>위탁 수하물</span>
-            <span id="checked-limit-label">/ 23.0kg</span>
+    <!-- ==================== 1. 메인 홈 화면 (투어 목록 관리 & 제미나이 연결 & 사용법) ==================== -->
+    <div id="home-view">
+      <div class="header-row">
+        <div class="app-brand">
+          <img src="icon.svg" alt="Scuba Icon" class="app-logo" />
+          <div>
+            <h1>스쿠버 투어 패킹 매니저</h1>
+            <span style="font-size:0.78rem; color:var(--subtext-color);">투어별 수하물 무게 계산 & AI 장비 관리</span>
           </div>
-          <div class="metric-value" id="checked-val">0.00 kg</div>
-          <div class="metric-delta" id="checked-delta">↑ 23.00 kg 여유</div>
         </div>
-        <div class="metric-card">
-          <div class="metric-label">
-            <span>기내 수하물</span>
-            <span id="carryon-limit-label">/ 10.0kg</span>
-          </div>
-          <div class="metric-value" id="carryon-val">0.00 kg</div>
-          <div class="metric-delta" id="carryon-delta">↑ 10.00 kg 여유</div>
+        <button class="btn btn-primary" onclick="createNewTour()">➕ 새 투어 만들기</button>
+      </div>
+
+      <!-- 저장된 투어 패킹 목록 -->
+      <div class="section-title">
+        <span>📂 저장된 투어 패킹 목록</span>
+        <span style="font-size:0.78rem; color:var(--subtext-color); font-weight:500;">터치하여 열기</span>
+      </div>
+      <div id="tour-list-container"></div>
+
+      <!-- 메인화면 제미나이(Gemini AI) 연결 설정 및 안내 카드 -->
+      <div class="section-title" style="margin-top: 24px;">
+        <span>🤖 제미나이(Gemini AI) 사진 인식 연결</span>
+        <span id="home-gemini-badge" class="status-pill disconnected">미연결</span>
+      </div>
+      <div class="guide-card">
+        <div class="guide-step">
+          장비를 일일이 타이핑할 필요 없이, <strong>카메라로 장비 사진을 찍으면 제미나이 AI가 장비명·카테고리·예상 무게·위탁/기내 위치를 자동 인식</strong>해 목록에 넣어줍니다.
+        </div>
+        <div class="guide-step" style="background:var(--bg-color); padding:10px 12px; border-radius:8px; border:1px solid var(--border-color); margin-bottom:10px;">
+          <strong>[1분 무료 연결 방법]</strong><br/>
+          1. 아래 <a class="help-link" href="https://aistudio.google.com/app/apikey" target="_blank">👉 Google AI Studio 무료 키 발급 페이지 열기 ↗</a> 터치<br/>
+          2. 구글 로그인 후 파란색 <strong>Create API key</strong> 버튼 클릭<br/>
+          3. 생성된 키(<code>AIzaSy...</code>로 시작)를 복사해 아래 칸에 붙여넣고 <strong>연결 저장</strong> 클릭!
+        </div>
+        <div style="display:flex; gap:8px;">
+          <input type="password" id="home-api-key-input" placeholder="여기에 AIzaSy... 키 붙여넣기" style="flex:1;" />
+          <button class="btn btn-ai" onclick="saveHomeApiKey()">연결 저장</button>
         </div>
       </div>
+
+      <!-- 메인화면 앱 전체 사용법 안내 카드 -->
+      <div class="section-title" style="margin-top: 24px;">
+        <span>📖 앱 사용법 완벽 가이드</span>
+      </div>
+      <div class="guide-card">
+        <div class="guide-step">
+          <strong>1️⃣ 투어 목록 저장 및 관리</strong><br/>
+          • 위 목록에서 투어를 눌러 패킹을 진행한 뒤, 화면 상단이나 하단의 <strong>💾 저장하기</strong> 버튼을 누르면 언제든 메인 화면 목록에 저장되어 다시 열어볼 수 있습니다.<br/>
+          • <strong>➕ 새 투어 만들기</strong>를 누르면 기본 장비 세트가 들어있는 새 투어(제주도, 필리핀, 팔라우 등)가 생성됩니다.
+        </div>
+        <div class="guide-step">
+          <strong>2️⃣ 실시간 위탁 / 기내 무게 계산</strong><br/>
+          • 챙긴 장비를 체크(☑)하면 상단 고정 대시보드에 <strong>위탁 수하물 / 기내 수하물 무게 합계와 여유 무게</strong>가 실시간으로 계산됩니다.<br/>
+          • 장비 우측의 <strong>위탁 / 기내</strong> 버튼만 누르면 가방 위치가 즉시 바뀌며 무게도 다시 계산됩니다. (배터리·커터·멀티툴·액체류 등은 항공 보안 규정에 맞춰 자동 고정)
+        </div>
+        <div class="guide-step">
+          <strong>3️⃣ 드라이수트 / 텍핀 등 제외 품목 간편 편입</strong><br/>
+          • 웻수트 투어에서 제외된 <strong>아거노트 드라이수트(3.5kg), 내피(1.8kg), 포스 텍핀(2.3kg), 락호퍼 슈즈(0.5kg), 아르고백(1.0kg)</strong>은 패킹 화면 맨 아래 <strong>[제외 품목]</strong>에 분리되어 있습니다.<br/>
+          • 동계/국내 투어 시 <strong>+ 추가</strong> 버튼만 누르면 즉시 본 리스트에 편입됩니다.
+        </div>
+        <div class="guide-step" style="margin-bottom:0;">
+          <strong>4️⃣ 일정·항공편 및 장비 무게 편집</strong><br/>
+          • 패킹 화면의 <strong>✏️ 일정/항공 편집</strong> 버튼으로 장소, 날짜, 수온, 항공편명, 위탁/기내 허용 한도(kg)를 자유롭게 수정할 수 있습니다.<br/>
+          • <strong>⚙️ 장비/무게 편집</strong> 버튼을 켜면 모든 장비의 이름, 설명, 무게(kg), 제외 여부를 수정할 수 있습니다.
+        </div>
+      </div>
     </div>
 
-    <div id="items-container"></div>
-    <div id="excluded-container"></div>
+    <!-- ==================== 2. 투어 패킹 상세 화면 ==================== -->
+    <div id="detail-view" style="display:none;">
+      <div class="header-row">
+        <button class="btn" onclick="saveAndGoHome()">← 목록으로</button>
+        <div class="top-actions">
+          <button class="btn" onclick="checkAllActive(true)">전체체크</button>
+          <button class="btn" onclick="resetCurrentTour()">초기값 복원</button>
+          <button class="btn btn-save" onclick="saveCurrentTourWithToast()">💾 저장</button>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 10px;">
+        <h1 id="tour-title-display">🤿 오키나와 투어 패킹 (11.12 ~ 15)</h1>
+      </div>
+
+      <div class="info-box">
+        <div id="tour-info-display">
+          예상 수온: 25 ~ 26°C | 항공: 위탁 23.0kg / 기내 10.0kg
+        </div>
+        <button class="info-edit-btn" onclick="openTourModal()">✏️ 일정/항공 편집</button>
+      </div>
+
+      <div class="toolbar">
+        <button class="btn btn-ai" onclick="openAiModal()">📸 사진으로 장비 추가</button>
+        <button class="btn" onclick="openItemModal(-1)">➕ 직접 추가</button>
+        <button class="btn" id="edit-mode-btn" onclick="toggleEditMode()">⚙️ 장비/무게 편집</button>
+      </div>
+
+      <div class="metrics-wrapper">
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-label">
+              <span>위탁 수하물</span>
+              <span id="checked-limit-label">/ 23.0kg</span>
+            </div>
+            <div class="metric-value" id="checked-val">0.00 kg</div>
+            <div class="metric-delta" id="checked-delta">↑ 23.00 kg 여유</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">
+              <span>기내 수하물</span>
+              <span id="carryon-limit-label">/ 10.0kg</span>
+            </div>
+            <div class="metric-value" id="carryon-val">0.00 kg</div>
+            <div class="metric-delta" id="carryon-delta">↑ 10.00 kg 여유</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="items-container"></div>
+      <div id="excluded-container"></div>
+    </div>
   </div>
 
-  <!-- 1. 투어/항공편 정보 편집 모달 -->
+  <!-- 패킹 화면 하단 고정 저장 바 -->
+  <div class="bottom-save-bar" id="bottom-save-bar">
+    <div class="bottom-save-inner">
+      <button class="btn" onclick="saveCurrentTourWithToast()">💾 현재 상태 저장</button>
+      <button class="btn btn-save" onclick="saveAndGoHome()">💾 저장 후 메인 목록으로</button>
+    </div>
+  </div>
+
+  <!-- 저장 완료 토스트 알림 -->
+  <div class="toast" id="toast-msg">✅ 투어 패킹이 저장되었습니다!</div>
+
+  <!-- 모달 1: 투어/항공편 정보 편집 모달 -->
   <div class="modal-backdrop" id="tour-modal">
     <div class="modal">
       <h3>✈️ 투어 및 항공 수하물 설정</h3>
@@ -565,12 +830,12 @@
       </div>
       <div class="modal-footer">
         <button class="btn" onclick="closeTourModal()">취소</button>
-        <button class="btn btn-primary" onclick="saveTourConfig()">저장하기</button>
+        <button class="btn btn-primary" onclick="saveTourConfig()">적용 및 저장</button>
       </div>
     </div>
   </div>
 
-  <!-- 2. 장비 추가/편집 모달 -->
+  <!-- 모달 2: 장비 추가/편집 모달 -->
   <div class="modal-backdrop" id="item-modal">
     <div class="modal">
       <h3 id="item-modal-title">장비 추가 / 수정</h3>
@@ -632,16 +897,16 @@
     </div>
   </div>
 
-  <!-- 3. 제미나이 AI 장비 사진 인식 모달 -->
+  <!-- 모달 3: 제미나이 AI 장비 사진 인식 모달 -->
   <div class="modal-backdrop" id="ai-modal">
     <div class="modal">
       <h3>📸 제미나이 AI 장비 사진 인식</h3>
       <div class="form-group">
         <label>
-          Gemini API Key (한 번만 입력하면 자동 저장)
+          Gemini API Key (메인 화면에서 등록했으면 자동 입력됨)
           <a class="help-link" href="https://aistudio.google.com/app/apikey" target="_blank">무료 키 발급받기 ↗</a>
         </label>
-        <input type="password" id="gemini-api-key" placeholder="AIzaSy... 키를 붙여넣으세요" onchange="saveApiKey()" />
+        <input type="password" id="gemini-api-key" placeholder="AIzaSy... 키를 붙여넣으세요" onchange="saveApiKeyFromModal()" />
       </div>
 
       <div class="form-group">
@@ -662,7 +927,7 @@
   </div>
 
   <script>
-    const DEFAULT_TOUR = {
+    const DEFAULT_TOUR_META = {
       place: "오키나와 투어 패킹",
       dates: "11.12 ~ 15",
       flight: "",
@@ -674,364 +939,282 @@
     // 사용자 실제 보유 장비 리스트 및 분리된 제외 품목 초기값 세팅
     const DEFAULT_ITEMS = [
       // 1. 가방류 (2.20 kg)
-      {
-        name: "포스 익스페디션 주황색 90L 백",
-        desc: "메인 위탁 아우터 가방",
-        cat: "가방류",
-        weight: 1.50,
-        bag: "위탁",
-        fixed: true,
-        checked: false,
-        excluded: false
-      },
-      {
-        name: "PADI 메쉬백 (OMS 파우치를 내부에 수납)",
-        desc: "내부에 OMS 메쉬 파우치 포함",
-        cat: "가방류",
-        weight: 0.40,
-        bag: "위탁",
-        fixed: true,
-        checked: false,
-        excluded: false
-      },
-      {
-        name: "OMS 메쉬 파우치 (PADI 메쉬백 내부에 수납)",
-        desc: "[기내/위탁 변경 가능] 소품 수납",
-        cat: "가방류",
-        weight: 0.30,
-        bag: "위탁",
-        fixed: false,
-        checked: false,
-        excluded: false
-      },
+      { name: "포스 익스페디션 주황색 90L 백", desc: "메인 위탁 아우터 가방", cat: "가방류", weight: 1.50, bag: "위탁", fixed: true, checked: false, excluded: false },
+      { name: "PADI 메쉬백 (OMS 파우치를 내부에 수납)", desc: "내부에 OMS 메쉬 파우치 포함", cat: "가방류", weight: 0.40, bag: "위탁", fixed: true, checked: false, excluded: false },
+      { name: "OMS 메쉬 파우치 (PADI 메쉬백 내부에 수납)", desc: "[기내/위탁 변경 가능] 소품 수납", cat: "가방류", weight: 0.30, bag: "위탁", fixed: false, checked: false, excluded: false },
 
       // 2. 핵심 장비 (15.05 kg)
-      {
-        name: "OMS 프로엘리트 BC (90L 백 바닥 배치)",
-        desc: "가방 바닥면에 수납",
-        cat: "핵심 장비",
-        weight: 7.25,
-        bag: "위탁",
-        fixed: false,
-        checked: false,
-        excluded: false
-      },
-      {
-        name: "포스엘리먼트 프로테우스 3mm 웻수트",
-        desc: "11월 오키나와 웻수트",
-        cat: "핵심 장비",
-        weight: 1.65,
-        bag: "위탁",
-        fixed: false,
-        checked: false,
-        excluded: false
-      },
-      {
-        name: "걸 와프 핀 (풀풋 고무 핀)",
-        desc: "타비 삭스와 세트 착용",
-        cat: "핵심 장비",
-        weight: 2.60,
-        bag: "위탁",
-        fixed: false,
-        checked: false,
-        excluded: false
-      },
-      {
-        name: "아펙스 XTX200 레귤레이터 세트 (파우치 포함)",
-        desc: "[기내/위탁 변경 가능] 파손 방지 및 무게 분산",
-        cat: "핵심 장비",
-        weight: 3.25,
-        bag: "기내",
-        fixed: false,
-        checked: false,
-        excluded: false
-      },
-      {
-        name: "투사 파라곤 마스크 (클리어 렌즈)",
-        desc: "[기내/위탁 변경 가능] 렌즈 보호",
-        cat: "핵심 장비",
-        weight: 0.30,
-        bag: "기내",
-        fixed: false,
-        checked: false,
-        excluded: false
-      },
+      { name: "OMS 프로엘리트 BC (90L 백 바닥 배치)", desc: "가방 바닥면에 수납", cat: "핵심 장비", weight: 7.25, bag: "위탁", fixed: false, checked: false, excluded: false },
+      { name: "포스엘리먼트 프로테우스 3mm 웻수트", desc: "11월 오키나와 웻수트", cat: "핵심 장비", weight: 1.65, bag: "위탁", fixed: false, checked: false, excluded: false },
+      { name: "걸 와프 핀 (풀풋 고무 핀)", desc: "타비 삭스와 세트 착용", cat: "핵심 장비", weight: 2.60, bag: "위탁", fixed: false, checked: false, excluded: false },
+      { name: "아펙스 XTX200 레귤레이터 세트 (파우치 포함)", desc: "[기내/위탁 변경 가능] 파손 방지 및 무게 분산", cat: "핵심 장비", weight: 3.25, bag: "기내", fixed: false, checked: false, excluded: false },
+      { name: "투사 파라곤 마스크 (클리어 렌즈)", desc: "[기내/위탁 변경 가능] 렌즈 보호", cat: "핵심 장비", weight: 0.30, bag: "기내", fixed: false, checked: false, excluded: false },
 
       // 3. 의류/보온 (0.50 kg)
-      {
-        name: "포스엘리먼트 3mm 다이빙 후드",
-        desc: "개별 항목",
-        cat: "의류/보온",
-        weight: 0.15,
-        bag: "위탁",
-        fixed: false,
-        checked: false,
-        excluded: false
-      },
-      {
-        name: "포스엘리먼트 3mm 다이빙 글러브",
-        desc: "개별 항목",
-        cat: "의류/보온",
-        weight: 0.15,
-        bag: "위탁",
-        fixed: false,
-        checked: false,
-        excluded: false
-      },
-      {
-        name: "걸 타비형 네오프렌 삭스",
-        desc: "개별 항목",
-        cat: "의류/보온",
-        weight: 0.12,
-        bag: "위탁",
-        fixed: false,
-        checked: false,
-        excluded: false
-      },
-      {
-        name: "나이키 수영복 (브리프)",
-        desc: "개별 항목",
-        cat: "의류/보온",
-        weight: 0.08,
-        bag: "위탁",
-        fixed: false,
-        checked: false,
-        excluded: false
-      },
+      { name: "포스엘리먼트 3mm 다이빙 후드", desc: "개별 항목", cat: "의류/보온", weight: 0.15, bag: "위탁", fixed: false, checked: false, excluded: false },
+      { name: "포스엘리먼트 3mm 다이빙 글러브", desc: "개별 항목", cat: "의류/보온", weight: 0.15, bag: "위탁", fixed: false, checked: false, excluded: false },
+      { name: "걸 타비형 네오프렌 삭스", desc: "개별 항목", cat: "의류/보온", weight: 0.12, bag: "위탁", fixed: false, checked: false, excluded: false },
+      { name: "나이키 수영복 (브리프)", desc: "개별 항목", cat: "의류/보온", weight: 0.08, bag: "위탁", fixed: false, checked: false, excluded: false },
 
       // 4. 계기/전자 (0.30 kg)
-      {
-        name: "가민 디센트 Mk3i 본체 (스트랩 포함)",
-        desc: "[기내/위탁 변경 가능] 메인 컴퓨터",
-        cat: "계기/전자",
-        weight: 0.10,
-        bag: "기내",
-        fixed: false,
-        checked: false,
-        excluded: false
-      },
-      {
-        name: "가민 전용 충전 케이블",
-        desc: "[기내/위탁 변경 가능] 필수 충전기",
-        cat: "계기/전자",
-        weight: 0.10,
-        bag: "기내",
-        fixed: false,
-        checked: false,
-        excluded: false
-      },
-      {
-        name: "히드프로 다이빙 컴퍼스",
-        desc: "번지 마운트 나침반",
-        cat: "계기/전자",
-        weight: 0.10,
-        bag: "위탁",
-        fixed: false,
-        checked: false,
-        excluded: false
-      },
+      { name: "가민 디센트 Mk3i 본체 (스트랩 포함)", desc: "[기내/위탁 변경 가능] 메인 컴퓨터", cat: "계기/전자", weight: 0.10, bag: "기내", fixed: false, checked: false, excluded: false },
+      { name: "가민 전용 충전 케이블", desc: "[기내/위탁 변경 가능] 필수 충전기", cat: "계기/전자", weight: 0.10, bag: "기내", fixed: false, checked: false, excluded: false },
+      { name: "히드프로 다이빙 컴퍼스", desc: "번지 마운트 나침반", cat: "계기/전자", weight: 0.10, bag: "위탁", fixed: false, checked: false, excluded: false },
 
       // 5. 조명/촬영 (1.70 kg)
-      {
-        name: "다이브프로 S40 V2 수중 랜턴",
-        desc: "[기내/위탁 변경 가능] 수중 랜턴",
-        cat: "조명/촬영",
-        weight: 0.60,
-        bag: "기내",
-        fixed: false,
-        checked: false,
-        excluded: false
-      },
-      {
-        name: "리튬이온 배터리 5알 (18650/26650)",
-        desc: "[기내 고정] 리튬 배터리 보안 규정",
-        cat: "조명/촬영",
-        weight: 0.30,
-        bag: "기내",
-        fixed: true,
-        checked: false,
-        excluded: false
-      },
-      {
-        name: "리튬이온 배터리 4구 충전기",
-        desc: "[기내/위탁 변경 가능] 4구 멀티 충전기",
-        cat: "조명/촬영",
-        weight: 0.40,
-        bag: "기내",
-        fixed: false,
-        checked: false,
-        excluded: false
-      },
-      {
-        name: "인스타360 에이스 프로 2 (하우징 세팅)",
-        desc: "[기내/위탁 변경 가능] 액션캠 세트",
-        cat: "조명/촬영",
-        weight: 0.40,
-        bag: "기내",
-        fixed: false,
-        checked: false,
-        excluded: false
-      },
+      { name: "다이브프로 S40 V2 수중 랜턴", desc: "[기내/위탁 변경 가능] 수중 랜턴", cat: "조명/촬영", weight: 0.60, bag: "기내", fixed: false, checked: false, excluded: false },
+      { name: "리튬이온 배터리 5알 (18650/26650)", desc: "[기내 고정] 리튬 배터리 보안 규정", cat: "조명/촬영", weight: 0.30, bag: "기내", fixed: true, checked: false, excluded: false },
+      { name: "리튬이온 배터리 4구 충전기", desc: "[기내/위탁 변경 가능] 4구 멀티 충전기", cat: "조명/촬영", weight: 0.40, bag: "기내", fixed: false, checked: false, excluded: false },
+      { name: "인스타360 에이스 프로 2 (하우징 세팅)", desc: "[기내/위탁 변경 가능] 액션캠 세트", cat: "조명/촬영", weight: 0.40, bag: "기내", fixed: false, checked: false, excluded: false },
 
       // 6. 안전/소품 (0.60 kg)
-      {
-        name: "360도 후방 손등 미러",
-        desc: "안전용 거울",
-        cat: "안전/소품",
-        weight: 0.10,
-        bag: "위탁",
-        fixed: false,
-        checked: false,
-        excluded: false
-      },
-      {
-        name: "OMS 1.8m SMB + 핑거 스풀 세트",
-        desc: "결합된 단일 품목",
-        cat: "안전/소품",
-        weight: 0.50,
-        bag: "위탁",
-        fixed: false,
-        checked: false,
-        excluded: false
-      },
+      { name: "360도 후방 손등 미러", desc: "안전용 거울", cat: "안전/소품", weight: 0.10, bag: "위탁", fixed: false, checked: false, excluded: false },
+      { name: "OMS 1.8m SMB + 핑거 스풀 세트", desc: "결합된 단일 품목", cat: "안전/소품", weight: 0.50, bag: "위탁", fixed: false, checked: false, excluded: false },
 
       // 7. 공구/케어 (0.30 kg)
-      {
-        name: "스파이더코 H2 다이빙 커터 (볼트스냅)",
-        desc: "[위탁 고정] 기내 반입 불가",
-        cat: "공구/케어",
-        weight: 0.10,
-        bag: "위탁",
-        fixed: true,
-        checked: false,
-        excluded: false
-      },
-      {
-        name: "판도라툴 (만능렌치)",
-        desc: "[위탁 고정] 장비 정비용 멀티툴",
-        cat: "공구/케어",
-        weight: 0.10,
-        bag: "위탁",
-        fixed: true,
-        checked: false,
-        excluded: false
-      },
-      {
-        name: "안티포그 스프레이 (Wiper G)",
-        desc: "[위탁 고정] 액체류 필수",
-        cat: "공구/케어",
-        weight: 0.10,
-        bag: "위탁",
-        fixed: true,
-        checked: false,
-        excluded: false
-      },
+      { name: "스파이더코 H2 다이빙 커터 (볼트스냅)", desc: "[위탁 고정] 기내 반입 불가", cat: "공구/케어", weight: 0.10, bag: "위탁", fixed: true, checked: false, excluded: false },
+      { name: "판도라툴 (만능렌치)", desc: "[위탁 고정] 장비 정비용 멀티툴", cat: "공구/케어", weight: 0.10, bag: "위탁", fixed: true, checked: false, excluded: false },
+      { name: "안티포그 스프레이 (Wiper G)", desc: "[위탁 고정] 액체류 필수", cat: "공구/케어", weight: 0.10, bag: "위탁", fixed: true, checked: false, excluded: false },
 
       // 8. 제외 품목 (필요시 추가 가능 - 아거노트/내피/텍핀/락호퍼 모두 개별 분리)
-      {
-        name: "포스 아르고백 (44L)",
-        desc: "드라이수트/추가 장비 수납 백",
-        cat: "가방류",
-        weight: 1.00,
-        bag: "위탁",
-        fixed: false,
-        checked: false,
-        excluded: true
-      },
-      {
-        name: "아거노트 2.0 드라이수트",
-        desc: "포스엘리먼트 드라이수트 본체 (내피 분리)",
-        cat: "핵심 장비",
-        weight: 3.50,
-        bag: "위탁",
-        fixed: false,
-        checked: false,
-        excluded: true
-      },
-      {
-        name: "드라이수트 내피",
-        desc: "동계/드라이수트 보온 내피 (언더수트)",
-        cat: "의류/보온",
-        weight: 1.80,
-        bag: "위탁",
-        fixed: false,
-        checked: false,
-        excluded: true
-      },
-      {
-        name: "포스 텍핀",
-        desc: "오픈힐 텍 다이빙 핀 (락호퍼 슈즈와 착용)",
-        cat: "핵심 장비",
-        weight: 2.30,
-        bag: "위탁",
-        fixed: false,
-        checked: false,
-        excluded: true
-      },
-      {
-        name: "포스 락호퍼 슈즈",
-        desc: "텍핀 전용 다이빙 슈즈",
-        cat: "의류/보온",
-        weight: 0.50,
-        bag: "위탁",
-        fixed: false,
-        checked: false,
-        excluded: true
-      }
+      { name: "포스 아르고백 (44L)", desc: "드라이수트/추가 장비 수납 백", cat: "가방류", weight: 1.00, bag: "위탁", fixed: false, checked: false, excluded: true },
+      { name: "아거노트 2.0 드라이수트", desc: "포스엘리먼트 드라이수트 본체 (내피 분리)", cat: "핵심 장비", weight: 3.50, bag: "위탁", fixed: false, checked: false, excluded: true },
+      { name: "드라이수트 내피", desc: "동계/드라이수트 보온 내피 (언더수트)", cat: "의류/보온", weight: 1.80, bag: "위탁", fixed: false, checked: false, excluded: true },
+      { name: "포스 텍핀", desc: "오픈힐 텍 다이빙 핀 (락호퍼 슈즈와 착용)", cat: "핵심 장비", weight: 2.30, bag: "위탁", fixed: false, checked: false, excluded: true },
+      { name: "포스 락호퍼 슈즈", desc: "텍핀 전용 다이빙 슈즈", cat: "의류/보온", weight: 0.50, bag: "위탁", fixed: false, checked: false, excluded: true }
     ];
 
-    const ITEMS_KEY = "okinawa_diving_packing_v3";
-    const TOUR_KEY = "okinawa_diving_tour_cfg_v3";
+    const TOURS_STORAGE_KEY = "scuba_saved_tours_v4";
     const API_KEY_STORAGE = "okinawa_gemini_api_key";
 
-    let items = loadItems();
-    let tour = loadTour();
+    let savedTours = loadAllTours();
+    let currentTourId = null;
+    let tour = null;
+    let items = [];
     let editMode = false;
     let recognizedPending = [];
 
-    function loadItems() {
-      try {
-        const saved = localStorage.getItem(ITEMS_KEY);
-        if (saved) return JSON.parse(saved);
-      } catch (e) {}
-      return JSON.parse(JSON.stringify(DEFAULT_ITEMS));
+    function formatNow() {
+      const d = new Date();
+      const mm = String(d.getMonth() + 1).padStart(2, "0");
+      const dd = String(d.getDate()).padStart(2, "0");
+      const hh = String(d.getHours()).padStart(2, "0");
+      const mi = String(d.getMinutes()).padStart(2, "0");
+      return `${mm}.${dd} ${hh}:${mi}`;
     }
 
-    function saveItems() {
+    function loadAllTours() {
       try {
-        localStorage.setItem(ITEMS_KEY, JSON.stringify(items));
+        const raw = localStorage.getItem(TOURS_STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        }
+      } catch (e) {}
+      const initial = [{
+        id: "tour_" + Date.now(),
+        meta: Object.assign({}, DEFAULT_TOUR_META),
+        items: JSON.parse(JSON.stringify(DEFAULT_ITEMS)),
+        updatedAt: formatNow()
+      }];
+      localStorage.setItem(TOURS_STORAGE_KEY, JSON.stringify(initial));
+      return initial;
+    }
+
+    function saveAllTours() {
+      try {
+        localStorage.setItem(TOURS_STORAGE_KEY, JSON.stringify(savedTours));
       } catch (e) {}
     }
 
-    function loadTour() {
-      try {
-        const saved = localStorage.getItem(TOUR_KEY);
-        if (saved) return Object.assign({}, DEFAULT_TOUR, JSON.parse(saved));
-      } catch (e) {}
-      return Object.assign({}, DEFAULT_TOUR);
+    function showToast(msg) {
+      const el = document.getElementById("toast-msg");
+      el.textContent = msg || "✅ 저장되었습니다!";
+      el.style.display = "block";
+      setTimeout(() => { el.style.display = "none"; }, 2200);
     }
 
-    function saveTour() {
-      try {
-        localStorage.setItem(TOUR_KEY, JSON.stringify(tour));
-      } catch (e) {}
+    // ==================== 메인 홈 화면 렌더링 ====================
+    function renderHome() {
+      document.getElementById("home-view").style.display = "block";
+      document.getElementById("detail-view").style.display = "none";
+      document.getElementById("bottom-save-bar").style.display = "none";
+
+      // 제미나이 API 키 연결 상태 표시
+      const savedKey = localStorage.getItem(API_KEY_STORAGE) || "";
+      document.getElementById("home-api-key-input").value = savedKey;
+      const badgeEl = document.getElementById("home-gemini-badge");
+      if (savedKey && savedKey.length > 10) {
+        badgeEl.textContent = "✅ 연결 완료";
+        badgeEl.className = "status-pill connected";
+      } else {
+        badgeEl.textContent = "⚠️ 미연결";
+        badgeEl.className = "status-pill disconnected";
+      }
+
+      const listContainer = document.getElementById("tour-list-container");
+      listContainer.innerHTML = "";
+
+      savedTours.forEach((t, idx) => {
+        const activeItems = (t.items || []).filter(i => !i.excluded);
+        const checkedItems = activeItems.filter(i => i.checked);
+        const checkedW = checkedItems.filter(i => i.bag === "위탁").reduce((a, c) => a + Number(c.weight || 0), 0);
+        const carryonW = checkedItems.filter(i => i.bag === "기내").reduce((a, c) => a + Number(c.weight || 0), 0);
+
+        const isCheckedOver = checkedW > t.meta.checkedLimit;
+        const isCarryonOver = carryonW > t.meta.carryonLimit;
+
+        const card = document.createElement("div");
+        card.className = "tour-card";
+        card.onclick = () => openTourById(t.id);
+
+        const flightInfo = t.meta.flight ? ` · ✈️ ${t.meta.flight}` : "";
+        card.innerHTML = `
+          <div class="tour-card-header">
+            <h3 class="tour-card-title">🤿 ${t.meta.place} (${t.meta.dates})</h3>
+            <span style="font-size:0.8rem; color:#38bdf8; font-weight:600;">열기 →</span>
+          </div>
+          <div class="tour-card-sub">
+            예상 수온: ${t.meta.temp}${flightInfo}
+          </div>
+          <div class="tour-card-badges">
+            <span class="badge ${isCheckedOver ? "over" : "ok"}">위탁: ${checkedW.toFixed(2)} / ${t.meta.checkedLimit.toFixed(1)}kg</span>
+            <span class="badge ${isCarryonOver ? "over" : "ok"}">기내: ${carryonW.toFixed(2)} / ${t.meta.carryonLimit.toFixed(1)}kg</span>
+            <span class="badge">챙긴 장비: ${checkedItems.length} / ${activeItems.length}개</span>
+          </div>
+          <div class="tour-card-footer">
+            <span>최근 저장: ${t.updatedAt || "-"}</span>
+            <div style="display:flex; gap:6px;" onclick="event.stopPropagation();">
+              <button class="icon-btn" onclick="duplicateTour('${t.id}')">📋 복제</button>
+              <button class="icon-btn" style="color:var(--red);" onclick="deleteTour('${t.id}')">🗑️ 삭제</button>
+            </div>
+          </div>
+        `;
+        listContainer.appendChild(card);
+      });
+    }
+
+    function saveHomeApiKey() {
+      const val = document.getElementById("home-api-key-input").value.trim();
+      if (!val) {
+        localStorage.removeItem(API_KEY_STORAGE);
+        showToast("API 키가 삭제되었습니다.");
+      } else {
+        localStorage.setItem(API_KEY_STORAGE, val);
+        showToast("✅ 제미나이 API 키가 연결 및 저장되었습니다!");
+      }
+      renderHome();
+    }
+
+    function createNewTour() {
+      const place = prompt("새 투어 이름(장소)을 입력하세요:", "제주도/해외 다이빙 투어");
+      if (!place) return;
+      const dates = prompt("투어 일정(날짜)을 입력하세요:", "12.01 ~ 04") || "일정 미정";
+
+      const newTour = {
+        id: "tour_" + Date.now(),
+        meta: {
+          place: place.trim(),
+          dates: dates.trim(),
+          flight: "",
+          temp: "24 ~ 26°C",
+          checkedLimit: 23.0,
+          carryonLimit: 10.0
+        },
+        items: JSON.parse(JSON.stringify(DEFAULT_ITEMS)),
+        updatedAt: formatNow()
+      };
+      savedTours.unshift(newTour);
+      saveAllTours();
+      openTourById(newTour.id);
+      showToast("✅ 새 투어 패킹 리스트가 생성되었습니다!");
+    }
+
+    function duplicateTour(id) {
+      const orig = savedTours.find(t => t.id === id);
+      if (!orig) return;
+      const copy = {
+        id: "tour_" + Date.now(),
+        meta: Object.assign({}, orig.meta, { place: orig.meta.place + " (복사본)" }),
+        items: JSON.parse(JSON.stringify(orig.items)),
+        updatedAt: formatNow()
+      };
+      savedTours.unshift(copy);
+      saveAllTours();
+      renderHome();
+      showToast("📋 투어 패킹이 복제되었습니다!");
+    }
+
+    function deleteTour(id) {
+      if (savedTours.length <= 1) {
+        alert("최소 1개의 투어 목록은 남겨두어야 합니다.");
+        return;
+      }
+      const target = savedTours.find(t => t.id === id);
+      if (!target) return;
+      if (confirm(`'${target.meta.place}' 목록을 삭제할까요?`)) {
+        savedTours = savedTours.filter(t => t.id !== id);
+        saveAllTours();
+        renderHome();
+        showToast("🗑️ 삭제되었습니다.");
+      }
+    }
+
+    // ==================== 상세 패킹 화면 열기 & 저장 ====================
+    function openTourById(id) {
+      const found = savedTours.find(t => t.id === id);
+      if (!found) return;
+      currentTourId = found.id;
+      tour = found.meta;
+      items = found.items;
+      editMode = false;
+      const btn = document.getElementById("edit-mode-btn");
+      btn.textContent = "⚙️ 장비/무게 편집";
+      btn.classList.remove("btn-primary");
+
+      document.getElementById("home-view").style.display = "none";
+      document.getElementById("detail-view").style.display = "block";
+      document.getElementById("bottom-save-bar").style.display = "block";
+      window.scrollTo(0, 0);
+      renderDetail();
+    }
+
+    function syncCurrentTourToStorage() {
+      const idx = savedTours.findIndex(t => t.id === currentTourId);
+      if (idx !== -1) {
+        savedTours[idx].meta = tour;
+        savedTours[idx].items = items;
+        savedTours[idx].updatedAt = formatNow();
+        saveAllTours();
+      }
+    }
+
+    function saveCurrentTourWithToast() {
+      syncCurrentTourToStorage();
+      showToast("💾 현재 투어 패킹 상태가 저장되었습니다!");
+    }
+
+    function saveAndGoHome() {
+      syncCurrentTourToStorage();
+      showToast("💾 저장 완료! 목록 화면으로 이동합니다.");
+      renderHome();
+      window.scrollTo(0, 0);
     }
 
     function checkAllActive(state) {
       items.forEach(item => {
         if (!item.excluded) item.checked = state;
       });
-      saveItems();
-      render();
+      syncCurrentTourToStorage();
+      renderDetail();
     }
 
-    function resetAll() {
-      if (confirm("모든 장비 목록과 설정을 초기 세팅값으로 복원할까요?")) {
+    function resetCurrentTour() {
+      if (confirm("현재 투어의 장비 목록을 초기 기본값 세팅으로 복원할까요?")) {
         items = JSON.parse(JSON.stringify(DEFAULT_ITEMS));
-        tour = Object.assign({}, DEFAULT_TOUR);
-        saveItems();
-        saveTour();
-        render();
+        syncCurrentTourToStorage();
+        renderDetail();
+        showToast("✅ 기본 장비 세팅으로 복원되었습니다.");
       }
     }
 
@@ -1040,38 +1223,40 @@
       const btn = document.getElementById("edit-mode-btn");
       btn.textContent = editMode ? "✅ 편집 완료" : "⚙️ 장비/무게 편집";
       btn.classList.toggle("btn-primary", editMode);
-      render();
+      renderDetail();
     }
 
     function toggleCheck(idx) {
       items[idx].checked = !items[idx].checked;
-      saveItems();
-      render();
+      syncCurrentTourToStorage();
+      renderDetail();
     }
 
     function changeBag(idx, newBag) {
       items[idx].bag = newBag;
-      saveItems();
-      render();
+      syncCurrentTourToStorage();
+      renderDetail();
     }
 
     function includeItem(idx) {
       items[idx].excluded = false;
       items[idx].checked = true;
-      saveItems();
-      render();
+      syncCurrentTourToStorage();
+      renderDetail();
+      showToast(`➕ '${items[idx].name}' 항목이 편입되었습니다.`);
     }
 
     function excludeItem(idx) {
       items[idx].excluded = true;
       items[idx].checked = false;
-      saveItems();
-      render();
+      syncCurrentTourToStorage();
+      renderDetail();
+      showToast(`'${items[idx].name}' 항목이 제외 품목으로 이동했습니다.`);
     }
 
     function updateMetrics() {
       document.getElementById("tour-title-display").textContent =
-        `${tour.place} (${tour.dates})`;
+        `🤿 ${tour.place} (${tour.dates})`;
 
       const flightText = tour.flight ? ` | 항공편: ${tour.flight}` : "";
       document.getElementById("tour-info-display").textContent =
@@ -1121,7 +1306,7 @@
       "공구/케어"
     ];
 
-    function render() {
+    function renderDetail() {
       updateMetrics();
 
       const activeItems = items.filter(i => !i.excluded);
@@ -1171,7 +1356,9 @@
               toggleCheck(idx);
             }
           });
-          const descHtml = item.desc ? `<span class="item-desc">${item.desc} · <span class="item-weight-tag">${Number(item.weight).toFixed(2)} kg</span></span>` : `<span class="item-desc"><span class="item-weight-tag">${Number(item.weight).toFixed(2)} kg</span></span>`;
+          const descHtml = item.desc
+            ? `<span class="item-desc">${item.desc} · <span class="item-weight-tag">${Number(item.weight).toFixed(2)} kg</span></span>`
+            : `<span class="item-desc"><span class="item-weight-tag">${Number(item.weight).toFixed(2)} kg</span></span>`;
           info.innerHTML = `
             <span class="item-name">${item.name}</span>
             ${descHtml}
@@ -1295,9 +1482,10 @@
       tour.temp = document.getElementById("input-temp").value.trim() || "25 ~ 26°C";
       tour.checkedLimit = parseFloat(document.getElementById("input-checked-limit").value) || 23.0;
       tour.carryonLimit = parseFloat(document.getElementById("input-carryon-limit").value) || 10.0;
-      saveTour();
+      syncCurrentTourToStorage();
       closeTourModal();
-      render();
+      renderDetail();
+      showToast("✅ 일정 및 항공 설정이 저장되었습니다.");
     }
 
     // --- 장비 추가/수정 모달 로직 ---
@@ -1359,9 +1547,10 @@
       } else {
         items.push({ name, desc, cat, weight, bag, fixed, checked: !excluded, excluded });
       }
-      saveItems();
+      syncCurrentTourToStorage();
       closeItemModal();
-      render();
+      renderDetail();
+      showToast("✅ 장비 정보가 저장되었습니다.");
     }
 
     function deleteCurrentItem() {
@@ -1369,9 +1558,10 @@
       if (idx >= 0 && items[idx]) {
         if (confirm(`'${items[idx].name}' 항목을 목록에서 완전히 삭제할까요?`)) {
           items.splice(idx, 1);
-          saveItems();
+          syncCurrentTourToStorage();
           closeItemModal();
-          render();
+          renderDetail();
+          showToast("🗑️ 장비가 삭제되었습니다.");
         }
       }
     }
@@ -1393,9 +1583,9 @@
       document.getElementById("ai-modal").classList.remove("active");
     }
 
-    function saveApiKey() {
+    function saveApiKeyFromModal() {
       const key = document.getElementById("gemini-api-key").value.trim();
-      if (key) localStorage.getItem(API_KEY_STORAGE, key);
+      if (key) localStorage.setItem(API_KEY_STORAGE, key);
     }
 
     function compressImageToBase64(file) {
@@ -1440,11 +1630,11 @@
 
       const apiKey = document.getElementById("gemini-api-key").value.trim();
       if (!apiKey) {
-        alert("먼저 상단에 Gemini API Key를 입력해 주세요!");
+        alert("먼저 상단(또는 메인화면)에 Gemini API Key를 입력해 주세요!");
         event.target.value = "";
         return;
       }
-      saveApiKey();
+      saveApiKeyFromModal();
 
       const statusEl = document.getElementById("ai-status");
       const resultsEl = document.getElementById("ai-results-list");
@@ -1557,12 +1747,14 @@
           excluded: false
         });
       });
-      saveItems();
+      syncCurrentTourToStorage();
       closeAiModal();
-      render();
+      renderDetail();
+      showToast(`📸 ${toAdd.length}개 장비가 추가 및 저장되었습니다!`);
     }
 
-    render();
+    // 앱 시작 시 메인 홈 화면(투어 목록 + 제미나이 연결 + 사용법 안내) 표시
+    renderHome();
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
