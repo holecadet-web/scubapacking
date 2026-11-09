@@ -19,10 +19,12 @@
       --info-text: #004280;
       --info-border: #b8daff;
       --accent: #ff4b4b;
+      --blue: #2563eb;
       --green: #09ab3b;
       --green-bg: rgba(9, 171, 59, 0.12);
       --red: #ff2b2b;
       --red-bg: rgba(255, 43, 43, 0.12);
+      --modal-overlay: rgba(0, 0, 0, 0.65);
     }
 
     @media (prefers-color-scheme: dark) {
@@ -45,58 +47,111 @@
 
     body {
       margin: 0;
-      padding: env(safe-area-inset-top, 16px) 16px env(safe-area-inset-bottom, 32px) 16px;
+      padding: env(safe-area-inset-top, 16px) 14px env(safe-area-inset-bottom, 40px) 14px;
       font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       background-color: var(--bg-color);
       color: var(--text-color);
-      line-height: 1.5;
+      line-height: 1.45;
     }
 
     .container {
       max-width: 640px;
       margin: 0 auto;
-      padding-top: 12px;
+      padding-top: 10px;
     }
 
     .header-row {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       gap: 8px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     h1 {
-      font-size: 1.55rem;
+      font-size: 1.4rem;
       font-weight: 700;
       margin: 0;
       letter-spacing: -0.02em;
+      word-break: keep-all;
     }
 
-    .reset-btn {
-      background: transparent;
+    .top-actions {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .btn {
+      background: var(--card-bg);
       border: 1px solid var(--border-color);
-      color: var(--subtext-color);
+      color: var(--text-color);
       border-radius: 8px;
       padding: 6px 10px;
       font-size: 0.78rem;
+      font-weight: 600;
       cursor: pointer;
       white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
 
-    .reset-btn:active {
-      opacity: 0.7;
+    .btn:active {
+      opacity: 0.75;
+    }
+
+    .btn-primary {
+      background-color: var(--accent);
+      border-color: var(--accent);
+      color: #ffffff;
+    }
+
+    .btn-ai {
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      border: none;
+      color: #ffffff;
     }
 
     .info-box {
       background-color: var(--info-bg);
       color: var(--info-text);
       border: 1px solid var(--info-border);
-      padding: 12px 14px;
+      padding: 11px 13px;
       border-radius: 10px;
-      font-size: 0.9rem;
-      margin-bottom: 18px;
+      font-size: 0.86rem;
+      margin-bottom: 12px;
       font-weight: 500;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .info-edit-btn {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid var(--info-border);
+      color: var(--info-text);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    /* 액션 툴바 */
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .toolbar .btn {
+      justify-content: center;
+      padding: 9px 10px;
+      font-size: 0.83rem;
     }
 
     /* 상단 고정 대시보드 */
@@ -107,39 +162,41 @@
       background-color: var(--bg-color);
       padding: 8px 0 12px 0;
       border-bottom: 1px solid var(--border-color);
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     .metrics-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      gap: 10px;
     }
 
     .metric-card {
       background-color: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 12px;
-      padding: 12px 14px;
+      padding: 11px 13px;
     }
 
     .metric-label {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: var(--subtext-color);
-      margin-bottom: 4px;
+      margin-bottom: 2px;
       font-weight: 500;
+      display: flex;
+      justify-content: space-between;
     }
 
     .metric-value {
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       font-weight: 700;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .metric-delta {
       display: inline-flex;
       align-items: center;
-      font-size: 0.8rem;
+      font-size: 0.76rem;
       font-weight: 600;
       padding: 2px 8px;
       border-radius: 999px;
@@ -153,19 +210,28 @@
     }
 
     h2 {
-      font-size: 1.15rem;
+      font-size: 1.08rem;
       font-weight: 700;
-      margin: 24px 0 10px 0;
+      margin: 22px 0 8px 0;
       padding-bottom: 6px;
       border-bottom: 2px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cat-count {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--subtext-color);
     }
 
     .item-row {
       display: grid;
-      grid-template-columns: 36px 1fr auto;
+      grid-template-columns: 32px 1fr auto;
       align-items: center;
       gap: 10px;
-      padding: 12px 8px;
+      padding: 11px 6px;
       border-bottom: 1px solid var(--border-color);
       transition: background-color 0.15s;
     }
@@ -182,8 +248,8 @@
     }
 
     input[type="checkbox"] {
-      width: 22px;
-      height: 22px;
+      width: 21px;
+      height: 21px;
       accent-color: var(--accent);
       cursor: pointer;
       margin: 0;
@@ -192,17 +258,25 @@
     .item-info {
       cursor: pointer;
       user-select: none;
+      min-width: 0;
     }
 
     .item-name {
       font-weight: 600;
-      font-size: 0.98rem;
+      font-size: 0.94rem;
       display: block;
+      word-break: keep-all;
     }
 
     .item-weight {
-      font-size: 0.84rem;
+      font-size: 0.81rem;
       color: var(--subtext-color);
+    }
+
+    .item-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     /* 위탁/기내 세그먼트 라디오 버튼 */
@@ -227,8 +301,8 @@
 
     .bag-option span {
       display: block;
-      padding: 5px 10px;
-      font-size: 0.82rem;
+      padding: 4px 9px;
+      font-size: 0.78rem;
       font-weight: 600;
       border-radius: 6px;
       color: var(--subtext-color);
@@ -242,35 +316,165 @@
     }
 
     .fixed-badge {
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       font-style: italic;
       color: var(--subtext-color);
-      padding: 4px 8px;
+      padding: 4px 6px;
+    }
+
+    .icon-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+      border-radius: 6px;
+      padding: 4px 7px;
+      font-size: 0.78rem;
+      cursor: pointer;
+    }
+
+    .icon-btn.delete {
+      color: var(--red);
+    }
+
+    /* 모달 스타일 */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: var(--modal-overlay);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      padding: 16px;
+    }
+
+    .modal-backdrop.active {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--bg-color);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      width: 100%;
+      max-width: 480px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 18px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+    }
+
+    .modal h3 {
+      margin: 0 0 14px 0;
+      font-size: 1.12rem;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--subtext-color);
+      margin-bottom: 4px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="password"],
+    select {
+      width: 100%;
+      padding: 9px 11px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: var(--card-bg);
+      color: var(--text-color);
+      font-size: 0.9rem;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .ai-result-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 8px 10px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      margin-bottom: 8px;
+      font-size: 0.85rem;
+    }
+
+    .ai-preview-img {
+      width: 100%;
+      max-height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      display: none;
+    }
+
+    .help-link {
+      color: #3b82f6;
+      text-decoration: underline;
+      font-size: 0.78rem;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header-row">
-      <h1>🤿 오키나와 투어 패킹 (11.12 ~ 15)</h1>
-      <button class="reset-btn" onclick="resetItems()">초기화</button>
+      <h1 id="tour-title-display">🤿 오키나와 투어 패킹 (11.12 ~ 15)</h1>
+      <div class="top-actions">
+        <button class="btn" onclick="resetAll()">전체 초기화</button>
+      </div>
     </div>
 
     <div class="info-box">
-      예상 수온: 25 ~ 26°C | 항공: 위탁 23.0kg / 기내 10.0kg
+      <div id="tour-info-display">
+        예상 수온: 25 ~ 26°C | 항공: 위탁 23.0kg / 기내 10.0kg
+      </div>
+      <button class="info-edit-btn" onclick="openTourModal()">✏️ 일정/항공 편집</button>
+    </div>
+
+    <div class="toolbar">
+      <button class="btn btn-ai" onclick="openAiModal()">📸 사진으로 장비 추가 (AI)</button>
+      <button class="btn" onclick="openItemModal(-1)">➕ 장비 직접 추가</button>
+      <button class="btn" id="edit-mode-btn" onclick="toggleEditMode()">⚙️ 편집</button>
     </div>
 
     <div class="metrics-wrapper">
       <div class="metrics-grid">
         <div class="metric-card">
-          <div class="metric-label">위탁 수하물</div>
+          <div class="metric-label">
+            <span>위탁 수하물</span>
+            <span id="checked-limit-label">/ 23.0kg</span>
+          </div>
           <div class="metric-value" id="checked-val">0.0 kg</div>
-          <div class="metric-delta" id="checked-delta">23.0 kg 여유</div>
+          <div class="metric-delta" id="checked-delta">↑ 23.0 kg 여유</div>
         </div>
         <div class="metric-card">
-          <div class="metric-label">기내 수하물</div>
+          <div class="metric-label">
+            <span>기내 수하물</span>
+            <span id="carryon-limit-label">/ 10.0kg</span>
+          </div>
           <div class="metric-value" id="carryon-val">0.0 kg</div>
-          <div class="metric-delta" id="carryon-delta">10.0 kg 여유</div>
+          <div class="metric-delta" id="carryon-delta">↑ 10.0 kg 여유</div>
         </div>
       </div>
     </div>
@@ -278,48 +482,236 @@
     <div id="items-container"></div>
   </div>
 
+  <!-- 1. 투어/항공편 정보 편집 모달 -->
+  <div class="modal-backdrop" id="tour-modal">
+    <div class="modal">
+      <h3>✈️ 투어 및 항공 수하물 설정</h3>
+      <div class="form-group">
+        <label>투어 장소 / 제목</label>
+        <input type="text" id="input-place" placeholder="예: 오키나와 투어 패킹" />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>일정 / 날짜</label>
+          <input type="text" id="input-dates" placeholder="예: 11.12 ~ 15" />
+        </div>
+        <div class="form-group">
+          <label>항공편명 (선택)</label>
+          <input type="text" id="input-flight" placeholder="예: 진에어 / 대한항공" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>예상 수온 / 다이빙 환경 메모</label>
+        <input type="text" id="input-temp" placeholder="예: 25 ~ 26°C" />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>위탁 수하물 한도 (kg)</label>
+          <input type="number" step="0.5" id="input-checked-limit" />
+        </div>
+        <div class="form-group">
+          <label>기내 수하물 한도 (kg)</label>
+          <input type="number" step="0.5" id="input-carryon-limit" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" onclick="closeTourModal()">취소</button>
+        <button class="btn btn-primary" onclick="saveTourConfig()">저장하기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. 장비 추가/편집 모달 -->
+  <div class="modal-backdrop" id="item-modal">
+    <div class="modal">
+      <h3 id="item-modal-title">장비 추가 / 수정</h3>
+      <input type="hidden" id="edit-item-idx" value="-1" />
+      <div class="form-group">
+        <label>장비 이름</label>
+        <input type="text" id="item-name-input" placeholder="예: 걸 만티스5 마스크" />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>카테고리</label>
+          <select id="item-cat-input">
+            <option value="가방류">가방류</option>
+            <option value="핵심 장비">핵심 장비</option>
+            <option value="보온/착용류">보온/착용류</option>
+            <option value="안전/액세서리">안전/액세서리</option>
+            <option value="조명/촬영">조명/촬영</option>
+            <option value="공구/케어">공구/케어</option>
+            <option value="개인/서류">개인/서류</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>무게 (kg)</label>
+          <input type="number" step="0.05" id="item-weight-input" placeholder="0.5" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>수하물 위치</label>
+          <select id="item-bag-input">
+            <option value="위탁">위탁 수하물</option>
+            <option value="기내">기내 수하물</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>위치 고정 여부</label>
+          <select id="item-fixed-input">
+            <option value="false">자유 변경 가능</option>
+            <option value="true">고정 (배터리/도검류 등)</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" id="delete-item-btn" style="color:var(--red); margin-right:auto; display:none;" onclick="deleteCurrentItem()">🗑️ 삭제</button>
+        <button class="btn" onclick="closeItemModal()">취소</button>
+        <button class="btn btn-primary" onclick="saveItemModal()">저장</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. 제미나이 AI 장비 사진 인식 모달 -->
+  <div class="modal-backdrop" id="ai-modal">
+    <div class="modal">
+      <h3>📸 제미나이 AI 장비 사진 인식</h3>
+      <div class="form-group">
+        <label>
+          Gemini API Key (한 번만 입력하면 폰에 저장됩니다)
+          <a class="help-link" href="https://aistudio.google.com/app/apikey" target="_blank">무료 키 발급받기 ↗</a>
+        </label>
+        <input type="password" id="gemini-api-key" placeholder="AIzaSy... 키를 붙여넣으세요" onchange="saveApiKey()" />
+      </div>
+
+      <div class="form-group">
+        <label>장비 사진 촬영 또는 앨범에서 선택 (여러 장비를 한 번에 찍어도 됩니다)</label>
+        <input type="file" id="ai-photo-input" accept="image/*" capture="environment" onchange="handlePhotoSelected(event)" style="margin-top:4px;" />
+      </div>
+
+      <img id="ai-preview" class="ai-preview-img" alt="미리보기" />
+
+      <div id="ai-status" style="font-size:0.84rem; color:var(--subtext-color); margin: 8px 0;"></div>
+      <div id="ai-results-list"></div>
+
+      <div class="modal-footer">
+        <button class="btn" onclick="closeAiModal()">닫기</button>
+        <button class="btn btn-ai" id="ai-add-btn" style="display:none;" onclick="addRecognizedItems()">선택한 장비 목록에 추가</button>
+      </div>
+    </div>
+  </div>
+
   <script>
+    const DEFAULT_TOUR = {
+      place: "오키나와 투어 패킹",
+      dates: "11.12 ~ 15",
+      flight: "",
+      temp: "25 ~ 26°C",
+      checkedLimit: 23.0,
+      carryonLimit: 10.0
+    };
+
+    // 누락되었던 스쿠버 다이빙 풀세트 기본 장비 목록 복원
     const DEFAULT_ITEMS = [
+      // 1. 가방류
       { name: "포스 주황색 90L 백", cat: "가방류", weight: 1.5, bag: "위탁", fixed: true, checked: false },
       { name: "OMS 메쉬 파우치", cat: "가방류", weight: 0.3, bag: "위탁", fixed: false, checked: false },
+      { name: "방수 드라이백 (5L~10L)", cat: "가방류", weight: 0.25, bag: "기내", fixed: false, checked: false },
+      { name: "레귤레이터 백 / 카메라 파우치", cat: "가방류", weight: 0.4, bag: "기내", fixed: false, checked: false },
+
+      // 2. 핵심 장비
       { name: "OMS 프로엘리트 BC", cat: "핵심 장비", weight: 7.25, bag: "위탁", fixed: false, checked: false },
-      { name: "포스 프로테우스 3mm", cat: "핵심 장비", weight: 1.65, bag: "위탁", fixed: false, checked: false },
-      { name: "아펙스 XTX200 세트", cat: "핵심 장비", weight: 3.25, bag: "기내", fixed: false, checked: false },
+      { name: "아펙스 XTX200 세트 (호흡기)", cat: "핵심 장비", weight: 3.25, bag: "기내", fixed: false, checked: false },
+      { name: "포스 프로테우스 3mm 슈트", cat: "핵심 장비", weight: 1.65, bag: "위탁", fixed: false, checked: false },
+      { name: "다이빙 핀 (오리발) + 스프링 스트랩", cat: "핵심 장비", weight: 2.3, bag: "위탁", fixed: false, checked: false },
+      { name: "다이빙 마스크 + 스트랩 커버", cat: "핵심 장비", weight: 0.25, bag: "기내", fixed: false, checked: false },
+      { name: "다이브 컴퓨터 + 충전 케이블", cat: "핵심 장비", weight: 0.15, bag: "기내", fixed: false, checked: false },
+      { name: "스노클", cat: "핵심 장비", weight: 0.15, bag: "위탁", fixed: false, checked: false },
+
+      // 3. 보온/착용류
+      { name: "다이빙 부츠 (5mm)", cat: "보온/착용류", weight: 0.85, bag: "위탁", fixed: false, checked: false },
+      { name: "다이빙 장갑", cat: "보온/착용류", weight: 0.15, bag: "위탁", fixed: false, checked: false },
+      { name: "후드 / 후드베스트", cat: "보온/착용류", weight: 0.45, bag: "위탁", fixed: false, checked: false },
+      { name: "래쉬가드 / 보드숏 / 워터레깅스", cat: "보온/착용류", weight: 0.4, bag: "위탁", fixed: false, checked: false },
+      { name: "보트 코트 / 방풍 자켓", cat: "보온/착용류", weight: 0.65, bag: "위탁", fixed: false, checked: false },
+
+      // 4. 안전/액세서리
+      { name: "SMB (소시지) + 핑거 스풀/릴", cat: "안전/액세서리", weight: 0.45, bag: "위탁", fixed: false, checked: false },
+      { name: "더블엔더 / 볼트스냅 여유분", cat: "안전/액세서리", weight: 0.15, bag: "위탁", fixed: false, checked: false },
+      { name: "탐침봉 / 셰이커 / 신호벨", cat: "안전/액세서리", weight: 0.15, bag: "위탁", fixed: false, checked: false },
+      { name: "스파이더코 H2 커터", cat: "공구/케어", weight: 0.1, bag: "위탁", fixed: true, checked: false },
+
+      // 5. 조명/촬영
       { name: "다이브프로 S40 V2", cat: "조명/촬영", weight: 0.6, bag: "기내", fixed: false, checked: false },
+      { name: "백업 랜턴", cat: "조명/촬영", weight: 0.25, bag: "기내", fixed: false, checked: false },
+      { name: "액션캠(고프로/인스타) + 방수하우징", cat: "조명/촬영", weight: 0.55, bag: "기내", fixed: false, checked: false },
       { name: "리튬이온 배터리 5알", cat: "조명/촬영", weight: 0.3, bag: "기내", fixed: true, checked: false },
       { name: "리튬 4구 충전기", cat: "조명/촬영", weight: 0.4, bag: "기내", fixed: false, checked: false },
-      { name: "스파이더코 H2 커터", cat: "공구/케어", weight: 0.1, bag: "위탁", fixed: true, checked: false }
+
+      // 6. 공구/케어
+      { name: "다이빙 멀티툴 / 육각렌치 / 오링", cat: "공구/케어", weight: 0.25, bag: "위탁", fixed: true, checked: false },
+      { name: "마스크 김서림 방지제 (안티포그)", cat: "공구/케어", weight: 0.05, bag: "위탁", fixed: false, checked: false },
+      { name: "스포츠 타월 / 판초 타월", cat: "공구/케어", weight: 0.35, bag: "위탁", fixed: false, checked: false },
+
+      // 7. 개인/서류
+      { name: "다이빙 라이센스(C카드) / 여권 / 로그북", cat: "개인/서류", weight: 0.2, bag: "기내", fixed: true, checked: false },
+      { name: "멀미약 / 귀안압(이퀄라이징) 상비약", cat: "개인/서류", weight: 0.1, bag: "기내", fixed: false, checked: false },
+      { name: "일상복 / 세면도구 / 선크림", cat: "개인/서류", weight: 2.0, bag: "위탁", fixed: false, checked: false }
     ];
 
-    const STORAGE_KEY = "okinawa_diving_packing_v1";
+    const ITEMS_KEY = "okinawa_diving_packing_v2";
+    const TOUR_KEY = "okinawa_diving_tour_cfg_v2";
+    const API_KEY_STORAGE = "okinawa_gemini_api_key";
+
     let items = loadItems();
+    let tour = loadTour();
+    let editMode = false;
+    let recognizedPending = [];
 
     function loadItems() {
       try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-          return JSON.parse(saved);
-        }
-      } catch (e) {
-        console.error(e);
-      }
+        const saved = localStorage.getItem(ITEMS_KEY);
+        if (saved) return JSON.parse(saved);
+      } catch (e) {}
       return JSON.parse(JSON.stringify(DEFAULT_ITEMS));
     }
 
     function saveItems() {
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-      } catch (e) {
-        console.error(e);
+        localStorage.setItem(ITEMS_KEY, JSON.stringify(items));
+      } catch (e) {}
+    }
+
+    function loadTour() {
+      try {
+        const saved = localStorage.getItem(TOUR_KEY);
+        if (saved) return Object.assign({}, DEFAULT_TOUR, JSON.parse(saved));
+      } catch (e) {}
+      return Object.assign({}, DEFAULT_TOUR);
+    }
+
+    function saveTour() {
+      try {
+        localStorage.setItem(TOUR_KEY, JSON.stringify(tour));
+      } catch (e) {}
+    }
+
+    function resetAll() {
+      if (confirm("모든 장비 목록과 투어 설정을 처음 기본값(풀세트 31종)으로 복원할까요?")) {
+        items = JSON.parse(JSON.stringify(DEFAULT_ITEMS));
+        tour = Object.assign({}, DEFAULT_TOUR);
+        saveItems();
+        saveTour();
+        render();
       }
     }
 
-    function resetItems() {
-      if (confirm("체크 상태와 가방 설정을 초기 상태로 되돌릴까요?")) {
-        items = JSON.parse(JSON.stringify(DEFAULT_ITEMS));
-        saveItems();
-        render();
-      }
+    function toggleEditMode() {
+      editMode = !editMode;
+      const btn = document.getElementById("edit-mode-btn");
+      btn.textContent = editMode ? "✅ 편집 완료" : "⚙️ 편집";
+      btn.classList.toggle("btn-primary", editMode);
+      render();
     }
 
     function toggleCheck(idx) {
@@ -335,47 +727,79 @@
     }
 
     function updateMetrics() {
+      document.getElementById("tour-title-display").textContent =
+        `🤿 ${tour.place} (${tour.dates})`;
+
+      const flightText = tour.flight ? ` | 항공편: ${tour.flight}` : "";
+      document.getElementById("tour-info-display").textContent =
+        `예상 수온: ${tour.temp}${flightText} | 위탁 ${tour.checkedLimit.toFixed(1)}kg / 기내 ${tour.carryonLimit.toFixed(1)}kg`;
+
+      document.getElementById("checked-limit-label").textContent = `/ ${tour.checkedLimit.toFixed(1)}kg`;
+      document.getElementById("carryon-limit-label").textContent = `/ ${tour.carryonLimit.toFixed(1)}kg`;
+
       const checkedW = items
         .filter(i => i.checked && i.bag === "위탁")
-        .reduce((acc, cur) => acc + cur.weight, 0);
+        .reduce((acc, cur) => acc + Number(cur.weight || 0), 0);
       const carryonW = items
         .filter(i => i.checked && i.bag === "기내")
-        .reduce((acc, cur) => acc + cur.weight, 0);
+        .reduce((acc, cur) => acc + Number(cur.weight || 0), 0);
 
-      const checkedRem = 23.0 - checkedW;
-      const carryonRem = 10.0 - carryonW;
+      const checkedRem = tour.checkedLimit - checkedW;
+      const carryonRem = tour.carryonLimit - carryonW;
 
-      document.getElementById("checked-val").textContent = `${checkedW.toFixed(1)} kg`;
+      document.getElementById("checked-val").textContent = `${checkedW.toFixed(2)} kg`;
       const checkedDeltaEl = document.getElementById("checked-delta");
       if (checkedRem >= 0) {
-        checkedDeltaEl.textContent = `↑ ${checkedRem.toFixed(1)} kg 여유`;
+        checkedDeltaEl.textContent = `↑ ${checkedRem.toFixed(2)} kg 여유`;
         checkedDeltaEl.classList.remove("over");
       } else {
-        checkedDeltaEl.textContent = `↓ ${Math.abs(checkedRem).toFixed(1)} kg 초과`;
+        checkedDeltaEl.textContent = `↓ ${Math.abs(checkedRem).toFixed(2)} kg 초과`;
         checkedDeltaEl.classList.add("over");
       }
 
-      document.getElementById("carryon-val").textContent = `${carryonW.toFixed(1)} kg`;
+      document.getElementById("carryon-val").textContent = `${carryonW.toFixed(2)} kg`;
       const carryonDeltaEl = document.getElementById("carryon-delta");
       if (carryonRem >= 0) {
-        carryonDeltaEl.textContent = `↑ ${carryonRem.toFixed(1)} kg 여유`;
+        carryonDeltaEl.textContent = `↑ ${carryonRem.toFixed(2)} kg 여유`;
         carryonDeltaEl.classList.remove("over");
       } else {
-        carryonDeltaEl.textContent = `↓ ${Math.abs(carryonRem).toFixed(1)} kg 초과`;
+        carryonDeltaEl.textContent = `↓ ${Math.abs(carryonRem).toFixed(2)} kg 초과`;
         carryonDeltaEl.classList.add("over");
       }
     }
 
+    const CATEGORY_ORDER = [
+      "가방류",
+      "핵심 장비",
+      "보온/착용류",
+      "안전/액세서리",
+      "조명/촬영",
+      "공구/케어",
+      "개인/서류"
+    ];
+
     function render() {
       updateMetrics();
 
-      const categories = [...new Set(items.map(i => i.cat))].sort((a, b) => a.localeCompare(b, "ko"));
+      const presentCats = [...new Set(items.map(i => i.cat))];
+      presentCats.sort((a, b) => {
+        const ia = CATEGORY_ORDER.indexOf(a);
+        const ib = CATEGORY_ORDER.indexOf(b);
+        if (ia !== -1 && ib !== -1) return ia - ib;
+        if (ia !== -1) return -1;
+        if (ib !== -1) return 1;
+        return a.localeCompare(b, "ko");
+      });
+
       const container = document.getElementById("items-container");
       container.innerHTML = "";
 
-      categories.forEach(cat => {
+      presentCats.forEach(cat => {
+        const catItems = items.filter(i => i.cat === cat);
+        const checkedCount = catItems.filter(i => i.checked).length;
+
         const header = document.createElement("h2");
-        header.textContent = cat;
+        header.innerHTML = `<span>${cat}</span><span class="cat-count">${checkedCount} / ${catItems.length} 챙김</span>`;
         container.appendChild(header);
 
         items.forEach((item, idx) => {
@@ -393,35 +817,55 @@
           chk.addEventListener("change", () => toggleCheck(idx));
           chkWrap.appendChild(chk);
 
-          // 2. 장비 이름 및 무게 (클릭해도 체크 토글)
+          // 2. 장비 이름 및 무게
           const info = document.createElement("div");
           info.className = "item-info";
-          info.addEventListener("click", () => toggleCheck(idx));
+          info.addEventListener("click", () => {
+            if (editMode) {
+              openItemModal(idx);
+            } else {
+              toggleCheck(idx);
+            }
+          });
           info.innerHTML = `
             <span class="item-name">${item.name}</span>
-            <span class="item-weight">(${item.weight}kg)</span>
+            <span class="item-weight">(${Number(item.weight).toFixed(2).replace(/\.00$/, ".0").replace(/(\.\d)0$/, "$1")}kg)</span>
           `;
 
-          // 3. 위탁/기내 토글버튼 (고정 품목 제외)
+          // 3. 우측 컨트롤 (위탁/기내 토글 + 편집 버튼)
           const actionWrap = document.createElement("div");
+          actionWrap.className = "item-actions";
+
           if (!item.fixed) {
-            actionWrap.innerHTML = `
-              <div class="bag-toggle">
-                <label class="bag-option">
-                  <input type="radio" name="bag_${idx}" value="위탁" ${item.bag === "위탁" ? "checked" : ""} />
-                  <span>위탁</span>
-                </label>
-                <label class="bag-option">
-                  <input type="radio" name="bag_${idx}" value="기내" ${item.bag === "기내" ? "checked" : ""} />
-                  <span>기내</span>
-                </label>
-              </div>
+            const toggleDiv = document.createElement("div");
+            toggleDiv.className = "bag-toggle";
+            toggleDiv.innerHTML = `
+              <label class="bag-option">
+                <input type="radio" name="bag_${idx}" value="위탁" ${item.bag === "위탁" ? "checked" : ""} />
+                <span>위탁</span>
+              </label>
+              <label class="bag-option">
+                <input type="radio" name="bag_${idx}" value="기내" ${item.bag === "기내" ? "checked" : ""} />
+                <span>기내</span>
+              </label>
             `;
-            actionWrap.querySelectorAll("input").forEach(radio => {
+            toggleDiv.querySelectorAll("input").forEach(radio => {
               radio.addEventListener("change", (e) => changeBag(idx, e.target.value));
             });
+            actionWrap.appendChild(toggleDiv);
           } else {
-            actionWrap.innerHTML = `<span class="fixed-badge">${item.bag} 고정</span>`;
+            const badge = document.createElement("span");
+            badge.className = "fixed-badge";
+            badge.textContent = `${item.bag} 고정`;
+            actionWrap.appendChild(badge);
+          }
+
+          if (editMode) {
+            const editBtn = document.createElement("button");
+            editBtn.className = "icon-btn";
+            editBtn.textContent = "✏️";
+            editBtn.onclick = () => openItemModal(idx);
+            actionWrap.appendChild(editBtn);
           }
 
           row.appendChild(chkWrap);
@@ -430,6 +874,283 @@
           container.appendChild(row);
         });
       });
+    }
+
+    // --- 투어/항공편 모달 로직 ---
+    function openTourModal() {
+      document.getElementById("input-place").value = tour.place;
+      document.getElementById("input-dates").value = tour.dates;
+      document.getElementById("input-flight").value = tour.flight || "";
+      document.getElementById("input-temp").value = tour.temp;
+      document.getElementById("input-checked-limit").value = tour.checkedLimit;
+      document.getElementById("input-carryon-limit").value = tour.carryonLimit;
+      document.getElementById("tour-modal").classList.add("active");
+    }
+
+    function closeTourModal() {
+      document.getElementById("tour-modal").classList.remove("active");
+    }
+
+    function saveTourConfig() {
+      tour.place = document.getElementById("input-place").value.trim() || "다이빙 투어 패킹";
+      tour.dates = document.getElementById("input-dates").value.trim() || "일정 미정";
+      tour.flight = document.getElementById("input-flight").value.trim();
+      tour.temp = document.getElementById("input-temp").value.trim() || "25°C";
+      tour.checkedLimit = parseFloat(document.getElementById("input-checked-limit").value) || 23.0;
+      tour.carryonLimit = parseFloat(document.getElementById("input-carryon-limit").value) || 10.0;
+      saveTour();
+      closeTourModal();
+      render();
+    }
+
+    // --- 장비 추가/수정 모달 로직 ---
+    function openItemModal(idx) {
+      document.getElementById("edit-item-idx").value = idx;
+      const delBtn = document.getElementById("delete-item-btn");
+
+      if (idx >= 0 && items[idx]) {
+        const item = items[idx];
+        document.getElementById("item-modal-title").textContent = "✏️ 장비 수정";
+        document.getElementById("item-name-input").value = item.name;
+        document.getElementById("item-cat-input").value = item.cat;
+        document.getElementById("item-weight-input").value = item.weight;
+        document.getElementById("item-bag-input").value = item.bag;
+        document.getElementById("item-fixed-input").value = item.fixed ? "true" : "false";
+        delBtn.style.display = "inline-flex";
+      } else {
+        document.getElementById("item-modal-title").textContent = "➕ 새 장비 추가";
+        document.getElementById("item-name-input").value = "";
+        document.getElementById("item-cat-input").value = "핵심 장비";
+        document.getElementById("item-weight-input").value = "0.5";
+        document.getElementById("item-bag-input").value = "위탁";
+        document.getElementById("item-fixed-input").value = "false";
+        delBtn.style.display = "none";
+      }
+      document.getElementById("item-modal").classList.add("active");
+    }
+
+    function closeItemModal() {
+      document.getElementById("item-modal").classList.remove("active");
+    }
+
+    function saveItemModal() {
+      const idx = parseInt(document.getElementById("edit-item-idx").value, 10);
+      const name = document.getElementById("item-name-input").value.trim();
+      if (!name) {
+        alert("장비 이름을 입력해 주세요.");
+        return;
+      }
+      const cat = document.getElementById("item-cat-input").value;
+      const weight = parseFloat(document.getElementById("item-weight-input").value) || 0.1;
+      const bag = document.getElementById("item-bag-input").value;
+      const fixed = document.getElementById("item-fixed-input").value === "true";
+
+      if (idx >= 0 && items[idx]) {
+        items[idx].name = name;
+        items[idx].cat = cat;
+        items[idx].weight = weight;
+        items[idx].bag = bag;
+        items[idx].fixed = fixed;
+      } else {
+        items.push({ name, cat, weight, bag, fixed, checked: true });
+      }
+      saveItems();
+      closeItemModal();
+      render();
+    }
+
+    function deleteCurrentItem() {
+      const idx = parseInt(document.getElementById("edit-item-idx").value, 10);
+      if (idx >= 0 && items[idx]) {
+        if (confirm(`'${items[idx].name}' 항목을 삭제할까요?`)) {
+          items.splice(idx, 1);
+          saveItems();
+          closeItemModal();
+          render();
+        }
+      }
+    }
+
+    // --- 제미나이 AI 장비 사진 인식 로직 ---
+    function openAiModal() {
+      const savedKey = localStorage.getItem(API_KEY_STORAGE) || "";
+      document.getElementById("gemini-api-key").value = savedKey;
+      document.getElementById("ai-status").textContent = "";
+      document.getElementById("ai-results-list").innerHTML = "";
+      document.getElementById("ai-add-btn").style.display = "none";
+      document.getElementById("ai-preview").style.display = "none";
+      document.getElementById("ai-photo-input").value = "";
+      recognizedPending = [];
+      document.getElementById("ai-modal").classList.add("active");
+    }
+
+    function closeAiModal() {
+      document.getElementById("ai-modal").classList.remove("active");
+    }
+
+    function saveApiKey() {
+      const key = document.getElementById("gemini-api-key").value.trim();
+      if (key) localStorage.setItem(API_KEY_STORAGE, key);
+    }
+
+    function compressImageToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            const MAX_SIZE = 1024;
+            let w = img.width;
+            let h = img.height;
+            if (w > h && w > MAX_SIZE) {
+              h = Math.round((h * MAX_SIZE) / w);
+              w = MAX_SIZE;
+            } else if (h > MAX_SIZE) {
+              w = Math.round((w * MAX_SIZE) / h);
+              h = MAX_SIZE;
+            }
+            const canvas = document.createElement("canvas");
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, w, h);
+            const dataUrl = canvas.toDataURL("image/jpeg", 0.82);
+            resolve({
+              dataUrl,
+              base64: dataUrl.split(",")[1],
+              mimeType: "image/jpeg"
+            });
+          };
+          img.onerror = reject;
+          img.src = e.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function handlePhotoSelected(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const apiKey = document.getElementById("gemini-api-key").value.trim();
+      if (!apiKey) {
+        alert("먼저 상단에 Gemini API Key를 입력해 주세요!");
+        event.target.value = "";
+        return;
+      }
+      saveApiKey();
+
+      const statusEl = document.getElementById("ai-status");
+      const resultsEl = document.getElementById("ai-results-list");
+      const previewEl = document.getElementById("ai-preview");
+      const addBtn = document.getElementById("ai-add-btn");
+
+      resultsEl.innerHTML = "";
+      addBtn.style.display = "none";
+      statusEl.textContent = "⏳ 사진을 압축하고 제미나이 AI로 장비를 분석하는 중입니다...";
+
+      try {
+        const { dataUrl, base64, mimeType } = await compressImageToBase64(file);
+        previewEl.src = dataUrl;
+        previewEl.style.display = "block";
+
+        const prompt = `당신은 스쿠버 다이빙 장비 전문가입니다. 사진에 보이는 스쿠버 다이빙 장비 또는 여행 용품들을 모두 식별하여 JSON 배열로만 응답하세요.
+각 객체 형식:
+{
+  "name": "브랜드/모델명을 포함한 한국어 장비 이름 (예: 걸 만티스5 마스크, 스쿠버프로 제트핀)",
+  "cat": "가방류 | 핵심 장비 | 보온/착용류 | 안전/액세서리 | 조명/촬영 | 공구/케어 | 개인/서류 중 하나",
+  "weight": 예상 무게(kg, 숫자 소수점 2자리까지 현실적인 무게),
+  "bag": "위탁 | 기내 중 추천 위치 (배터리, 호흡기, 컴퓨터, 카메라 등은 기내 / 칼, 공구, 무거운 BC, 핀 등은 위탁)",
+  "fixed": 배터리(기내 고정)나 칼/멀티툴(위탁 고정)이면 true, 아니면 false
+}
+반드시 순수 JSON 배열만 출력하세요.`;
+
+        const response = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              contents: [{
+                parts: [
+                  { text: prompt },
+                  { inline_data: { mime_type: mimeType, data: base64 } }
+                ]
+              }],
+              generationConfig: {
+                responseMimeType: "application/json"
+              }
+            })
+          }
+        );
+
+        if (!response.ok) {
+          const errData = await response.json().catch(() => ({}));
+          throw new Error(errData.error?.message || `API 오류 (${response.status})`);
+        }
+
+        const data = await response.json();
+        const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text || "[]";
+        const parsed = JSON.parse(rawText);
+
+        if (!Array.isArray(parsed) || parsed.length === 0) {
+          statusEl.textContent = "⚠️ 사진에서 장비를 찾지 못했습니다. 다시 촬영해 보세요.";
+          return;
+        }
+
+        recognizedPending = parsed.map(item => ({
+          selected: true,
+          name: item.name || "인식된 장비",
+          cat: CATEGORY_ORDER.includes(item.cat) ? item.cat : "핵심 장비",
+          weight: Number(item.weight) || 0.3,
+          bag: item.bag === "기내" ? "기내" : "위탁",
+          fixed: Boolean(item.fixed)
+        }));
+
+        statusEl.textContent = `✅ 총 ${recognizedPending.length}개의 장비를 인식했습니다! 이름/무게를 확인 후 추가하세요.`;
+        renderRecognizedPending();
+        addBtn.style.display = "inline-flex";
+      } catch (err) {
+        statusEl.textContent = `❌ 분석 실패: ${err.message}`;
+      }
+    }
+
+    function renderRecognizedPending() {
+      const resultsEl = document.getElementById("ai-results-list");
+      resultsEl.innerHTML = "";
+      recognizedPending.forEach((item, idx) => {
+        const div = document.createElement("div");
+        div.className = "ai-result-item";
+        div.innerHTML = `
+          <input type="checkbox" ${item.selected ? "checked" : ""} onchange="recognizedPending[${idx}].selected = this.checked" />
+          <input type="text" value="${item.name}" onchange="recognizedPending[${idx}].name = this.value" style="flex:1; padding:5px 8px; font-size:0.82rem;" />
+          <input type="number" step="0.05" value="${item.weight}" onchange="recognizedPending[${idx}].weight = parseFloat(this.value)||0.1" style="width:70px; padding:5px 6px; font-size:0.82rem;" />
+          <span style="font-size:0.78rem; color:var(--subtext-color);">kg (${item.bag})</span>
+        `;
+        resultsEl.appendChild(div);
+      });
+    }
+
+    function addRecognizedItems() {
+      const toAdd = recognizedPending.filter(i => i.selected && i.name.trim());
+      if (toAdd.length === 0) {
+        alert("추가할 장비를 하나 이상 선택해 주세요.");
+        return;
+      }
+      toAdd.forEach(item => {
+        items.push({
+          name: item.name.trim(),
+          cat: item.cat,
+          weight: Number(item.weight) || 0.3,
+          bag: item.bag,
+          fixed: item.fixed,
+          checked: true
+        });
+      });
+      saveItems();
+      closeAiModal();
+      render();
     }
 
     render();
