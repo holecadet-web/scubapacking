@@ -26,10 +26,13 @@ jobs:
           distribution: 'temurin'
           java-version: 21
 
-      - name: Install Capacitor & Generate Android Project
+      - name: Install Capacitor & Generate Android Project with Scuba Icon
         run: |
           npm install
+          npm install --no-save sharp @capacitor/assets
           npx cap add android
+          node -e "const sharp = require('sharp'); const fs = require('fs'); fs.mkdirSync('assets', {recursive: true}); sharp('www/icon.svg').resize(1024, 1024).png().toFile('assets/icon-only.png').then(() => console.log('Icon rendered'));"
+          npx capacitor-assets generate --android --iconBackgroundColor '#0284c7' --splashBackgroundColor '#0f172a'
           npx cap sync android
 
       - name: Build Debug APK
@@ -52,7 +55,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v1.0.0
-          name: "오키나와 다이빙 투어 패킹 APK v1.0.0"
+          name: "오키나와 다이빙 투어 패킹 APK (스쿠바 아이콘 & 실제 장비 리스트 반영)"
           body: "아래 Assets에서 `okinawa-diving-packing.apk` 파일을 다운로드해 설치하세요."
           files: okinawa-diving-packing.apk
         env:

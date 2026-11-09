@@ -1,4 +1,64 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="112" fill="#004280"/>
-  <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" font-size="280">🤿</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="oceanBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0ea5e9"/>
+      <stop offset="45%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="lensGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#0369a1"/>
+      <stop offset="100%" stop-color="#0c4a6e"/>
+    </linearGradient>
+    <linearGradient id="frameGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#cbd5e1"/>
+    </linearGradient>
+    <linearGradient id="accentOrange" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fb923c"/>
+      <stop offset="100%" stop-color="#ea580c"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="512" height="512" rx="115" fill="url(#oceanBg)"/>
+
+  <!-- Sun RaysUnderwater -->
+  <polygon points="80,0 180,0 300,512 120,512" fill="#ffffff" opacity="0.06"/>
+  <polygon points="240,0 360,0 460,512 310,512" fill="#ffffff" opacity="0.05"/>
+
+  <!-- Bubbles -->
+  <circle cx="115" cy="115" r="14" fill="#ffffff" opacity="0.35"/>
+  <circle cx="140" cy="85" r="8" fill="#ffffff" opacity="0.25"/>
+  <circle cx="385" cy="105" r="18" fill="#ffffff" opacity="0.3"/>
+  <circle cx="355" cy="72" r="10" fill="#ffffff" opacity="0.25"/>
+  <circle cx="410" cy="150" r="9" fill="#ffffff" opacity="0.2"/>
+
+  <!-- Snorkel Tube (Right Side) -->
+  <path d="M398 105 L398 310 C398 370 355 415 295 415 L268 415" fill="none" stroke="#1e293b" stroke-width="34" stroke-linecap="round"/>
+  <path d="M398 105 L398 310 C398 370 355 415 295 415 L268 415" fill="none" stroke="#f8fafc" stroke-width="22" stroke-linecap="round"/>
+  <!-- Snorkel Top Splash Guard (Force Element Orange) -->
+  <path d="M380 85 L416 75 L416 120 L380 120 Z" rx="8" fill="url(#accentOrange)"/>
+  <rect x="383" y="210" width="30" height="22" rx="5" fill="url(#accentOrange)"/>
+
+  <!-- Scuba Mask Strap -->
+  <rect x="52" y="212" width="408" height="44" rx="18" fill="#0f172a"/>
+
+  <!-- Scuba Mask Skirt / Outer Frame -->
+  <path d="M84 162 H428 C448 162 462 178 460 198 L450 278 C446 306 420 326 392 326 H312 C292 326 278 308 268 292 C261 280 251 280 244 292 C234 308 220 326 200 326 H120 C92 326 66 306 62 278 L52 198 C50 178 64 162 84 162 Z" fill="url(#frameGrad)" stroke="#0f172a" stroke-width="12"/>
+
+  <!-- Mask Dual Lenses / Visor -->
+  <path d="M98 184 H234 C242 184 246 190 244 198 L232 280 C228 296 214 304 196 304 H124 C104 304 88 290 84 270 L76 206 C74 192 84 184 98 184 Z" fill="url(#lensGrad)" stroke="#0f172a" stroke-width="8"/>
+  <path d="M278 184 H414 C428 184 438 192 436 206 L428 270 C424 290 408 304 388 304 H316 C298 304 284 296 280 280 L268 198 C266 190 270 184 278 184 Z" fill="url(#lensGrad)" stroke="#0f172a" stroke-width="8"/>
+
+  <!-- Lens Glare Highlights -->
+  <path d="M102 200 H155 L125 282 H98 Z" fill="#ffffff" opacity="0.28"/>
+  <path d="M292 200 H345 L315 282 H288 Z" fill="#ffffff" opacity="0.28"/>
+
+  <!-- Regulator Second Stage (Mouthpiece at Bottom Center) -->
+  <circle cx="256" cy="402" r="56" fill="#1e293b" stroke="#f8fafc" stroke-width="10"/>
+  <circle cx="256" cy="402" r="34" fill="url(#accentOrange)"/>
+  <!-- Purge Button Detail -->
+  <circle cx="256" cy="402" r="14" fill="#0f172a"/>
+  <path d="M256 368 V384 M256 420 V436 M222 402 H238 M274 402 H290" stroke="#0f172a" stroke-width="6" stroke-linecap="round"/>
 </svg>

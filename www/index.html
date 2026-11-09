@@ -8,6 +8,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>다이빙 투어 패킹</title>
   <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="icon.svg" />
+  <link rel="apple-touch-icon" href="icon.svg" />
   <style>
     :root {
       --bg-color: #ffffff;
@@ -19,7 +21,7 @@
       --info-text: #004280;
       --info-border: #b8daff;
       --accent: #ff4b4b;
-      --blue: #2563eb;
+      --blue: #0284c7;
       --green: #09ab3b;
       --green-bg: rgba(9, 171, 59, 0.12);
       --red: #ff2b2b;
@@ -68,8 +70,21 @@
       margin-bottom: 10px;
     }
 
+    .app-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .app-logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      flex-shrink: 0;
+    }
+
     h1 {
-      font-size: 1.4rem;
+      font-size: 1.32rem;
       font-weight: 700;
       margin: 0;
       letter-spacing: -0.02em;
@@ -107,8 +122,14 @@
       color: #ffffff;
     }
 
+    .btn-blue {
+      background-color: var(--blue);
+      border-color: var(--blue);
+      color: #ffffff;
+    }
+
     .btn-ai {
-      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      background: linear-gradient(135deg, #0284c7, #6366f1);
       border: none;
       color: #ffffff;
     }
@@ -119,7 +140,7 @@
       border: 1px solid var(--info-border);
       padding: 11px 13px;
       border-radius: 10px;
-      font-size: 0.86rem;
+      font-size: 0.85rem;
       margin-bottom: 12px;
       font-weight: 500;
       display: flex;
@@ -133,7 +154,7 @@
       border: 1px solid var(--info-border);
       color: var(--info-text);
       border-radius: 6px;
-      padding: 4px 8px;
+      padding: 5px 9px;
       font-size: 0.75rem;
       font-weight: 600;
       cursor: pointer;
@@ -143,15 +164,15 @@
     /* 액션 툴바 */
     .toolbar {
       display: grid;
-      grid-template-columns: 1fr 1fr auto;
+      grid-template-columns: 1.15fr 0.95fr auto;
       gap: 8px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .toolbar .btn {
       justify-content: center;
       padding: 9px 10px;
-      font-size: 0.83rem;
+      font-size: 0.82rem;
     }
 
     /* 상단 고정 대시보드 */
@@ -162,7 +183,7 @@
       background-color: var(--bg-color);
       padding: 8px 0 12px 0;
       border-bottom: 1px solid var(--border-color);
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .metrics-grid {
@@ -188,7 +209,7 @@
     }
 
     .metric-value {
-      font-size: 1.5rem;
+      font-size: 1.48rem;
       font-weight: 700;
       margin-bottom: 4px;
     }
@@ -210,7 +231,7 @@
     }
 
     h2 {
-      font-size: 1.08rem;
+      font-size: 1.05rem;
       font-weight: 700;
       margin: 22px 0 8px 0;
       padding-bottom: 6px;
@@ -220,15 +241,19 @@
       align-items: center;
     }
 
-    .cat-count {
-      font-size: 0.78rem;
-      font-weight: 500;
+    .cat-weight-badge {
+      font-size: 0.8rem;
+      font-weight: 600;
       color: var(--subtext-color);
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 2px 8px;
+      border-radius: 999px;
     }
 
     .item-row {
       display: grid;
-      grid-template-columns: 32px 1fr auto;
+      grid-template-columns: 30px 1fr auto;
       align-items: center;
       gap: 10px;
       padding: 11px 6px;
@@ -239,6 +264,16 @@
     .item-row.checked-row {
       background-color: var(--card-bg);
       border-radius: 8px;
+    }
+
+    .excluded-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 8px;
+      border-bottom: 1px solid var(--border-color);
+      opacity: 0.88;
     }
 
     .checkbox-wrap {
@@ -263,20 +298,27 @@
 
     .item-name {
       font-weight: 600;
-      font-size: 0.94rem;
+      font-size: 0.93rem;
       display: block;
       word-break: keep-all;
     }
 
-    .item-weight {
-      font-size: 0.81rem;
+    .item-desc {
+      font-size: 0.78rem;
       color: var(--subtext-color);
+      display: block;
+      margin-top: 1px;
+    }
+
+    .item-weight-tag {
+      font-weight: 700;
+      color: var(--text-color);
     }
 
     .item-actions {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
     }
 
     /* 위탁/기내 세그먼트 라디오 버튼 */
@@ -301,8 +343,8 @@
 
     .bag-option span {
       display: block;
-      padding: 4px 9px;
-      font-size: 0.78rem;
+      padding: 4px 8px;
+      font-size: 0.77rem;
       font-weight: 600;
       border-radius: 6px;
       color: var(--subtext-color);
@@ -316,10 +358,14 @@
     }
 
     .fixed-badge {
-      font-size: 0.78rem;
-      font-style: italic;
+      font-size: 0.76rem;
+      font-weight: 600;
       color: var(--subtext-color);
-      padding: 4px 6px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 4px 7px;
+      white-space: nowrap;
     }
 
     .icon-btn {
@@ -328,12 +374,10 @@
       color: var(--text-color);
       border-radius: 6px;
       padding: 4px 7px;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
+      font-weight: 600;
       cursor: pointer;
-    }
-
-    .icon-btn.delete {
-      color: var(--red);
+      white-space: nowrap;
     }
 
     /* 모달 스타일 */
@@ -411,13 +455,13 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
-      padding: 8px 10px;
+      gap: 6px;
+      padding: 8px;
       background: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 8px;
       margin-bottom: 8px;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
     }
 
     .ai-preview-img {
@@ -430,7 +474,7 @@
     }
 
     .help-link {
-      color: #3b82f6;
+      color: #38bdf8;
       text-decoration: underline;
       font-size: 0.78rem;
     }
@@ -439,9 +483,13 @@
 <body>
   <div class="container">
     <div class="header-row">
-      <h1 id="tour-title-display">🤿 오키나와 투어 패킹 (11.12 ~ 15)</h1>
+      <div class="app-brand">
+        <img src="icon.svg" alt="Scuba Icon" class="app-logo" />
+        <h1 id="tour-title-display">오키나와 투어 패킹 (11.12 ~ 15)</h1>
+      </div>
       <div class="top-actions">
-        <button class="btn" onclick="resetAll()">전체 초기화</button>
+        <button class="btn" onclick="checkAllActive(true)">전체체크</button>
+        <button class="btn" onclick="resetAll()">초기화</button>
       </div>
     </div>
 
@@ -453,9 +501,9 @@
     </div>
 
     <div class="toolbar">
-      <button class="btn btn-ai" onclick="openAiModal()">📸 사진으로 장비 추가 (AI)</button>
-      <button class="btn" onclick="openItemModal(-1)">➕ 장비 직접 추가</button>
-      <button class="btn" id="edit-mode-btn" onclick="toggleEditMode()">⚙️ 편집</button>
+      <button class="btn btn-ai" onclick="openAiModal()">📸 사진으로 장비 추가</button>
+      <button class="btn" onclick="openItemModal(-1)">➕ 직접 추가</button>
+      <button class="btn" id="edit-mode-btn" onclick="toggleEditMode()">⚙️ 장비/무게 편집</button>
     </div>
 
     <div class="metrics-wrapper">
@@ -465,21 +513,22 @@
             <span>위탁 수하물</span>
             <span id="checked-limit-label">/ 23.0kg</span>
           </div>
-          <div class="metric-value" id="checked-val">0.0 kg</div>
-          <div class="metric-delta" id="checked-delta">↑ 23.0 kg 여유</div>
+          <div class="metric-value" id="checked-val">0.00 kg</div>
+          <div class="metric-delta" id="checked-delta">↑ 23.00 kg 여유</div>
         </div>
         <div class="metric-card">
           <div class="metric-label">
             <span>기내 수하물</span>
             <span id="carryon-limit-label">/ 10.0kg</span>
           </div>
-          <div class="metric-value" id="carryon-val">0.0 kg</div>
-          <div class="metric-delta" id="carryon-delta">↑ 10.0 kg 여유</div>
+          <div class="metric-value" id="carryon-val">0.00 kg</div>
+          <div class="metric-delta" id="carryon-delta">↑ 10.00 kg 여유</div>
         </div>
       </div>
     </div>
 
     <div id="items-container"></div>
+    <div id="excluded-container"></div>
   </div>
 
   <!-- 1. 투어/항공편 정보 편집 모달 -->
@@ -497,7 +546,7 @@
         </div>
         <div class="form-group">
           <label>항공편명 (선택)</label>
-          <input type="text" id="input-flight" placeholder="예: 진에어 / 대한항공" />
+          <input type="text" id="input-flight" placeholder="예: 진에어 LJ241" />
         </div>
       </div>
       <div class="form-group">
@@ -528,7 +577,11 @@
       <input type="hidden" id="edit-item-idx" value="-1" />
       <div class="form-group">
         <label>장비 이름</label>
-        <input type="text" id="item-name-input" placeholder="예: 걸 만티스5 마스크" />
+        <input type="text" id="item-name-input" placeholder="예: 투사 파라곤 마스크" />
+      </div>
+      <div class="form-group">
+        <label>설명 / 수납 메모</label>
+        <input type="text" id="item-desc-input" placeholder="예: [기내/위탁 변경 가능] 렌즈 보호" />
       </div>
       <div class="form-row">
         <div class="form-group">
@@ -536,16 +589,16 @@
           <select id="item-cat-input">
             <option value="가방류">가방류</option>
             <option value="핵심 장비">핵심 장비</option>
-            <option value="보온/착용류">보온/착용류</option>
-            <option value="안전/액세서리">안전/액세서리</option>
+            <option value="의류/보온">의류/보온</option>
+            <option value="계기/전자">계기/전자</option>
             <option value="조명/촬영">조명/촬영</option>
+            <option value="안전/소품">안전/소품</option>
             <option value="공구/케어">공구/케어</option>
-            <option value="개인/서류">개인/서류</option>
           </select>
         </div>
         <div class="form-group">
           <label>무게 (kg)</label>
-          <input type="number" step="0.05" id="item-weight-input" placeholder="0.5" />
+          <input type="number" step="0.01" id="item-weight-input" placeholder="0.30" />
         </div>
       </div>
       <div class="form-row">
@@ -559,13 +612,20 @@
         <div class="form-group">
           <label>위치 고정 여부</label>
           <select id="item-fixed-input">
-            <option value="false">자유 변경 가능</option>
-            <option value="true">고정 (배터리/도검류 등)</option>
+            <option value="false">기내/위탁 변경 가능</option>
+            <option value="true">고정 (배터리/공구/아우터백)</option>
           </select>
         </div>
       </div>
+      <div class="form-group">
+        <label>리스트 편입 상태</label>
+        <select id="item-excluded-input">
+          <option value="false">현재 투어 패킹 리스트에 포함</option>
+          <option value="true">제외 품목 (하단 보관함으로 이동)</option>
+        </select>
+      </div>
       <div class="modal-footer">
-        <button class="btn" id="delete-item-btn" style="color:var(--red); margin-right:auto; display:none;" onclick="deleteCurrentItem()">🗑️ 삭제</button>
+        <button class="btn" id="delete-item-btn" style="color:var(--red); margin-right:auto; display:none;" onclick="deleteCurrentItem()">🗑️ 영구 삭제</button>
         <button class="btn" onclick="closeItemModal()">취소</button>
         <button class="btn btn-primary" onclick="saveItemModal()">저장</button>
       </div>
@@ -578,14 +638,14 @@
       <h3>📸 제미나이 AI 장비 사진 인식</h3>
       <div class="form-group">
         <label>
-          Gemini API Key (한 번만 입력하면 폰에 저장됩니다)
+          Gemini API Key (한 번만 입력하면 자동 저장)
           <a class="help-link" href="https://aistudio.google.com/app/apikey" target="_blank">무료 키 발급받기 ↗</a>
         </label>
         <input type="password" id="gemini-api-key" placeholder="AIzaSy... 키를 붙여넣으세요" onchange="saveApiKey()" />
       </div>
 
       <div class="form-group">
-        <label>장비 사진 촬영 또는 앨범에서 선택 (여러 장비를 한 번에 찍어도 됩니다)</label>
+        <label>장비 사진 촬영 또는 앨범 선택 (여러 개를 바닥에 두고 찍어도 됩니다)</label>
         <input type="file" id="ai-photo-input" accept="image/*" capture="environment" onchange="handlePhotoSelected(event)" style="margin-top:4px;" />
       </div>
 
@@ -611,56 +671,317 @@
       carryonLimit: 10.0
     };
 
-    // 누락되었던 스쿠버 다이빙 풀세트 기본 장비 목록 복원
+    // 사용자 실제 보유 장비 리스트 및 분리된 제외 품목 초기값 세팅
     const DEFAULT_ITEMS = [
-      // 1. 가방류
-      { name: "포스 주황색 90L 백", cat: "가방류", weight: 1.5, bag: "위탁", fixed: true, checked: false },
-      { name: "OMS 메쉬 파우치", cat: "가방류", weight: 0.3, bag: "위탁", fixed: false, checked: false },
-      { name: "방수 드라이백 (5L~10L)", cat: "가방류", weight: 0.25, bag: "기내", fixed: false, checked: false },
-      { name: "레귤레이터 백 / 카메라 파우치", cat: "가방류", weight: 0.4, bag: "기내", fixed: false, checked: false },
+      // 1. 가방류 (2.20 kg)
+      {
+        name: "포스 익스페디션 주황색 90L 백",
+        desc: "메인 위탁 아우터 가방",
+        cat: "가방류",
+        weight: 1.50,
+        bag: "위탁",
+        fixed: true,
+        checked: false,
+        excluded: false
+      },
+      {
+        name: "PADI 메쉬백 (OMS 파우치를 내부에 수납)",
+        desc: "내부에 OMS 메쉬 파우치 포함",
+        cat: "가방류",
+        weight: 0.40,
+        bag: "위탁",
+        fixed: true,
+        checked: false,
+        excluded: false
+      },
+      {
+        name: "OMS 메쉬 파우치 (PADI 메쉬백 내부에 수납)",
+        desc: "[기내/위탁 변경 가능] 소품 수납",
+        cat: "가방류",
+        weight: 0.30,
+        bag: "위탁",
+        fixed: false,
+        checked: false,
+        excluded: false
+      },
 
-      // 2. 핵심 장비
-      { name: "OMS 프로엘리트 BC", cat: "핵심 장비", weight: 7.25, bag: "위탁", fixed: false, checked: false },
-      { name: "아펙스 XTX200 세트 (호흡기)", cat: "핵심 장비", weight: 3.25, bag: "기내", fixed: false, checked: false },
-      { name: "포스 프로테우스 3mm 슈트", cat: "핵심 장비", weight: 1.65, bag: "위탁", fixed: false, checked: false },
-      { name: "다이빙 핀 (오리발) + 스프링 스트랩", cat: "핵심 장비", weight: 2.3, bag: "위탁", fixed: false, checked: false },
-      { name: "다이빙 마스크 + 스트랩 커버", cat: "핵심 장비", weight: 0.25, bag: "기내", fixed: false, checked: false },
-      { name: "다이브 컴퓨터 + 충전 케이블", cat: "핵심 장비", weight: 0.15, bag: "기내", fixed: false, checked: false },
-      { name: "스노클", cat: "핵심 장비", weight: 0.15, bag: "위탁", fixed: false, checked: false },
+      // 2. 핵심 장비 (15.05 kg)
+      {
+        name: "OMS 프로엘리트 BC (90L 백 바닥 배치)",
+        desc: "가방 바닥면에 수납",
+        cat: "핵심 장비",
+        weight: 7.25,
+        bag: "위탁",
+        fixed: false,
+        checked: false,
+        excluded: false
+      },
+      {
+        name: "포스엘리먼트 프로테우스 3mm 웻수트",
+        desc: "11월 오키나와 웻수트",
+        cat: "핵심 장비",
+        weight: 1.65,
+        bag: "위탁",
+        fixed: false,
+        checked: false,
+        excluded: false
+      },
+      {
+        name: "걸 와프 핀 (풀풋 고무 핀)",
+        desc: "타비 삭스와 세트 착용",
+        cat: "핵심 장비",
+        weight: 2.60,
+        bag: "위탁",
+        fixed: false,
+        checked: false,
+        excluded: false
+      },
+      {
+        name: "아펙스 XTX200 레귤레이터 세트 (파우치 포함)",
+        desc: "[기내/위탁 변경 가능] 파손 방지 및 무게 분산",
+        cat: "핵심 장비",
+        weight: 3.25,
+        bag: "기내",
+        fixed: false,
+        checked: false,
+        excluded: false
+      },
+      {
+        name: "투사 파라곤 마스크 (클리어 렌즈)",
+        desc: "[기내/위탁 변경 가능] 렌즈 보호",
+        cat: "핵심 장비",
+        weight: 0.30,
+        bag: "기내",
+        fixed: false,
+        checked: false,
+        excluded: false
+      },
 
-      // 3. 보온/착용류
-      { name: "다이빙 부츠 (5mm)", cat: "보온/착용류", weight: 0.85, bag: "위탁", fixed: false, checked: false },
-      { name: "다이빙 장갑", cat: "보온/착용류", weight: 0.15, bag: "위탁", fixed: false, checked: false },
-      { name: "후드 / 후드베스트", cat: "보온/착용류", weight: 0.45, bag: "위탁", fixed: false, checked: false },
-      { name: "래쉬가드 / 보드숏 / 워터레깅스", cat: "보온/착용류", weight: 0.4, bag: "위탁", fixed: false, checked: false },
-      { name: "보트 코트 / 방풍 자켓", cat: "보온/착용류", weight: 0.65, bag: "위탁", fixed: false, checked: false },
+      // 3. 의류/보온 (0.50 kg)
+      {
+        name: "포스엘리먼트 3mm 다이빙 후드",
+        desc: "개별 항목",
+        cat: "의류/보온",
+        weight: 0.15,
+        bag: "위탁",
+        fixed: false,
+        checked: false,
+        excluded: false
+      },
+      {
+        name: "포스엘리먼트 3mm 다이빙 글러브",
+        desc: "개별 항목",
+        cat: "의류/보온",
+        weight: 0.15,
+        bag: "위탁",
+        fixed: false,
+        checked: false,
+        excluded: false
+      },
+      {
+        name: "걸 타비형 네오프렌 삭스",
+        desc: "개별 항목",
+        cat: "의류/보온",
+        weight: 0.12,
+        bag: "위탁",
+        fixed: false,
+        checked: false,
+        excluded: false
+      },
+      {
+        name: "나이키 수영복 (브리프)",
+        desc: "개별 항목",
+        cat: "의류/보온",
+        weight: 0.08,
+        bag: "위탁",
+        fixed: false,
+        checked: false,
+        excluded: false
+      },
 
-      // 4. 안전/액세서리
-      { name: "SMB (소시지) + 핑거 스풀/릴", cat: "안전/액세서리", weight: 0.45, bag: "위탁", fixed: false, checked: false },
-      { name: "더블엔더 / 볼트스냅 여유분", cat: "안전/액세서리", weight: 0.15, bag: "위탁", fixed: false, checked: false },
-      { name: "탐침봉 / 셰이커 / 신호벨", cat: "안전/액세서리", weight: 0.15, bag: "위탁", fixed: false, checked: false },
-      { name: "스파이더코 H2 커터", cat: "공구/케어", weight: 0.1, bag: "위탁", fixed: true, checked: false },
+      // 4. 계기/전자 (0.30 kg)
+      {
+        name: "가민 디센트 Mk3i 본체 (스트랩 포함)",
+        desc: "[기내/위탁 변경 가능] 메인 컴퓨터",
+        cat: "계기/전자",
+        weight: 0.10,
+        bag: "기내",
+        fixed: false,
+        checked: false,
+        excluded: false
+      },
+      {
+        name: "가민 전용 충전 케이블",
+        desc: "[기내/위탁 변경 가능] 필수 충전기",
+        cat: "계기/전자",
+        weight: 0.10,
+        bag: "기내",
+        fixed: false,
+        checked: false,
+        excluded: false
+      },
+      {
+        name: "히드프로 다이빙 컴퍼스",
+        desc: "번지 마운트 나침반",
+        cat: "계기/전자",
+        weight: 0.10,
+        bag: "위탁",
+        fixed: false,
+        checked: false,
+        excluded: false
+      },
 
-      // 5. 조명/촬영
-      { name: "다이브프로 S40 V2", cat: "조명/촬영", weight: 0.6, bag: "기내", fixed: false, checked: false },
-      { name: "백업 랜턴", cat: "조명/촬영", weight: 0.25, bag: "기내", fixed: false, checked: false },
-      { name: "액션캠(고프로/인스타) + 방수하우징", cat: "조명/촬영", weight: 0.55, bag: "기내", fixed: false, checked: false },
-      { name: "리튬이온 배터리 5알", cat: "조명/촬영", weight: 0.3, bag: "기내", fixed: true, checked: false },
-      { name: "리튬 4구 충전기", cat: "조명/촬영", weight: 0.4, bag: "기내", fixed: false, checked: false },
+      // 5. 조명/촬영 (1.70 kg)
+      {
+        name: "다이브프로 S40 V2 수중 랜턴",
+        desc: "[기내/위탁 변경 가능] 수중 랜턴",
+        cat: "조명/촬영",
+        weight: 0.60,
+        bag: "기내",
+        fixed: false,
+        checked: false,
+        excluded: false
+      },
+      {
+        name: "리튬이온 배터리 5알 (18650/26650)",
+        desc: "[기내 고정] 리튬 배터리 보안 규정",
+        cat: "조명/촬영",
+        weight: 0.30,
+        bag: "기내",
+        fixed: true,
+        checked: false,
+        excluded: false
+      },
+      {
+        name: "리튬이온 배터리 4구 충전기",
+        desc: "[기내/위탁 변경 가능] 4구 멀티 충전기",
+        cat: "조명/촬영",
+        weight: 0.40,
+        bag: "기내",
+        fixed: false,
+        checked: false,
+        excluded: false
+      },
+      {
+        name: "인스타360 에이스 프로 2 (하우징 세팅)",
+        desc: "[기내/위탁 변경 가능] 액션캠 세트",
+        cat: "조명/촬영",
+        weight: 0.40,
+        bag: "기내",
+        fixed: false,
+        checked: false,
+        excluded: false
+      },
 
-      // 6. 공구/케어
-      { name: "다이빙 멀티툴 / 육각렌치 / 오링", cat: "공구/케어", weight: 0.25, bag: "위탁", fixed: true, checked: false },
-      { name: "마스크 김서림 방지제 (안티포그)", cat: "공구/케어", weight: 0.05, bag: "위탁", fixed: false, checked: false },
-      { name: "스포츠 타월 / 판초 타월", cat: "공구/케어", weight: 0.35, bag: "위탁", fixed: false, checked: false },
+      // 6. 안전/소품 (0.60 kg)
+      {
+        name: "360도 후방 손등 미러",
+        desc: "안전용 거울",
+        cat: "안전/소품",
+        weight: 0.10,
+        bag: "위탁",
+        fixed: false,
+        checked: false,
+        excluded: false
+      },
+      {
+        name: "OMS 1.8m SMB + 핑거 스풀 세트",
+        desc: "결합된 단일 품목",
+        cat: "안전/소품",
+        weight: 0.50,
+        bag: "위탁",
+        fixed: false,
+        checked: false,
+        excluded: false
+      },
 
-      // 7. 개인/서류
-      { name: "다이빙 라이센스(C카드) / 여권 / 로그북", cat: "개인/서류", weight: 0.2, bag: "기내", fixed: true, checked: false },
-      { name: "멀미약 / 귀안압(이퀄라이징) 상비약", cat: "개인/서류", weight: 0.1, bag: "기내", fixed: false, checked: false },
-      { name: "일상복 / 세면도구 / 선크림", cat: "개인/서류", weight: 2.0, bag: "위탁", fixed: false, checked: false }
+      // 7. 공구/케어 (0.30 kg)
+      {
+        name: "스파이더코 H2 다이빙 커터 (볼트스냅)",
+        desc: "[위탁 고정] 기내 반입 불가",
+        cat: "공구/케어",
+        weight: 0.10,
+        bag: "위탁",
+        fixed: true,
+        checked: false,
+        excluded: false
+      },
+      {
+        name: "판도라툴 (만능렌치)",
+        desc: "[위탁 고정] 장비 정비용 멀티툴",
+        cat: "공구/케어",
+        weight: 0.10,
+        bag: "위탁",
+        fixed: true,
+        checked: false,
+        excluded: false
+      },
+      {
+        name: "안티포그 스프레이 (Wiper G)",
+        desc: "[위탁 고정] 액체류 필수",
+        cat: "공구/케어",
+        weight: 0.10,
+        bag: "위탁",
+        fixed: true,
+        checked: false,
+        excluded: false
+      },
+
+      // 8. 제외 품목 (필요시 추가 가능 - 아거노트/내피/텍핀/락호퍼 모두 개별 분리)
+      {
+        name: "포스 아르고백 (44L)",
+        desc: "드라이수트/추가 장비 수납 백",
+        cat: "가방류",
+        weight: 1.00,
+        bag: "위탁",
+        fixed: false,
+        checked: false,
+        excluded: true
+      },
+      {
+        name: "아거노트 2.0 드라이수트",
+        desc: "포스엘리먼트 드라이수트 본체 (내피 분리)",
+        cat: "핵심 장비",
+        weight: 3.50,
+        bag: "위탁",
+        fixed: false,
+        checked: false,
+        excluded: true
+      },
+      {
+        name: "드라이수트 내피",
+        desc: "동계/드라이수트 보온 내피 (언더수트)",
+        cat: "의류/보온",
+        weight: 1.80,
+        bag: "위탁",
+        fixed: false,
+        checked: false,
+        excluded: true
+      },
+      {
+        name: "포스 텍핀",
+        desc: "오픈힐 텍 다이빙 핀 (락호퍼 슈즈와 착용)",
+        cat: "핵심 장비",
+        weight: 2.30,
+        bag: "위탁",
+        fixed: false,
+        checked: false,
+        excluded: true
+      },
+      {
+        name: "포스 락호퍼 슈즈",
+        desc: "텍핀 전용 다이빙 슈즈",
+        cat: "의류/보온",
+        weight: 0.50,
+        bag: "위탁",
+        fixed: false,
+        checked: false,
+        excluded: true
+      }
     ];
 
-    const ITEMS_KEY = "okinawa_diving_packing_v2";
-    const TOUR_KEY = "okinawa_diving_tour_cfg_v2";
+    const ITEMS_KEY = "okinawa_diving_packing_v3";
+    const TOUR_KEY = "okinawa_diving_tour_cfg_v3";
     const API_KEY_STORAGE = "okinawa_gemini_api_key";
 
     let items = loadItems();
@@ -696,8 +1017,16 @@
       } catch (e) {}
     }
 
+    function checkAllActive(state) {
+      items.forEach(item => {
+        if (!item.excluded) item.checked = state;
+      });
+      saveItems();
+      render();
+    }
+
     function resetAll() {
-      if (confirm("모든 장비 목록과 투어 설정을 처음 기본값(풀세트 31종)으로 복원할까요?")) {
+      if (confirm("모든 장비 목록과 설정을 초기 세팅값으로 복원할까요?")) {
         items = JSON.parse(JSON.stringify(DEFAULT_ITEMS));
         tour = Object.assign({}, DEFAULT_TOUR);
         saveItems();
@@ -709,7 +1038,7 @@
     function toggleEditMode() {
       editMode = !editMode;
       const btn = document.getElementById("edit-mode-btn");
-      btn.textContent = editMode ? "✅ 편집 완료" : "⚙️ 편집";
+      btn.textContent = editMode ? "✅ 편집 완료" : "⚙️ 장비/무게 편집";
       btn.classList.toggle("btn-primary", editMode);
       render();
     }
@@ -726,22 +1055,36 @@
       render();
     }
 
+    function includeItem(idx) {
+      items[idx].excluded = false;
+      items[idx].checked = true;
+      saveItems();
+      render();
+    }
+
+    function excludeItem(idx) {
+      items[idx].excluded = true;
+      items[idx].checked = false;
+      saveItems();
+      render();
+    }
+
     function updateMetrics() {
       document.getElementById("tour-title-display").textContent =
-        `🤿 ${tour.place} (${tour.dates})`;
+        `${tour.place} (${tour.dates})`;
 
       const flightText = tour.flight ? ` | 항공편: ${tour.flight}` : "";
       document.getElementById("tour-info-display").textContent =
-        `예상 수온: ${tour.temp}${flightText} | 위탁 ${tour.checkedLimit.toFixed(1)}kg / 기내 ${tour.carryonLimit.toFixed(1)}kg`;
+        `예상 수온: ${tour.temp}${flightText} | 항공: 위탁 ${tour.checkedLimit.toFixed(1)}kg / 기내 ${tour.carryonLimit.toFixed(1)}kg`;
 
       document.getElementById("checked-limit-label").textContent = `/ ${tour.checkedLimit.toFixed(1)}kg`;
       document.getElementById("carryon-limit-label").textContent = `/ ${tour.carryonLimit.toFixed(1)}kg`;
 
       const checkedW = items
-        .filter(i => i.checked && i.bag === "위탁")
+        .filter(i => !i.excluded && i.checked && i.bag === "위탁")
         .reduce((acc, cur) => acc + Number(cur.weight || 0), 0);
       const carryonW = items
-        .filter(i => i.checked && i.bag === "기내")
+        .filter(i => !i.excluded && i.checked && i.bag === "기내")
         .reduce((acc, cur) => acc + Number(cur.weight || 0), 0);
 
       const checkedRem = tour.checkedLimit - checkedW;
@@ -771,17 +1114,18 @@
     const CATEGORY_ORDER = [
       "가방류",
       "핵심 장비",
-      "보온/착용류",
-      "안전/액세서리",
+      "의류/보온",
+      "계기/전자",
       "조명/촬영",
-      "공구/케어",
-      "개인/서류"
+      "안전/소품",
+      "공구/케어"
     ];
 
     function render() {
       updateMetrics();
 
-      const presentCats = [...new Set(items.map(i => i.cat))];
+      const activeItems = items.filter(i => !i.excluded);
+      const presentCats = [...new Set(activeItems.map(i => i.cat))];
       presentCats.sort((a, b) => {
         const ia = CATEGORY_ORDER.indexOf(a);
         const ib = CATEGORY_ORDER.indexOf(b);
@@ -795,15 +1139,15 @@
       container.innerHTML = "";
 
       presentCats.forEach(cat => {
-        const catItems = items.filter(i => i.cat === cat);
-        const checkedCount = catItems.filter(i => i.checked).length;
+        const catItems = activeItems.filter(i => i.cat === cat);
+        const catTotalWeight = catItems.reduce((acc, cur) => acc + Number(cur.weight || 0), 0);
 
         const header = document.createElement("h2");
-        header.innerHTML = `<span>${cat}</span><span class="cat-count">${checkedCount} / ${catItems.length} 챙김</span>`;
+        header.innerHTML = `<span>${cat}</span><span class="cat-weight-badge">${catTotalWeight.toFixed(2)} kg</span>`;
         container.appendChild(header);
 
         items.forEach((item, idx) => {
-          if (item.cat !== cat) return;
+          if (item.excluded || item.cat !== cat) return;
 
           const row = document.createElement("div");
           row.className = `item-row ${item.checked ? "checked-row" : ""}`;
@@ -817,7 +1161,7 @@
           chk.addEventListener("change", () => toggleCheck(idx));
           chkWrap.appendChild(chk);
 
-          // 2. 장비 이름 및 무게
+          // 2. 장비 이름, 설명, 무게
           const info = document.createElement("div");
           info.className = "item-info";
           info.addEventListener("click", () => {
@@ -827,12 +1171,13 @@
               toggleCheck(idx);
             }
           });
+          const descHtml = item.desc ? `<span class="item-desc">${item.desc} · <span class="item-weight-tag">${Number(item.weight).toFixed(2)} kg</span></span>` : `<span class="item-desc"><span class="item-weight-tag">${Number(item.weight).toFixed(2)} kg</span></span>`;
           info.innerHTML = `
             <span class="item-name">${item.name}</span>
-            <span class="item-weight">(${Number(item.weight).toFixed(2).replace(/\.00$/, ".0").replace(/(\.\d)0$/, "$1")}kg)</span>
+            ${descHtml}
           `;
 
-          // 3. 우측 컨트롤 (위탁/기내 토글 + 편집 버튼)
+          // 3. 우측 컨트롤 (위탁/기내 토글 + 편집/제외 버튼)
           const actionWrap = document.createElement("div");
           actionWrap.className = "item-actions";
 
@@ -861,6 +1206,12 @@
           }
 
           if (editMode) {
+            const exBtn = document.createElement("button");
+            exBtn.className = "icon-btn";
+            exBtn.textContent = "제외";
+            exBtn.onclick = () => excludeItem(idx);
+            actionWrap.appendChild(exBtn);
+
             const editBtn = document.createElement("button");
             editBtn.className = "icon-btn";
             editBtn.textContent = "✏️";
@@ -874,6 +1225,52 @@
           container.appendChild(row);
         });
       });
+
+      // 하단 제외 품목 (필요시 추가 가능) 렌더링
+      const excludedContainer = document.getElementById("excluded-container");
+      excludedContainer.innerHTML = "";
+      const excludedItems = items.map((item, idx) => ({ item, idx })).filter(x => x.item.excluded);
+
+      if (excludedItems.length > 0) {
+        const exTotal = excludedItems.reduce((acc, cur) => acc + Number(cur.item.weight || 0), 0);
+        const exHeader = document.createElement("h2");
+        exHeader.innerHTML = `<span>제외 품목 (필요시 추가 가능)</span><span class="cat-weight-badge">${exTotal.toFixed(2)} kg</span>`;
+        excludedContainer.appendChild(exHeader);
+
+        excludedItems.forEach(({ item, idx }) => {
+          const row = document.createElement("div");
+          row.className = "excluded-row";
+
+          const info = document.createElement("div");
+          info.className = "item-info";
+          info.onclick = () => openItemModal(idx);
+          info.innerHTML = `
+            <span class="item-name">${item.name}</span>
+            <span class="item-desc">[${item.cat}] ${item.desc || "버튼으로 리스트 편입 가능"} · <span class="item-weight-tag">${Number(item.weight).toFixed(2)} kg</span></span>
+          `;
+
+          const actionWrap = document.createElement("div");
+          actionWrap.className = "item-actions";
+
+          const addBtn = document.createElement("button");
+          addBtn.className = "btn btn-blue";
+          addBtn.textContent = "+ 추가";
+          addBtn.onclick = () => includeItem(idx);
+          actionWrap.appendChild(addBtn);
+
+          if (editMode) {
+            const editBtn = document.createElement("button");
+            editBtn.className = "icon-btn";
+            editBtn.textContent = "✏️";
+            editBtn.onclick = () => openItemModal(idx);
+            actionWrap.appendChild(editBtn);
+          }
+
+          row.appendChild(info);
+          row.appendChild(actionWrap);
+          excludedContainer.appendChild(row);
+        });
+      }
     }
 
     // --- 투어/항공편 모달 로직 ---
@@ -892,10 +1289,10 @@
     }
 
     function saveTourConfig() {
-      tour.place = document.getElementById("input-place").value.trim() || "다이빙 투어 패킹";
-      tour.dates = document.getElementById("input-dates").value.trim() || "일정 미정";
+      tour.place = document.getElementById("input-place").value.trim() || "오키나와 투어 패킹";
+      tour.dates = document.getElementById("input-dates").value.trim() || "11.12 ~ 15";
       tour.flight = document.getElementById("input-flight").value.trim();
-      tour.temp = document.getElementById("input-temp").value.trim() || "25°C";
+      tour.temp = document.getElementById("input-temp").value.trim() || "25 ~ 26°C";
       tour.checkedLimit = parseFloat(document.getElementById("input-checked-limit").value) || 23.0;
       tour.carryonLimit = parseFloat(document.getElementById("input-carryon-limit").value) || 10.0;
       saveTour();
@@ -910,20 +1307,24 @@
 
       if (idx >= 0 && items[idx]) {
         const item = items[idx];
-        document.getElementById("item-modal-title").textContent = "✏️ 장비 수정";
+        document.getElementById("item-modal-title").textContent = "✏️ 장비 정보/무게 수정";
         document.getElementById("item-name-input").value = item.name;
+        document.getElementById("item-desc-input").value = item.desc || "";
         document.getElementById("item-cat-input").value = item.cat;
         document.getElementById("item-weight-input").value = item.weight;
         document.getElementById("item-bag-input").value = item.bag;
         document.getElementById("item-fixed-input").value = item.fixed ? "true" : "false";
+        document.getElementById("item-excluded-input").value = item.excluded ? "true" : "false";
         delBtn.style.display = "inline-flex";
       } else {
-        document.getElementById("item-modal-title").textContent = "➕ 새 장비 추가";
+        document.getElementById("item-modal-title").textContent = "➕ 새 장비 직접 추가";
         document.getElementById("item-name-input").value = "";
+        document.getElementById("item-desc-input").value = "개별 항목";
         document.getElementById("item-cat-input").value = "핵심 장비";
-        document.getElementById("item-weight-input").value = "0.5";
+        document.getElementById("item-weight-input").value = "0.50";
         document.getElementById("item-bag-input").value = "위탁";
         document.getElementById("item-fixed-input").value = "false";
+        document.getElementById("item-excluded-input").value = "false";
         delBtn.style.display = "none";
       }
       document.getElementById("item-modal").classList.add("active");
@@ -940,19 +1341,23 @@
         alert("장비 이름을 입력해 주세요.");
         return;
       }
+      const desc = document.getElementById("item-desc-input").value.trim();
       const cat = document.getElementById("item-cat-input").value;
       const weight = parseFloat(document.getElementById("item-weight-input").value) || 0.1;
       const bag = document.getElementById("item-bag-input").value;
       const fixed = document.getElementById("item-fixed-input").value === "true";
+      const excluded = document.getElementById("item-excluded-input").value === "true";
 
       if (idx >= 0 && items[idx]) {
         items[idx].name = name;
+        items[idx].desc = desc;
         items[idx].cat = cat;
         items[idx].weight = weight;
         items[idx].bag = bag;
         items[idx].fixed = fixed;
+        items[idx].excluded = excluded;
       } else {
-        items.push({ name, cat, weight, bag, fixed, checked: true });
+        items.push({ name, desc, cat, weight, bag, fixed, checked: !excluded, excluded });
       }
       saveItems();
       closeItemModal();
@@ -962,7 +1367,7 @@
     function deleteCurrentItem() {
       const idx = parseInt(document.getElementById("edit-item-idx").value, 10);
       if (idx >= 0 && items[idx]) {
-        if (confirm(`'${items[idx].name}' 항목을 삭제할까요?`)) {
+        if (confirm(`'${items[idx].name}' 항목을 목록에서 완전히 삭제할까요?`)) {
           items.splice(idx, 1);
           saveItems();
           closeItemModal();
@@ -990,7 +1395,7 @@
 
     function saveApiKey() {
       const key = document.getElementById("gemini-api-key").value.trim();
-      if (key) localStorage.setItem(API_KEY_STORAGE, key);
+      if (key) localStorage.getItem(API_KEY_STORAGE, key);
     }
 
     function compressImageToBase64(file) {
@@ -1048,7 +1453,7 @@
 
       resultsEl.innerHTML = "";
       addBtn.style.display = "none";
-      statusEl.textContent = "⏳ 사진을 압축하고 제미나이 AI로 장비를 분석하는 중입니다...";
+      statusEl.textContent = "⏳ 사진을 분석하여 다이빙 장비를 식별하고 있습니다...";
 
       try {
         const { dataUrl, base64, mimeType } = await compressImageToBase64(file);
@@ -1058,11 +1463,12 @@
         const prompt = `당신은 스쿠버 다이빙 장비 전문가입니다. 사진에 보이는 스쿠버 다이빙 장비 또는 여행 용품들을 모두 식별하여 JSON 배열로만 응답하세요.
 각 객체 형식:
 {
-  "name": "브랜드/모델명을 포함한 한국어 장비 이름 (예: 걸 만티스5 마스크, 스쿠버프로 제트핀)",
-  "cat": "가방류 | 핵심 장비 | 보온/착용류 | 안전/액세서리 | 조명/촬영 | 공구/케어 | 개인/서류 중 하나",
-  "weight": 예상 무게(kg, 숫자 소수점 2자리까지 현실적인 무게),
-  "bag": "위탁 | 기내 중 추천 위치 (배터리, 호흡기, 컴퓨터, 카메라 등은 기내 / 칼, 공구, 무거운 BC, 핀 등은 위탁)",
-  "fixed": 배터리(기내 고정)나 칼/멀티툴(위탁 고정)이면 true, 아니면 false
+  "name": "브랜드/모델명을 포함한 한국어 장비 이름 (예: 투사 파라곤 마스크, 포스엘리먼트 3mm 글러브)",
+  "desc": "간단한 설명 (예: [기내/위탁 변경 가능] 수중 랜턴)",
+  "cat": "가방류 | 핵심 장비 | 의류/보온 | 계기/전자 | 조명/촬영 | 안전/소품 | 공구/케어 중 하나",
+  "weight": 예상 무게(kg, 숫자 소수점 2자리),
+  "bag": "위탁 | 기내 중 추천 위치",
+  "fixed": 배터리(기내 고정)나 칼/멀티툴/액체류(위탁 고정)이면 true, 아니면 false
 }
 반드시 순수 JSON 배열만 출력하세요.`;
 
@@ -1102,13 +1508,14 @@
         recognizedPending = parsed.map(item => ({
           selected: true,
           name: item.name || "인식된 장비",
+          desc: item.desc || "AI 사진 인식 항목",
           cat: CATEGORY_ORDER.includes(item.cat) ? item.cat : "핵심 장비",
-          weight: Number(item.weight) || 0.3,
+          weight: Number(item.weight) || 0.30,
           bag: item.bag === "기내" ? "기내" : "위탁",
           fixed: Boolean(item.fixed)
         }));
 
-        statusEl.textContent = `✅ 총 ${recognizedPending.length}개의 장비를 인식했습니다! 이름/무게를 확인 후 추가하세요.`;
+        statusEl.textContent = `✅ 총 ${recognizedPending.length}개의 장비를 인식했습니다! 확인 후 추가하세요.`;
         renderRecognizedPending();
         addBtn.style.display = "inline-flex";
       } catch (err) {
@@ -1125,8 +1532,8 @@
         div.innerHTML = `
           <input type="checkbox" ${item.selected ? "checked" : ""} onchange="recognizedPending[${idx}].selected = this.checked" />
           <input type="text" value="${item.name}" onchange="recognizedPending[${idx}].name = this.value" style="flex:1; padding:5px 8px; font-size:0.82rem;" />
-          <input type="number" step="0.05" value="${item.weight}" onchange="recognizedPending[${idx}].weight = parseFloat(this.value)||0.1" style="width:70px; padding:5px 6px; font-size:0.82rem;" />
-          <span style="font-size:0.78rem; color:var(--subtext-color);">kg (${item.bag})</span>
+          <input type="number" step="0.05" value="${item.weight}" onchange="recognizedPending[${idx}].weight = parseFloat(this.value)||0.1" style="width:68px; padding:5px 6px; font-size:0.82rem;" />
+          <span style="font-size:0.76rem; color:var(--subtext-color);">kg (${item.bag})</span>
         `;
         resultsEl.appendChild(div);
       });
@@ -1141,11 +1548,13 @@
       toAdd.forEach(item => {
         items.push({
           name: item.name.trim(),
+          desc: item.desc,
           cat: item.cat,
           weight: Number(item.weight) || 0.3,
           bag: item.bag,
           fixed: item.fixed,
-          checked: true
+          checked: true,
+          excluded: false
         });
       });
       saveItems();
