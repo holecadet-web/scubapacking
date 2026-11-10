@@ -49,7 +49,7 @@
 
     body {
       margin: 0;
-      padding: env(safe-area-inset-top, 16px) 14px env(safe-area-inset-bottom, 80px) 14px;
+      padding: env(safe-area-inset-top, 16px) 14px env(safe-area-inset-bottom, 85px) 14px;
       font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       background-color: var(--bg-color);
       color: var(--text-color);
@@ -85,7 +85,7 @@
     }
 
     h1 {
-      font-size: 1.28rem;
+      font-size: 1.25rem;
       font-weight: 700;
       margin: 0;
       letter-spacing: -0.02em;
@@ -234,14 +234,6 @@
       margin-bottom: 14px;
     }
 
-    .guide-card h3 {
-      margin: 0 0 8px 0;
-      font-size: 0.98rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
     .guide-step {
       font-size: 0.83rem;
       color: var(--text-color);
@@ -297,17 +289,57 @@
       white-space: nowrap;
     }
 
-    /* 액션 툴바 */
+    /* 물품 추가/삭제 액션 툴바 */
     .toolbar {
       display: grid;
-      grid-template-columns: 1.15fr 0.95fr auto;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .toolbar-sub {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 8px;
       margin-bottom: 12px;
     }
 
-    .toolbar .btn {
-      padding: 9px 10px;
+    .toolbar .btn,
+    .toolbar-sub .btn {
+      padding: 10px;
+      font-size: 0.83rem;
+    }
+
+    /* 빠른 물품 추가 박스 */
+    .quick-add-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 14px;
+    }
+
+    .quick-add-title {
       font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .quick-add-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1.6fr 0.8fr auto;
+      gap: 6px;
+      align-items: center;
+    }
+
+    @media (max-width: 480px) {
+      .quick-add-grid {
+        grid-template-columns: 1fr 1fr;
+      }
     }
 
     /* 상단 고정 대시보드 */
@@ -366,7 +398,7 @@
     }
 
     h2 {
-      font-size: 1.05rem;
+      font-size: 1.03rem;
       font-weight: 700;
       margin: 22px 0 8px 0;
       padding-bottom: 6px;
@@ -376,8 +408,14 @@
       align-items: center;
     }
 
+    .cat-header-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
     .cat-weight-badge {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 600;
       color: var(--subtext-color);
       background: var(--card-bg);
@@ -386,12 +424,23 @@
       border-radius: 999px;
     }
 
+    .cat-add-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      color: #38bdf8;
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
     .item-row {
       display: grid;
-      grid-template-columns: 30px 1fr auto;
+      grid-template-columns: 28px 1fr auto;
       align-items: center;
-      gap: 10px;
-      padding: 11px 6px;
+      gap: 8px;
+      padding: 10px 4px;
       border-bottom: 1px solid var(--border-color);
       transition: background-color 0.15s;
     }
@@ -405,10 +454,10 @@
       display: grid;
       grid-template-columns: 1fr auto;
       align-items: center;
-      gap: 10px;
-      padding: 11px 8px;
+      gap: 8px;
+      padding: 11px 6px;
       border-bottom: 1px solid var(--border-color);
-      opacity: 0.88;
+      opacity: 0.9;
     }
 
     .checkbox-wrap {
@@ -418,8 +467,8 @@
     }
 
     input[type="checkbox"] {
-      width: 21px;
-      height: 21px;
+      width: 20px;
+      height: 20px;
       accent-color: var(--accent);
       cursor: pointer;
       margin: 0;
@@ -433,13 +482,13 @@
 
     .item-name {
       font-weight: 600;
-      font-size: 0.93rem;
+      font-size: 0.92rem;
       display: block;
       word-break: keep-all;
     }
 
     .item-desc {
-      font-size: 0.78rem;
+      font-size: 0.77rem;
       color: var(--subtext-color);
       display: block;
       margin-top: 1px;
@@ -453,7 +502,7 @@
     .item-actions {
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
     }
 
     /* 위탁/기내 세그먼트 라디오 버튼 */
@@ -478,8 +527,8 @@
 
     .bag-option span {
       display: block;
-      padding: 4px 8px;
-      font-size: 0.77rem;
+      padding: 4px 7px;
+      font-size: 0.75rem;
       font-weight: 600;
       border-radius: 6px;
       color: var(--subtext-color);
@@ -493,13 +542,13 @@
     }
 
     .fixed-badge {
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       font-weight: 600;
       color: var(--subtext-color);
       background: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 6px;
-      padding: 4px 7px;
+      padding: 4px 6px;
       white-space: nowrap;
     }
 
@@ -508,11 +557,16 @@
       border: 1px solid var(--border-color);
       color: var(--text-color);
       border-radius: 6px;
-      padding: 4px 7px;
-      font-size: 0.76rem;
+      padding: 5px 7px;
+      font-size: 0.75rem;
       font-weight: 600;
       cursor: pointer;
       white-space: nowrap;
+    }
+
+    .icon-btn.del-btn {
+      color: var(--red);
+      border-color: rgba(255, 43, 43, 0.3);
     }
 
     /* 하단 고정 저장 바 */
@@ -532,13 +586,13 @@
       max-width: 640px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 1fr 1.4fr;
+      grid-template-columns: 1fr 1.3fr;
       gap: 8px;
     }
 
     .bottom-save-inner .btn {
       padding: 11px;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
     }
 
     /* 토스트 메시지 */
@@ -615,12 +669,12 @@
     input[type="password"],
     select {
       width: 100%;
-      padding: 9px 11px;
+      padding: 8px 10px;
       border-radius: 8px;
       border: 1px solid var(--border-color);
       background: var(--card-bg);
       color: var(--text-color);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
     }
 
     .modal-footer {
@@ -710,23 +764,23 @@
       <div class="guide-card">
         <div class="guide-step">
           <strong>1️⃣ 투어 목록 저장 및 관리</strong><br/>
-          • 위 목록에서 투어를 눌러 패킹을 진행한 뒤, 화면 상단이나 하단의 <strong>💾 저장하기</strong> 버튼을 누르면 언제든 메인 화면 목록에 저장되어 다시 열어볼 수 있습니다.<br/>
-          • <strong>➕ 새 투어 만들기</strong>를 누르면 기본 장비 세트가 들어있는 새 투어(제주도, 필리핀, 팔라우 등)가 생성됩니다.
+          • 위 목록에서 투어를 눌러 패킹을 진행한 뒤, 화면 상단이나 하단의 <strong>💾 저장</strong> 버튼을 누르면 언제든 메인 화면 목록에 저장되어 다시 열어볼 수 있습니다.<br/>
+          • <strong>➕ 새 투어 만들기</strong>를 누르면 기본 장비 세트가 들어있는 새 투어가 생성됩니다.
         </div>
         <div class="guide-step">
-          <strong>2️⃣ 실시간 위탁 / 기내 무게 계산</strong><br/>
-          • 챙긴 장비를 체크(☑)하면 상단 고정 대시보드에 <strong>위탁 수하물 / 기내 수하물 무게 합계와 여유 무게</strong>가 실시간으로 계산됩니다.<br/>
-          • 장비 우측의 <strong>위탁 / 기내</strong> 버튼만 누르면 가방 위치가 즉시 바뀌며 무게도 다시 계산됩니다. (배터리·커터·멀티툴·액체류 등은 항공 보안 규정에 맞춰 자동 고정)
+          <strong>2️⃣ 물품 간편 추가 및 개별/선택 삭제</strong><br/>
+          • 패킹 화면 상단의 <strong>➕ 새 물품 추가</strong> 또는 각 카테고리 우측의 <strong>+ 물품 추가</strong> 버튼으로 원하는 장비를 즉시 추가할 수 있습니다.<br/>
+          • 각 물품 우측의 <strong>✏️(수정)</strong> 및 <strong>🗑️(삭제)</strong> 버튼으로 언제든 물품을 수정하거나 바로 삭제할 수 있으며, <strong>체크한 물품 일괄 삭제</strong>도 지원합니다.
         </div>
         <div class="guide-step">
           <strong>3️⃣ 드라이수트 / 텍핀 등 제외 품목 간편 편입</strong><br/>
           • 웻수트 투어에서 제외된 <strong>아거노트 드라이수트(3.5kg), 내피(1.8kg), 포스 텍핀(2.3kg), 락호퍼 슈즈(0.5kg), 아르고백(1.0kg)</strong>은 패킹 화면 맨 아래 <strong>[제외 품목]</strong>에 분리되어 있습니다.<br/>
-          • 동계/국내 투어 시 <strong>+ 추가</strong> 버튼만 누르면 즉시 본 리스트에 편입됩니다.
+          • <strong>+ 추가</strong> 버튼만 누르면 즉시 본 리스트에 편입되고, <strong>🗑️</strong> 버튼으로 삭제도 가능합니다.
         </div>
         <div class="guide-step" style="margin-bottom:0;">
-          <strong>4️⃣ 일정·항공편 및 장비 무게 편집</strong><br/>
-          • 패킹 화면의 <strong>✏️ 일정/항공 편집</strong> 버튼으로 장소, 날짜, 수온, 항공편명, 위탁/기내 허용 한도(kg)를 자유롭게 수정할 수 있습니다.<br/>
-          • <strong>⚙️ 장비/무게 편집</strong> 버튼을 켜면 모든 장비의 이름, 설명, 무게(kg), 제외 여부를 수정할 수 있습니다.
+          <strong>4️⃣ 실시간 위탁 / 기내 무게 계산 & 일정 편집</strong><br/>
+          • 챙긴 장비를 체크(☑)하면 상단 고정 대시보드에 <strong>위탁/기내 수하물 무게 합계와 여유 무게</strong>가 실시간 계산됩니다.<br/>
+          • <strong>✏️ 일정/항공 편집</strong> 버튼으로 장소, 날짜, 수온, 항공편명, 위탁/기내 한도(kg)를 자유롭게 수정할 수 있습니다.
         </div>
       </div>
     </div>
@@ -737,7 +791,7 @@
         <button class="btn" onclick="saveAndGoHome()">← 목록으로</button>
         <div class="top-actions">
           <button class="btn" onclick="checkAllActive(true)">전체체크</button>
-          <button class="btn" onclick="resetCurrentTour()">초기값 복원</button>
+          <button class="btn" onclick="checkAllActive(false)">체크해제</button>
           <button class="btn btn-save" onclick="saveCurrentTourWithToast()">💾 저장</button>
         </div>
       </div>
@@ -753,10 +807,36 @@
         <button class="info-edit-btn" onclick="openTourModal()">✏️ 일정/항공 편집</button>
       </div>
 
+      <!-- 물품 추가 / 삭제 전용 툴바 -->
       <div class="toolbar">
-        <button class="btn btn-ai" onclick="openAiModal()">📸 사진으로 장비 추가</button>
-        <button class="btn" onclick="openItemModal(-1)">➕ 직접 추가</button>
-        <button class="btn" id="edit-mode-btn" onclick="toggleEditMode()">⚙️ 장비/무게 편집</button>
+        <button class="btn btn-blue" onclick="openItemModal(-1)">➕ 새 물품 직접 추가</button>
+        <button class="btn btn-ai" onclick="openAiModal()">📸 AI 사진으로 물품 추가</button>
+      </div>
+      <div class="toolbar-sub">
+        <button class="btn" style="color:var(--red);" onclick="deleteCheckedItems()">🗑️ 체크한 물품 삭제</button>
+        <button class="btn" onclick="saveAsDefaultTemplate()">📌 현재 목록을 기본값으로 등록</button>
+      </div>
+
+      <!-- 1초 빠른 물품 추가 입력바 -->
+      <div class="quick-add-box">
+        <div class="quick-add-title">
+          <span>⚡ 빠른 물품 추가</span>
+          <span style="font-size:0.74rem; color:var(--subtext-color); font-weight:500;">입력 후 [추가] 터치</span>
+        </div>
+        <div class="quick-add-grid">
+          <select id="quick-cat">
+            <option value="가방류">가방류</option>
+            <option value="핵심 장비" selected>핵심 장비</option>
+            <option value="의류/보온">의류/보온</option>
+            <option value="계기/전자">계기/전자</option>
+            <option value="조명/촬영">조명/촬영</option>
+            <option value="안전/소품">안전/소품</option>
+            <option value="공구/케어">공구/케어</option>
+          </select>
+          <input type="text" id="quick-name" placeholder="물품 이름 입력" />
+          <input type="number" step="0.05" id="quick-weight" placeholder="무게(kg)" value="0.50" />
+          <button class="btn btn-primary" onclick="quickAddItem()">+ 추가</button>
+        </div>
       </div>
 
       <div class="metrics-wrapper">
@@ -782,6 +862,10 @@
 
       <div id="items-container"></div>
       <div id="excluded-container"></div>
+
+      <div style="margin-top: 24px; text-align: center;">
+        <button class="btn" onclick="resetCurrentTour()">🔄 초기 장비 세팅으로 전체 복원</button>
+      </div>
     </div>
   </div>
 
@@ -838,10 +922,10 @@
   <!-- 모달 2: 장비 추가/편집 모달 -->
   <div class="modal-backdrop" id="item-modal">
     <div class="modal">
-      <h3 id="item-modal-title">장비 추가 / 수정</h3>
+      <h3 id="item-modal-title">물품 추가 / 수정</h3>
       <input type="hidden" id="edit-item-idx" value="-1" />
       <div class="form-group">
-        <label>장비 이름</label>
+        <label>물품 이름</label>
         <input type="text" id="item-name-input" placeholder="예: 투사 파라곤 마스크" />
       </div>
       <div class="form-group">
@@ -890,7 +974,7 @@
         </select>
       </div>
       <div class="modal-footer">
-        <button class="btn" id="delete-item-btn" style="color:var(--red); margin-right:auto; display:none;" onclick="deleteCurrentItem()">🗑️ 영구 삭제</button>
+        <button class="btn" id="delete-item-btn" style="color:var(--red); margin-right:auto; display:none;" onclick="deleteCurrentItem()">🗑️ 물품 삭제</button>
         <button class="btn" onclick="closeItemModal()">취소</button>
         <button class="btn btn-primary" onclick="saveItemModal()">저장</button>
       </div>
@@ -937,7 +1021,7 @@
     };
 
     // 사용자 실제 보유 장비 리스트 및 분리된 제외 품목 초기값 세팅
-    const DEFAULT_ITEMS = [
+    const FACTORY_DEFAULT_ITEMS = [
       // 1. 가방류 (2.20 kg)
       { name: "포스 익스페디션 주황색 90L 백", desc: "메인 위탁 아우터 가방", cat: "가방류", weight: 1.50, bag: "위탁", fixed: true, checked: false, excluded: false },
       { name: "PADI 메쉬백 (OMS 파우치를 내부에 수납)", desc: "내부에 OMS 메쉬 파우치 포함", cat: "가방류", weight: 0.40, bag: "위탁", fixed: true, checked: false, excluded: false },
@@ -984,14 +1068,22 @@
       { name: "포스 락호퍼 슈즈", desc: "텍핀 전용 다이빙 슈즈", cat: "의류/보온", weight: 0.50, bag: "위탁", fixed: false, checked: false, excluded: true }
     ];
 
-    const TOURS_STORAGE_KEY = "scuba_saved_tours_v4";
+    const TOURS_STORAGE_KEY = "scuba_saved_tours_v5";
+    const CUSTOM_DEFAULT_KEY = "scuba_custom_default_items_v5";
     const API_KEY_STORAGE = "okinawa_gemini_api_key";
+
+    function getDefaultItemsTemplate() {
+      try {
+        const custom = localStorage.getItem(CUSTOM_DEFAULT_KEY);
+        if (custom) return JSON.parse(custom);
+      } catch (e) {}
+      return JSON.parse(JSON.stringify(FACTORY_DEFAULT_ITEMS));
+    }
 
     let savedTours = loadAllTours();
     let currentTourId = null;
     let tour = null;
     let items = [];
-    let editMode = false;
     let recognizedPending = [];
 
     function formatNow() {
@@ -1014,7 +1106,7 @@
       const initial = [{
         id: "tour_" + Date.now(),
         meta: Object.assign({}, DEFAULT_TOUR_META),
-        items: JSON.parse(JSON.stringify(DEFAULT_ITEMS)),
+        items: getDefaultItemsTemplate(),
         updatedAt: formatNow()
       }];
       localStorage.setItem(TOURS_STORAGE_KEY, JSON.stringify(initial));
@@ -1040,7 +1132,6 @@
       document.getElementById("detail-view").style.display = "none";
       document.getElementById("bottom-save-bar").style.display = "none";
 
-      // 제미나이 API 키 연결 상태 표시
       const savedKey = localStorage.getItem(API_KEY_STORAGE) || "";
       document.getElementById("home-api-key-input").value = savedKey;
       const badgeEl = document.getElementById("home-gemini-badge");
@@ -1055,7 +1146,7 @@
       const listContainer = document.getElementById("tour-list-container");
       listContainer.innerHTML = "";
 
-      savedTours.forEach((t, idx) => {
+      savedTours.forEach((t) => {
         const activeItems = (t.items || []).filter(i => !i.excluded);
         const checkedItems = activeItems.filter(i => i.checked);
         const checkedW = checkedItems.filter(i => i.bag === "위탁").reduce((a, c) => a + Number(c.weight || 0), 0);
@@ -1086,7 +1177,7 @@
             <span>최근 저장: ${t.updatedAt || "-"}</span>
             <div style="display:flex; gap:6px;" onclick="event.stopPropagation();">
               <button class="icon-btn" onclick="duplicateTour('${t.id}')">📋 복제</button>
-              <button class="icon-btn" style="color:var(--red);" onclick="deleteTour('${t.id}')">🗑️ 삭제</button>
+              <button class="icon-btn del-btn" onclick="deleteTour('${t.id}')">🗑️ 삭제</button>
             </div>
           </div>
         `;
@@ -1121,7 +1212,7 @@
           checkedLimit: 23.0,
           carryonLimit: 10.0
         },
-        items: JSON.parse(JSON.stringify(DEFAULT_ITEMS)),
+        items: getDefaultItemsTemplate(),
         updatedAt: formatNow()
       };
       savedTours.unshift(newTour);
@@ -1160,17 +1251,13 @@
       }
     }
 
-    // ==================== 상세 패킹 화면 열기 & 저장 ====================
+    // ==================== 상세 패킹 화면 열기 & 물품 추가/삭제 ====================
     function openTourById(id) {
       const found = savedTours.find(t => t.id === id);
       if (!found) return;
       currentTourId = found.id;
       tour = found.meta;
       items = found.items;
-      editMode = false;
-      const btn = document.getElementById("edit-mode-btn");
-      btn.textContent = "⚙️ 장비/무게 편집";
-      btn.classList.remove("btn-primary");
 
       document.getElementById("home-view").style.display = "none";
       document.getElementById("detail-view").style.display = "block";
@@ -1201,6 +1288,70 @@
       window.scrollTo(0, 0);
     }
 
+    // 빠른 물품 추가
+    function quickAddItem() {
+      const cat = document.getElementById("quick-cat").value;
+      const nameInput = document.getElementById("quick-name");
+      const weightInput = document.getElementById("quick-weight");
+      const name = nameInput.value.trim();
+      if (!name) {
+        alert("추가할 물품 이름을 입력해 주세요!");
+        nameInput.focus();
+        return;
+      }
+      const weight = parseFloat(weightInput.value) || 0.20;
+      items.push({
+        name,
+        desc: "직접 추가 항목",
+        cat,
+        weight,
+        bag: "위탁",
+        fixed: false,
+        checked: true,
+        excluded: false
+      });
+      nameInput.value = "";
+      syncCurrentTourToStorage();
+      renderDetail();
+      showToast(`➕ '${name}' (${weight.toFixed(2)}kg) 추가됨!`);
+    }
+
+    // 개별 물품 즉시 삭제 버튼
+    function deleteItemDirect(idx) {
+      if (!items[idx]) return;
+      const targetName = items[idx].name;
+      if (confirm(`'${targetName}' 물품을 목록에서 삭제할까요?`)) {
+        items.splice(idx, 1);
+        syncCurrentTourToStorage();
+        renderDetail();
+        showToast(`🗑️ '${targetName}' 삭제 완료`);
+      }
+    }
+
+    // 체크된 물품 일괄 삭제
+    function deleteCheckedItems() {
+      const checkedCount = items.filter(i => !i.excluded && i.checked).length;
+      if (checkedCount === 0) {
+        alert("삭제할 물품을 먼저 체크(☑)해 주세요.");
+        return;
+      }
+      if (confirm(`현재 체크(☑)된 ${checkedCount}개의 물품을 한 번에 삭제할까요?`)) {
+        items = items.filter(i => i.excluded || !i.checked);
+        syncCurrentTourToStorage();
+        renderDetail();
+        showToast(`🗑️ 체크된 물품 ${checkedCount}개가 삭제되었습니다.`);
+      }
+    }
+
+    // 현재 물품 구성을 기본 장비 템플릿으로 등록
+    function saveAsDefaultTemplate() {
+      if (confirm("현재 추가/삭제된 물품 구성을 내 기본 장비 세트로 등록할까요?\n(앞으로 새 투어를 만들 때 이 물품 목록이 기본으로 불러와집니다.)")) {
+        const cleanTemplate = items.map(i => Object.assign({}, i, { checked: false }));
+        localStorage.setItem(CUSTOM_DEFAULT_KEY, JSON.stringify(cleanTemplate));
+        showToast("📌 현재 물품 구성이 기본 장비 세트로 등록되었습니다!");
+      }
+    }
+
     function checkAllActive(state) {
       items.forEach(item => {
         if (!item.excluded) item.checked = state;
@@ -1210,20 +1361,13 @@
     }
 
     function resetCurrentTour() {
-      if (confirm("현재 투어의 장비 목록을 초기 기본값 세팅으로 복원할까요?")) {
-        items = JSON.parse(JSON.stringify(DEFAULT_ITEMS));
+      if (confirm("현재 투어의 장비 목록을 처음 출고 상태(원본 29종)로 복원할까요?")) {
+        localStorage.removeItem(CUSTOM_DEFAULT_KEY);
+        items = JSON.parse(JSON.stringify(FACTORY_DEFAULT_ITEMS));
         syncCurrentTourToStorage();
         renderDetail();
-        showToast("✅ 기본 장비 세팅으로 복원되었습니다.");
+        showToast("✅ 원본 초기 장비 세팅으로 복원되었습니다.");
       }
-    }
-
-    function toggleEditMode() {
-      editMode = !editMode;
-      const btn = document.getElementById("edit-mode-btn");
-      btn.textContent = editMode ? "✅ 편집 완료" : "⚙️ 장비/무게 편집";
-      btn.classList.toggle("btn-primary", editMode);
-      renderDetail();
     }
 
     function toggleCheck(idx) {
@@ -1251,7 +1395,7 @@
       items[idx].checked = false;
       syncCurrentTourToStorage();
       renderDetail();
-      showToast(`'${items[idx].name}' 항목이 제외 품목으로 이동했습니다.`);
+      showToast(`'${items[idx].name}' 항목이 하단 제외 품목으로 이동했습니다.`);
     }
 
     function updateMetrics() {
@@ -1328,7 +1472,13 @@
         const catTotalWeight = catItems.reduce((acc, cur) => acc + Number(cur.weight || 0), 0);
 
         const header = document.createElement("h2");
-        header.innerHTML = `<span>${cat}</span><span class="cat-weight-badge">${catTotalWeight.toFixed(2)} kg</span>`;
+        header.innerHTML = `
+          <span>${cat}</span>
+          <div class="cat-header-right">
+            <span class="cat-weight-badge">${catTotalWeight.toFixed(2)} kg</span>
+            <button class="cat-add-btn" onclick="openItemModal(-1, '${cat}')">+ 물품 추가</button>
+          </div>
+        `;
         container.appendChild(header);
 
         items.forEach((item, idx) => {
@@ -1349,13 +1499,7 @@
           // 2. 장비 이름, 설명, 무게
           const info = document.createElement("div");
           info.className = "item-info";
-          info.addEventListener("click", () => {
-            if (editMode) {
-              openItemModal(idx);
-            } else {
-              toggleCheck(idx);
-            }
-          });
+          info.addEventListener("click", () => toggleCheck(idx));
           const descHtml = item.desc
             ? `<span class="item-desc">${item.desc} · <span class="item-weight-tag">${Number(item.weight).toFixed(2)} kg</span></span>`
             : `<span class="item-desc"><span class="item-weight-tag">${Number(item.weight).toFixed(2)} kg</span></span>`;
@@ -1364,7 +1508,7 @@
             ${descHtml}
           `;
 
-          // 3. 우측 컨트롤 (위탁/기내 토글 + 편집/제외 버튼)
+          // 3. 우측 컨트롤 (위탁/기내 토글 + 수정(✏️) + 삭제(🗑️) 상시 노출)
           const actionWrap = document.createElement("div");
           actionWrap.className = "item-actions";
 
@@ -1392,19 +1536,19 @@
             actionWrap.appendChild(badge);
           }
 
-          if (editMode) {
-            const exBtn = document.createElement("button");
-            exBtn.className = "icon-btn";
-            exBtn.textContent = "제외";
-            exBtn.onclick = () => excludeItem(idx);
-            actionWrap.appendChild(exBtn);
+          const editBtn = document.createElement("button");
+          editBtn.className = "icon-btn";
+          editBtn.title = "물품 수정";
+          editBtn.textContent = "✏️";
+          editBtn.onclick = () => openItemModal(idx);
+          actionWrap.appendChild(editBtn);
 
-            const editBtn = document.createElement("button");
-            editBtn.className = "icon-btn";
-            editBtn.textContent = "✏️";
-            editBtn.onclick = () => openItemModal(idx);
-            actionWrap.appendChild(editBtn);
-          }
+          const delBtn = document.createElement("button");
+          delBtn.className = "icon-btn del-btn";
+          delBtn.title = "물품 삭제";
+          delBtn.textContent = "🗑️";
+          delBtn.onclick = () => deleteItemDirect(idx);
+          actionWrap.appendChild(delBtn);
 
           row.appendChild(chkWrap);
           row.appendChild(info);
@@ -1418,12 +1562,18 @@
       excludedContainer.innerHTML = "";
       const excludedItems = items.map((item, idx) => ({ item, idx })).filter(x => x.item.excluded);
 
-      if (excludedItems.length > 0) {
-        const exTotal = excludedItems.reduce((acc, cur) => acc + Number(cur.item.weight || 0), 0);
-        const exHeader = document.createElement("h2");
-        exHeader.innerHTML = `<span>제외 품목 (필요시 추가 가능)</span><span class="cat-weight-badge">${exTotal.toFixed(2)} kg</span>`;
-        excludedContainer.appendChild(exHeader);
+      const exTotal = excludedItems.reduce((acc, cur) => acc + Number(cur.item.weight || 0), 0);
+      const exHeader = document.createElement("h2");
+      exHeader.innerHTML = `
+        <span>제외 품목 (필요시 추가 가능)</span>
+        <div class="cat-header-right">
+          <span class="cat-weight-badge">${exTotal.toFixed(2)} kg</span>
+          <button class="cat-add-btn" onclick="openItemModal(-1, '핵심 장비', true)">+ 제외품목 추가</button>
+        </div>
+      `;
+      excludedContainer.appendChild(exHeader);
 
+      if (excludedItems.length > 0) {
         excludedItems.forEach(({ item, idx }) => {
           const row = document.createElement("div");
           row.className = "excluded-row";
@@ -1441,17 +1591,21 @@
 
           const addBtn = document.createElement("button");
           addBtn.className = "btn btn-blue";
-          addBtn.textContent = "+ 추가";
+          addBtn.textContent = "+ 편입";
           addBtn.onclick = () => includeItem(idx);
           actionWrap.appendChild(addBtn);
 
-          if (editMode) {
-            const editBtn = document.createElement("button");
-            editBtn.className = "icon-btn";
-            editBtn.textContent = "✏️";
-            editBtn.onclick = () => openItemModal(idx);
-            actionWrap.appendChild(editBtn);
-          }
+          const editBtn = document.createElement("button");
+          editBtn.className = "icon-btn";
+          editBtn.textContent = "✏️";
+          editBtn.onclick = () => openItemModal(idx);
+          actionWrap.appendChild(editBtn);
+
+          const delBtn = document.createElement("button");
+          delBtn.className = "icon-btn del-btn";
+          delBtn.textContent = "🗑️";
+          delBtn.onclick = () => deleteItemDirect(idx);
+          actionWrap.appendChild(delBtn);
 
           row.appendChild(info);
           row.appendChild(actionWrap);
@@ -1488,14 +1642,14 @@
       showToast("✅ 일정 및 항공 설정이 저장되었습니다.");
     }
 
-    // --- 장비 추가/수정 모달 로직 ---
-    function openItemModal(idx) {
+    // --- 물품 추가/수정 모달 로직 ---
+    function openItemModal(idx, defaultCat, defaultExcluded) {
       document.getElementById("edit-item-idx").value = idx;
       const delBtn = document.getElementById("delete-item-btn");
 
       if (idx >= 0 && items[idx]) {
         const item = items[idx];
-        document.getElementById("item-modal-title").textContent = "✏️ 장비 정보/무게 수정";
+        document.getElementById("item-modal-title").textContent = "✏️ 물품 정보/무게 수정";
         document.getElementById("item-name-input").value = item.name;
         document.getElementById("item-desc-input").value = item.desc || "";
         document.getElementById("item-cat-input").value = item.cat;
@@ -1505,14 +1659,14 @@
         document.getElementById("item-excluded-input").value = item.excluded ? "true" : "false";
         delBtn.style.display = "inline-flex";
       } else {
-        document.getElementById("item-modal-title").textContent = "➕ 새 장비 직접 추가";
+        document.getElementById("item-modal-title").textContent = "➕ 새 물품 추가";
         document.getElementById("item-name-input").value = "";
         document.getElementById("item-desc-input").value = "개별 항목";
-        document.getElementById("item-cat-input").value = "핵심 장비";
+        document.getElementById("item-cat-input").value = defaultCat || "핵심 장비";
         document.getElementById("item-weight-input").value = "0.50";
         document.getElementById("item-bag-input").value = "위탁";
         document.getElementById("item-fixed-input").value = "false";
-        document.getElementById("item-excluded-input").value = "false";
+        document.getElementById("item-excluded-input").value = defaultExcluded ? "true" : "false";
         delBtn.style.display = "none";
       }
       document.getElementById("item-modal").classList.add("active");
@@ -1526,7 +1680,7 @@
       const idx = parseInt(document.getElementById("edit-item-idx").value, 10);
       const name = document.getElementById("item-name-input").value.trim();
       if (!name) {
-        alert("장비 이름을 입력해 주세요.");
+        alert("물품 이름을 입력해 주세요.");
         return;
       }
       const desc = document.getElementById("item-desc-input").value.trim();
@@ -1550,18 +1704,18 @@
       syncCurrentTourToStorage();
       closeItemModal();
       renderDetail();
-      showToast("✅ 장비 정보가 저장되었습니다.");
+      showToast("✅ 물품 정보가 저장되었습니다.");
     }
 
     function deleteCurrentItem() {
       const idx = parseInt(document.getElementById("edit-item-idx").value, 10);
       if (idx >= 0 && items[idx]) {
-        if (confirm(`'${items[idx].name}' 항목을 목록에서 완전히 삭제할까요?`)) {
+        if (confirm(`'${items[idx].name}' 물품을 목록에서 완전히 삭제할까요?`)) {
           items.splice(idx, 1);
           syncCurrentTourToStorage();
           closeItemModal();
           renderDetail();
-          showToast("🗑️ 장비가 삭제되었습니다.");
+          showToast("🗑️ 물품이 삭제되었습니다.");
         }
       }
     }
@@ -1753,7 +1907,6 @@
       showToast(`📸 ${toAdd.length}개 장비가 추가 및 저장되었습니다!`);
     }
 
-    // 앱 시작 시 메인 홈 화면(투어 목록 + 제미나이 연결 + 사용법 안내) 표시
     renderHome();
 
     if ("serviceWorker" in navigator) {
