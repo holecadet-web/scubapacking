@@ -26,13 +26,61 @@ jobs:
           distribution: 'temurin'
           java-version: 21
 
-      - name: Install Capacitor & Generate Android Project with Scuba Icon
+      - name: Install Capacitor & Generate Android Project with Custom Photo Icon
         run: |
           npm install
           npm install --no-save sharp @capacitor/assets
           npx cap add android
-          node -e "const sharp = require('sharp'); const fs = require('fs'); fs.mkdirSync('assets', {recursive: true}); sharp('www/icon.svg').resize(1024, 1024).png().toFile('assets/icon-only.png').then(() => console.log('Icon rendered'));"
-          npx capacitor-assets generate --android --iconBackgroundColor '#0284c7' --splashBackgroundColor '#0f172a'
+          node -e "
+            const sharp = require('sharp');
+            const fs = require('fs');
+            const path = require('path');
+            (async () => {
+              fs.mkdirSync('assets', { recursive: true });
+              await sharp('www/icon.png').resize(1024, 1024, { fit: 'cover' }).png().toFile('assets/icon-only.png');
+              await sharp('www/icon.png').resize(1024, 1024, { fit: 'cover' }).png().toFile('assets/icon-foreground.png');
+              await sharp('www/icon.png').resize(1024, 1024, { fit: 'cover' }).png().toFile('assets/icon-background.png');
+              console.log('Prepared 1024x1024 assets');
+            })();
+          "
+          npx capacitor-assets generate --android --iconBackgroundColor '#0b2536' --splashBackgroundColor '#0f172a'
+          node -e "
+            const sharp = require('sharp');
+            const fs = require('fs');
+            const path = require('path');
+            const sizes = {
+              'mipmap-mdpi': 48,
+              'mipmap-hdpi': 72,
+              'mipmap-xhdpi': 96,
+              'mipmap-xxhdpi': 144,
+              'mipmap-xxxhdpi': 192
+            };
+            const fgSizes = {
+              'mipmap-mdpi': 108,
+              'mipmap-hdpi': 162,
+              'mipmap-xhdpi': 216,
+              'mipmap-xxhdpi': 324,
+              'mipmap-xxxhdpi': 432
+            };
+            (async () => {
+              const resDir = 'android/app/src/main/res';
+              for (const [folder, sz] of Object.entries(sizes)) {
+                const dir = path.join(resDir, folder);
+                if (fs.existsSync(dir)) {
+                  await sharp('www/icon.png').resize(sz, sz, { fit: 'cover' }).png().toFile(path.join(dir, 'ic_launcher.png'));
+                  const circleSvg = Buffer.from('<svg><circle cx=\"' + (sz/2) + '\" cy=\"' + (sz/2) + '\" r=\"' + (sz/2) + '\" /></svg>');
+                  await sharp('www/icon.png').resize(sz, sz, { fit: 'cover' }).composite([{ input: circleSvg, blend: 'dest-in' }]).png().toFile(path.join(dir, 'ic_launcher_round.png'));
+                }
+              }
+              for (const [folder, fsz] of Object.entries(fgSizes)) {
+                const dir = path.join(resDir, folder);
+                if (fs.existsSync(dir)) {
+                  await sharp('www/icon.png').resize(fsz, fsz, { fit: 'cover' }).png().toFile(path.join(dir, 'ic_launcher_foreground.png'));
+                }
+              }
+              console.log('Updated all Android mipmap icons with full-bleed photo');
+            })();
+          "
           npx cap sync android
 
       - name: Build Debug APK
@@ -55,7 +103,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v1.0.0
-          name: "오키나와 다이빙 투어 패킹 APK (스쿠바 아이콘 & 실제 장비 리스트 반영)"
+          name: "따이빙체크 APK (커스텀 다이버 아이콘 & 최신 기능 반영)"
           body: "아래 Assets에서 `okinawa-diving-packing.apk` 파일을 다운로드해 설치하세요."
           files: okinawa-diving-packing.apk
         env:
