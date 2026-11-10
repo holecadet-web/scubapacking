@@ -712,6 +712,111 @@
       font-size: 0.8rem;
       font-weight: 600;
     }
+
+    /* 퐁당닷컴 DB 검색 모달 & 자동완성 스타일 */
+    .btn-pongdang {
+      background: linear-gradient(135deg, #0ea5e9, #0d9488);
+      border: none;
+      color: #ffffff;
+    }
+
+    .pong-filter-row {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+    }
+
+    .pong-chip {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      color: var(--subtext-color);
+      border-radius: 999px;
+      padding: 5px 11px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .pong-chip.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #ffffff;
+    }
+
+    .pong-results-box {
+      max-height: 52vh;
+      overflow-y: auto;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      background: var(--card-bg);
+    }
+
+    .pong-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .pong-item:last-child {
+      border-bottom: none;
+    }
+
+    .pong-item-info {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .pong-item-title {
+      font-size: 0.86rem;
+      font-weight: 600;
+      display: block;
+      word-break: keep-all;
+    }
+
+    .pong-item-sub {
+      font-size: 0.74rem;
+      color: var(--subtext-color);
+      margin-top: 2px;
+      display: block;
+    }
+
+    .pong-item-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .quick-suggest-box {
+      margin-top: 6px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background: var(--bg-color);
+      max-height: 190px;
+      overflow-y: auto;
+      display: none;
+    }
+
+    .quick-suggest-item {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .quick-suggest-item:active {
+      background: var(--card-bg);
+    }
   </style>
 </head>
 <body>
@@ -768,9 +873,10 @@
           • <strong>➕ 새 투어 만들기</strong>를 누르면 기본 장비 세트가 들어있는 새 투어가 생성됩니다.
         </div>
         <div class="guide-step">
-          <strong>2️⃣ 물품 간편 추가 및 개별/선택 삭제</strong><br/>
-          • 패킹 화면 상단의 <strong>➕ 새 물품 추가</strong> 또는 각 카테고리 우측의 <strong>+ 물품 추가</strong> 버튼으로 원하는 장비를 즉시 추가할 수 있습니다.<br/>
-          • 각 물품 우측의 <strong>✏️(수정)</strong> 및 <strong>🗑️(삭제)</strong> 버튼으로 언제든 물품을 수정하거나 바로 삭제할 수 있으며, <strong>체크한 물품 일괄 삭제</strong>도 지원합니다.
+          <strong>2️⃣ 퐁당닷컴 6,448종 장비 DB 검색 & 물품 추가/삭제</strong><br/>
+          • 퐁당닷컴(PONGDANG.COM)의 <strong>'스쿠버' + '스쿠버 acc' 전 상품(6,448개) 이름과 중량 DB가 앱 내부에 탑재</strong>되어 있습니다.<br/>
+          • 패킹 화면의 <strong>🔍 퐁당닷컴 장비 DB 검색 (6,448종)</strong> 버튼을 누르거나 <strong>⚡ 빠른 물품 추가</strong>에 검색어만 입력하면 중량·카테고리가 자동으로 채워져 1초 만에 추가됩니다.<br/>
+          • 각 물품 우측의 <strong>✏️(수정)</strong> 및 <strong>🗑️(삭제)</strong> 버튼으로 언제든 물품을 수정/삭제할 수 있으며, <strong>체크한 물품 일괄 삭제</strong>도 지원합니다.
         </div>
         <div class="guide-step">
           <strong>3️⃣ 드라이수트 / 텍핀 등 제외 품목 간편 편입</strong><br/>
@@ -808,6 +914,11 @@
       </div>
 
       <!-- 물품 추가 / 삭제 전용 툴바 -->
+      <div style="margin-bottom: 8px;">
+        <button class="btn btn-pongdang" style="width:100%; padding:11px; font-size:0.9rem;" onclick="openPongdangModal()">
+          🔍 퐁당닷컴 장비 DB 검색 추가 (6,448종 내장)
+        </button>
+      </div>
       <div class="toolbar">
         <button class="btn btn-blue" onclick="openItemModal(-1)">➕ 새 물품 직접 추가</button>
         <button class="btn btn-ai" onclick="openAiModal()">📸 AI 사진으로 물품 추가</button>
@@ -817,11 +928,11 @@
         <button class="btn" onclick="saveAsDefaultTemplate()">📌 현재 목록을 기본값으로 등록</button>
       </div>
 
-      <!-- 1초 빠른 물품 추가 입력바 -->
+      <!-- 1초 빠른 물품 추가 입력바 (퐁당닷컴 DB 실시간 자동완성 연동) -->
       <div class="quick-add-box">
         <div class="quick-add-title">
-          <span>⚡ 빠른 물품 추가</span>
-          <span style="font-size:0.74rem; color:var(--subtext-color); font-weight:500;">입력 후 [추가] 터치</span>
+          <span>⚡ 빠른 물품 추가 (퐁당 DB 자동완성 지원)</span>
+          <span style="font-size:0.74rem; color:var(--subtext-color); font-weight:500;">장비명 입력 시 중량 자동매칭</span>
         </div>
         <div class="quick-add-grid">
           <select id="quick-cat">
@@ -833,10 +944,11 @@
             <option value="안전/소품">안전/소품</option>
             <option value="공구/케어">공구/케어</option>
           </select>
-          <input type="text" id="quick-name" placeholder="물품 이름 입력" />
+          <input type="text" id="quick-name" placeholder="물품/브랜드명 입력 (예: 제트핀, 가민)" oninput="onQuickNameInput()" autocomplete="off" />
           <input type="number" step="0.05" id="quick-weight" placeholder="무게(kg)" value="0.50" />
           <button class="btn btn-primary" onclick="quickAddItem()">+ 추가</button>
         </div>
+        <div class="quick-suggest-box" id="quick-suggest-box"></div>
       </div>
 
       <div class="metrics-wrapper">
@@ -1010,6 +1122,35 @@
     </div>
   </div>
 
+  <!-- 모달 4: 퐁당닷컴 스쿠버 & 스쿠버 acc 전 상품 DB (6,448종) 검색 모달 -->
+  <div class="modal-backdrop" id="pongdang-modal">
+    <div class="modal" style="max-width: 560px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <h3 style="margin:0;">🔍 퐁당닷컴 장비 DB 검색</h3>
+        <span id="pong-total-badge" class="badge">총 6,448종</span>
+      </div>
+      <div class="form-group" style="margin-bottom:8px;">
+        <input type="text" id="pong-search-input" placeholder="브랜드 또는 장비명 입력 (예: 스쿠버프로, 제트핀, 아펙스, 걸, 가민...)" oninput="renderPongdangResults()" autocomplete="off" />
+      </div>
+      <div class="pong-filter-row" id="pong-filter-row">
+        <button class="pong-chip active" onclick="setPongCatFilter('전체', this)">전체</button>
+        <button class="pong-chip" onclick="setPongCatFilter('핵심 장비', this)">핵심 장비</button>
+        <button class="pong-chip" onclick="setPongCatFilter('가방류', this)">가방류</button>
+        <button class="pong-chip" onclick="setPongCatFilter('의류/보온', this)">의류/보온</button>
+        <button class="pong-chip" onclick="setPongCatFilter('계기/전자', this)">계기/전자</button>
+        <button class="pong-chip" onclick="setPongCatFilter('조명/촬영', this)">조명/촬영</button>
+        <button class="pong-chip" onclick="setPongCatFilter('안전/소품', this)">안전/소품</button>
+        <button class="pong-chip" onclick="setPongCatFilter('공구/케어', this)">공구/케어</button>
+      </div>
+      <div id="pong-status-text" style="font-size:0.76rem; color:var(--subtext-color); margin-bottom:6px;"></div>
+      <div class="pong-results-box" id="pong-results-list"></div>
+      <div class="modal-footer">
+        <button class="btn" onclick="closePongdangModal()">닫기</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="pongdang_db.js"></script>
   <script>
     const DEFAULT_TOUR_META = {
       place: "오키나와 투어 패킹",
@@ -1300,17 +1441,21 @@
         return;
       }
       const weight = parseFloat(weightInput.value) || 0.20;
+      const db = window.PONGDANG_DB || [];
+      const foundDb = db.find(r => r[0] === name);
       items.push({
         name,
-        desc: "직접 추가 항목",
+        desc: foundDb ? (foundDb[2] ? `퐁당닷컴 DB (${foundDb[2]})` : "퐁당닷컴 장비 DB") : "직접 추가 항목",
         cat,
         weight,
-        bag: "위탁",
-        fixed: false,
+        bag: foundDb ? (foundDb[4] || "위탁") : "위탁",
+        fixed: foundDb ? Boolean(foundDb[5]) : false,
         checked: true,
         excluded: false
       });
       nameInput.value = "";
+      const suggestBox = document.getElementById("quick-suggest-box");
+      if (suggestBox) suggestBox.style.display = "none";
       syncCurrentTourToStorage();
       renderDetail();
       showToast(`➕ '${name}' (${weight.toFixed(2)}kg) 추가됨!`);
@@ -1905,6 +2050,198 @@
       closeAiModal();
       renderDetail();
       showToast(`📸 ${toAdd.length}개 장비가 추가 및 저장되었습니다!`);
+    }
+
+    // --- 퐁당닷컴 스쿠버 & 스쿠버 acc DB (6,448종) 검색 및 자동완성 로직 ---
+    let currentPongCatFilter = "전체";
+
+    function openPongdangModal() {
+      const db = window.PONGDANG_DB || [];
+      document.getElementById("pong-total-badge").textContent = `총 ${db.length.toLocaleString()}종`;
+      document.getElementById("pong-search-input").value = "";
+      currentPongCatFilter = "전체";
+      document.querySelectorAll("#pong-filter-row .pong-chip").forEach((btn, i) => {
+        btn.classList.toggle("active", i === 0);
+      });
+      renderPongdangResults();
+      document.getElementById("pongdang-modal").classList.add("active");
+      setTimeout(() => document.getElementById("pong-search-input").focus(), 100);
+    }
+
+    function closePongdangModal() {
+      document.getElementById("pongdang-modal").classList.remove("active");
+    }
+
+    function setPongCatFilter(cat, btnEl) {
+      currentPongCatFilter = cat;
+      document.querySelectorAll("#pong-filter-row .pong-chip").forEach(b => b.classList.remove("active"));
+      if (btnEl) btnEl.classList.add("active");
+      renderPongdangResults();
+    }
+
+    function renderPongdangResults() {
+      const db = window.PONGDANG_DB || [];
+      const query = (document.getElementById("pong-search-input").value || "").trim().toLowerCase();
+      const keywords = query ? query.split(/\s+/) : [];
+      const listEl = document.getElementById("pong-results-list");
+      const statusEl = document.getElementById("pong-status-text");
+
+      const matched = [];
+      let totalMatches = 0;
+
+      for (let i = 0; i < db.length; i++) {
+        const row = db[i]; // [fullName, appCat, pongCat2, weight, bag, fixed]
+        if (currentPongCatFilter !== "전체" && row[1] !== currentPongCatFilter) continue;
+
+        if (keywords.length > 0) {
+          const hay = (row[0] + " " + row[2] + " " + row[1]).toLowerCase();
+          let ok = true;
+          for (let k = 0; k < keywords.length; k++) {
+            if (!hay.includes(keywords[k])) {
+              ok = false;
+              break;
+            }
+          }
+          if (!ok) continue;
+        }
+
+        totalMatches++;
+        if (matched.length < 80) {
+          matched.push({ idx: i, row });
+        }
+      }
+
+      statusEl.textContent = query
+        ? `검색 결과: ${totalMatches.toLocaleString()}건 (상위 ${matched.length}건 표시)`
+        : `카테고리 장비: ${totalMatches.toLocaleString()}건 (검색어를 입력하면 더 빠르게 찾습니다)`;
+
+      listEl.innerHTML = "";
+      if (matched.length === 0) {
+        listEl.innerHTML = `<div style="padding:22px; text-align:center; font-size:0.84rem; color:var(--subtext-color);">일치하는 장비가 없습니다. 다른 검색어를 입력해 보세요.</div>`;
+        return;
+      }
+
+      matched.forEach(({ idx, row }) => {
+        const [fullName, appCat, subCat, weight, bag, fixed] = row;
+        const itemDiv = document.createElement("div");
+        itemDiv.className = "pong-item";
+        const subLabel = subCat ? `${subCat} · ${appCat}` : appCat;
+
+        const infoDiv = document.createElement("div");
+        infoDiv.className = "pong-item-info";
+        infoDiv.innerHTML = `
+          <span class="pong-item-title">${fullName}</span>
+          <span class="pong-item-sub">[${subLabel}] 추천: ${bag}${fixed ? " (고정)" : ""}</span>
+        `;
+
+        const actDiv = document.createElement("div");
+        actDiv.className = "pong-item-actions";
+
+        const weightInput = document.createElement("input");
+        weightInput.type = "number";
+        weightInput.step = "0.05";
+        weightInput.value = Number(weight).toFixed(2);
+        weightInput.style.width = "68px";
+        weightInput.style.padding = "5px 6px";
+        weightInput.style.fontSize = "0.8rem";
+        weightInput.title = "무게(kg) 수정 가능";
+
+        const unitSpan = document.createElement("span");
+        unitSpan.style.fontSize = "0.75rem";
+        unitSpan.style.color = "var(--subtext-color)";
+        unitSpan.textContent = "kg";
+
+        const addBtn = document.createElement("button");
+        addBtn.className = "btn btn-primary";
+        addBtn.style.padding = "6px 10px";
+        addBtn.style.fontSize = "0.78rem";
+        addBtn.textContent = "+ 추가";
+        addBtn.onclick = () => {
+          const customW = parseFloat(weightInput.value) || Number(weight) || 0.30;
+          addPongdangItem(idx, customW, false);
+        };
+
+        actDiv.appendChild(weightInput);
+        actDiv.appendChild(unitSpan);
+        actDiv.appendChild(addBtn);
+
+        itemDiv.appendChild(infoDiv);
+        itemDiv.appendChild(actDiv);
+        listEl.appendChild(itemDiv);
+      });
+    }
+
+    function addPongdangItem(dbIdx, customWeight, asExcluded) {
+      const db = window.PONGDANG_DB || [];
+      const row = db[dbIdx];
+      if (!row) return;
+      const [fullName, appCat, subCat, weight, bag, fixed] = row;
+      const finalW = customWeight !== undefined ? customWeight : (Number(weight) || 0.30);
+
+      items.push({
+        name: fullName,
+        desc: subCat ? `퐁당닷컴 DB (${subCat})` : "퐁당닷컴 장비 DB",
+        cat: appCat || "핵심 장비",
+        weight: finalW,
+        bag: bag || "위탁",
+        fixed: Boolean(fixed),
+        checked: !asExcluded,
+        excluded: Boolean(asExcluded)
+      });
+      syncCurrentTourToStorage();
+      renderDetail();
+      showToast(`➕ '${fullName}' (${finalW.toFixed(2)}kg) 추가됨!`);
+    }
+
+    // 빠른 물품 추가 입력창 자동완성 (퐁당닷컴 DB 연동)
+    function onQuickNameInput() {
+      const box = document.getElementById("quick-suggest-box");
+      const val = (document.getElementById("quick-name").value || "").trim().toLowerCase();
+      const db = window.PONGDANG_DB || [];
+      if (!val || val.length < 1 || db.length === 0) {
+        box.style.display = "none";
+        box.innerHTML = "";
+        return;
+      }
+
+      const words = val.split(/\s+/);
+      const hits = [];
+      for (let i = 0; i < db.length; i++) {
+        const hay = db[i][0].toLowerCase();
+        let ok = true;
+        for (let w = 0; w < words.length; w++) {
+          if (!hay.includes(words[w])) { ok = false; break; }
+        }
+        if (ok) {
+          hits.push({ idx: i, row: db[i] });
+          if (hits.length >= 12) break;
+        }
+      }
+
+      if (hits.length === 0) {
+        box.style.display = "none";
+        box.innerHTML = "";
+        return;
+      }
+
+      box.innerHTML = "";
+      hits.forEach(({ idx, row }) => {
+        const [fullName, appCat, subCat, weight, bag] = row;
+        const div = document.createElement("div");
+        div.className = "quick-suggest-item";
+        div.innerHTML = `
+          <span style="font-weight:600; word-break:keep-all;">${fullName}</span>
+          <span style="color:#38bdf8; font-weight:700; white-space:nowrap;">${Number(weight).toFixed(2)}kg · ${appCat}</span>
+        `;
+        div.onclick = () => {
+          document.getElementById("quick-cat").value = appCat;
+          document.getElementById("quick-name").value = fullName;
+          document.getElementById("quick-weight").value = Number(weight).toFixed(2);
+          box.style.display = "none";
+        };
+        box.appendChild(div);
+      });
+      box.style.display = "block";
     }
 
     renderHome();
