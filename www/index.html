@@ -12,33 +12,40 @@
   <link rel="apple-touch-icon" href="icon.svg" />
   <style>
     :root {
-      --bg-color: #ffffff;
-      --text-color: #262730;
-      --subtext-color: #555867;
-      --card-bg: #f8f9fb;
-      --border-color: #e6eaf1;
-      --info-bg: #e8f2fc;
-      --info-text: #004280;
-      --info-border: #b8daff;
-      --accent: #ff4b4b;
+      --bg-color: #f0f6fc;
+      --bg-gradient: radial-gradient(circle at 15% 0%, #e0f2fe 0%, #f0f6fc 55%, #f8fafc 100%);
+      --text-color: #0f172a;
+      --subtext-color: #475569;
+      --card-bg: rgba(255, 255, 255, 0.88);
+      --border-color: rgba(148, 163, 184, 0.28);
+      --info-bg: linear-gradient(135deg, rgba(2, 132, 199, 0.12), rgba(13, 148, 136, 0.12));
+      --info-text: #0369a1;
+      --info-border: rgba(14, 165, 233, 0.35);
+      --accent: #0ea5e9;
       --blue: #0284c7;
-      --green: #09ab3b;
-      --green-bg: rgba(9, 171, 59, 0.12);
-      --red: #ff2b2b;
-      --red-bg: rgba(255, 43, 43, 0.12);
-      --modal-overlay: rgba(0, 0, 0, 0.65);
+      --green: #10b981;
+      --green-bg: rgba(16, 185, 129, 0.14);
+      --red: #f43f5e;
+      --red-bg: rgba(244, 63, 94, 0.14);
+      --modal-overlay: rgba(8, 15, 28, 0.72);
+      --shadow-rest: 0 4px 14px -3px rgba(15, 23, 42, 0.08);
+      --shadow-lift: 0 12px 26px -6px rgba(14, 165, 233, 0.32);
     }
 
     @media (prefers-color-scheme: dark) {
       :root {
-        --bg-color: #0e1117;
-        --text-color: #fafafa;
-        --subtext-color: #a3a8b8;
-        --card-bg: #1a1c24;
-        --border-color: #2b2f3e;
-        --info-bg: #112a46;
-        --info-text: #8ec8f6;
-        --info-border: #1d4ed8;
+        --bg-color: #070d19;
+        --bg-gradient: radial-gradient(circle at 20% 0%, #0c2340 0%, #070d19 60%, #050912 100%);
+        --text-color: #f1f5f9;
+        --subtext-color: #94a3b8;
+        --card-bg: rgba(17, 27, 45, 0.82);
+        --border-color: rgba(56, 189, 248, 0.18);
+        --info-bg: linear-gradient(135deg, rgba(14, 165, 233, 0.18), rgba(20, 184, 166, 0.14));
+        --info-text: #7dd3fc;
+        --info-border: rgba(56, 189, 248, 0.38);
+        --accent: #0ea5e9;
+        --shadow-rest: 0 6px 18px -4px rgba(0, 0, 0, 0.45);
+        --shadow-lift: 0 14px 28px -6px rgba(14, 165, 233, 0.42);
       }
     }
 
@@ -52,8 +59,52 @@
       padding: env(safe-area-inset-top, 16px) 14px env(safe-area-inset-bottom, 85px) 14px;
       font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       background-color: var(--bg-color);
+      background-image: var(--bg-gradient);
+      background-attachment: fixed;
       color: var(--text-color);
       line-height: 1.45;
+    }
+
+    /* ==================== 인터랙티브 스프링 리프트 & 물결 애니메이션 ==================== */
+    @keyframes springLiftPop {
+      0%   { transform: translateY(0) scale(1); }
+      30%  { transform: translateY(-5px) scale(1.045); box-shadow: var(--shadow-lift); }
+      65%  { transform: translateY(1px) scale(0.985); }
+      100% { transform: translateY(0) scale(1); }
+    }
+
+    @keyframes rowCheckBounce {
+      0%   { transform: translateY(0) scale(1); }
+      40%  { transform: translateY(-3px) scale(1.018); box-shadow: 0 8px 20px -6px rgba(14, 165, 233, 0.35); }
+      100% { transform: translateY(0) scale(1); }
+    }
+
+    @keyframes modalSpringOpen {
+      0%   { opacity: 0; transform: translateY(22px) scale(0.94); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes rippleExpand {
+      0%   { transform: translate(-50%, -50%) scale(0); opacity: 0.55; }
+      100% { transform: translate(-50%, -50%) scale(3.6); opacity: 0; }
+    }
+
+    .spring-pop-active {
+      animation: springLiftPop 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    }
+
+    .row-bounce-active {
+      animation: rowCheckBounce 0.36s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    }
+
+    .ripple-wave {
+      position: absolute;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.45);
+      pointer-events: none;
+      animation: rippleExpand 0.48s ease-out forwards;
     }
 
     .container {
@@ -78,10 +129,31 @@
     }
 
     .app-logo {
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
       flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .app-logo:hover {
+      transform: rotate(-8deg) scale(1.08);
+    }
+
+    .fastapi-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.16);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      margin-left: 6px;
+      vertical-align: middle;
     }
 
     h1 {
@@ -98,12 +170,28 @@
       flex-shrink: 0;
     }
 
+    .btn,
+    .icon-btn,
+    .cat-add-btn,
+    .info-edit-btn,
+    .pong-chip {
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.26s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  box-shadow 0.24s ease,
+                  border-color 0.2s ease,
+                  background-color 0.2s ease;
+      box-shadow: var(--shadow-rest);
+      will-change: transform;
+    }
+
     .btn {
       background: var(--card-bg);
+      backdrop-filter: blur(10px);
       border: 1px solid var(--border-color);
       color: var(--text-color);
-      border-radius: 8px;
-      padding: 7px 11px;
+      border-radius: 10px;
+      padding: 8px 12px;
       font-size: 0.8rem;
       font-weight: 600;
       cursor: pointer;
@@ -114,25 +202,40 @@
       gap: 5px;
     }
 
-    .btn:active {
-      opacity: 0.75;
+    .btn:hover,
+    .icon-btn:hover,
+    .cat-add-btn:hover,
+    .info-edit-btn:hover,
+    .pong-chip:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: var(--shadow-lift);
+      border-color: rgba(56, 189, 248, 0.5);
+    }
+
+    .btn:active,
+    .icon-btn:active,
+    .cat-add-btn:active,
+    .info-edit-btn:active,
+    .pong-chip:active {
+      transform: translateY(-4px) scale(1.04);
+      box-shadow: var(--shadow-lift);
     }
 
     .btn-primary {
-      background-color: var(--accent);
-      border-color: var(--accent);
+      background: linear-gradient(135deg, #0ea5e9, #0284c7);
+      border-color: transparent;
       color: #ffffff;
     }
 
     .btn-save {
-      background-color: var(--green);
-      border-color: var(--green);
+      background: linear-gradient(135deg, #10b981, #059669);
+      border-color: transparent;
       color: #ffffff;
     }
 
     .btn-blue {
-      background-color: var(--blue);
-      border-color: var(--blue);
+      background: linear-gradient(135deg, #38bdf8, #0284c7);
+      border-color: transparent;
       color: #ffffff;
     }
 
@@ -154,16 +257,26 @@
 
     .tour-card {
       background: var(--card-bg);
+      backdrop-filter: blur(12px);
       border: 1px solid var(--border-color);
-      border-radius: 14px;
-      padding: 15px;
+      border-radius: 16px;
+      padding: 16px;
       margin-bottom: 12px;
       cursor: pointer;
-      transition: transform 0.12s, border-color 0.15s;
+      box-shadow: var(--shadow-rest);
+      transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  box-shadow 0.25s ease,
+                  border-color 0.2s ease;
+    }
+
+    .tour-card:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: var(--shadow-lift);
+      border-color: rgba(56, 189, 248, 0.45);
     }
 
     .tour-card:active {
-      transform: scale(0.99);
+      transform: translateY(-3px) scale(1.015);
     }
 
     .tour-card-header {
@@ -347,10 +460,13 @@
       position: sticky;
       top: 0;
       z-index: 10;
-      background-color: var(--bg-color);
-      padding: 8px 0 12px 0;
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      padding: 10px 8px 12px 8px;
       border-bottom: 1px solid var(--border-color);
+      border-radius: 0 0 16px 16px;
       margin-bottom: 14px;
+      box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.28);
     }
 
     .metrics-grid {
@@ -360,25 +476,57 @@
     }
 
     .metric-card {
-      background-color: var(--card-bg);
+      background-color: var(--bg-color);
       border: 1px solid var(--border-color);
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 11px 13px;
+      box-shadow: var(--shadow-rest);
+      transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  box-shadow 0.25s ease;
+    }
+
+    .metric-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lift);
     }
 
     .metric-label {
       font-size: 0.8rem;
       color: var(--subtext-color);
       margin-bottom: 2px;
-      font-weight: 500;
+      font-weight: 600;
       display: flex;
       justify-content: space-between;
     }
 
     .metric-value {
       font-size: 1.48rem;
-      font-weight: 700;
-      margin-bottom: 4px;
+      font-weight: 800;
+      margin-bottom: 5px;
+      letter-spacing: -0.02em;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .metric-bar-bg {
+      width: 100%;
+      height: 6px;
+      background: rgba(148, 163, 184, 0.2);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 7px;
+    }
+
+    .metric-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #0ea5e9, #10b981);
+      border-radius: 999px;
+      transition: width 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  background 0.3s ease;
+    }
+
+    .metric-bar-fill.over {
+      background: linear-gradient(90deg, #f97316, #f43f5e);
     }
 
     .metric-delta {
@@ -428,8 +576,8 @@
       background: var(--card-bg);
       border: 1px solid var(--border-color);
       color: #38bdf8;
-      border-radius: 6px;
-      padding: 2px 8px;
+      border-radius: 8px;
+      padding: 3px 9px;
       font-size: 0.75rem;
       font-weight: 700;
       cursor: pointer;
@@ -440,14 +588,27 @@
       grid-template-columns: 28px 1fr auto;
       align-items: center;
       gap: 8px;
-      padding: 10px 4px;
+      padding: 11px 8px;
+      margin-bottom: 5px;
+      border: 1px solid transparent;
       border-bottom: 1px solid var(--border-color);
-      transition: background-color 0.15s;
+      border-radius: 12px;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  box-shadow 0.22s ease,
+                  background-color 0.2s ease,
+                  border-color 0.2s ease;
+    }
+
+    .item-row:hover {
+      transform: translateY(-2px);
+      background-color: var(--card-bg);
+      box-shadow: var(--shadow-rest);
     }
 
     .item-row.checked-row {
       background-color: var(--card-bg);
-      border-radius: 8px;
+      border: 1px solid rgba(14, 165, 233, 0.38);
+      box-shadow: 0 6px 16px -6px rgba(14, 165, 233, 0.22);
     }
 
     .excluded-row {
@@ -455,9 +616,18 @@
       grid-template-columns: 1fr auto;
       align-items: center;
       gap: 8px;
-      padding: 11px 6px;
+      padding: 11px 8px;
+      margin-bottom: 4px;
+      border-radius: 10px;
       border-bottom: 1px solid var(--border-color);
-      opacity: 0.9;
+      opacity: 0.92;
+      transition: transform 0.24s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  background-color 0.2s ease;
+    }
+
+    .excluded-row:hover {
+      transform: translateY(-2px);
+      background-color: var(--card-bg);
     }
 
     .checkbox-wrap {
@@ -472,6 +642,11 @@
       accent-color: var(--accent);
       cursor: pointer;
       margin: 0;
+      transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    input[type="checkbox"]:checked {
+      transform: scale(1.14);
     }
 
     .item-info {
@@ -508,9 +683,9 @@
     /* 위탁/기내 세그먼트 라디오 버튼 */
     .bag-toggle {
       display: inline-flex;
-      background-color: var(--card-bg);
+      background-color: var(--bg-color);
       border: 1px solid var(--border-color);
-      border-radius: 8px;
+      border-radius: 9px;
       padding: 2px;
     }
 
@@ -527,18 +702,27 @@
 
     .bag-option span {
       display: block;
-      padding: 4px 7px;
+      padding: 4px 8px;
       font-size: 0.75rem;
       font-weight: 600;
-      border-radius: 6px;
+      border-radius: 7px;
       color: var(--subtext-color);
       cursor: pointer;
-      transition: all 0.15s ease;
+      transition: transform 0.24s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  background-color 0.18s ease,
+                  color 0.18s ease,
+                  box-shadow 0.18s ease;
+    }
+
+    .bag-option span:hover {
+      transform: translateY(-1.5px);
     }
 
     .bag-option input:checked + span {
-      background-color: var(--accent);
+      background: linear-gradient(135deg, #0ea5e9, #0284c7);
       color: #ffffff;
+      box-shadow: 0 3px 10px rgba(14, 165, 233, 0.35);
+      transform: translateY(-1px) scale(1.04);
     }
 
     .fixed-badge {
@@ -547,8 +731,8 @@
       color: var(--subtext-color);
       background: var(--card-bg);
       border: 1px solid var(--border-color);
-      border-radius: 6px;
-      padding: 4px 6px;
+      border-radius: 7px;
+      padding: 4px 7px;
       white-space: nowrap;
     }
 
@@ -556,8 +740,8 @@
       background: var(--card-bg);
       border: 1px solid var(--border-color);
       color: var(--text-color);
-      border-radius: 6px;
-      padding: 5px 7px;
+      border-radius: 8px;
+      padding: 5px 8px;
       font-size: 0.75rem;
       font-weight: 600;
       cursor: pointer;
@@ -566,7 +750,7 @@
 
     .icon-btn.del-btn {
       color: var(--red);
-      border-color: rgba(255, 43, 43, 0.3);
+      border-color: rgba(244, 63, 94, 0.35);
     }
 
     /* 하단 고정 저장 바 */
@@ -576,6 +760,7 @@
       left: 0;
       right: 0;
       background: var(--card-bg);
+      backdrop-filter: blur(16px);
       border-top: 1px solid var(--border-color);
       padding: 10px 14px calc(env(safe-area-inset-bottom, 10px) + 6px) 14px;
       z-index: 50;
@@ -601,16 +786,17 @@
       bottom: 76px;
       left: 50%;
       transform: translateX(-50%);
-      background: #10b981;
+      background: linear-gradient(135deg, #10b981, #059669);
       color: #ffffff;
-      padding: 9px 18px;
+      padding: 10px 20px;
       border-radius: 999px;
       font-size: 0.84rem;
       font-weight: 600;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
       z-index: 200;
       display: none;
       white-space: nowrap;
+      animation: modalSpringOpen 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     /* 모달 스타일 */
@@ -618,6 +804,7 @@
       position: fixed;
       inset: 0;
       background: var(--modal-overlay);
+      backdrop-filter: blur(6px);
       display: none;
       justify-content: center;
       align-items: center;
@@ -632,13 +819,14 @@
     .modal {
       background: var(--bg-color);
       border: 1px solid var(--border-color);
-      border-radius: 14px;
+      border-radius: 18px;
       width: 100%;
       max-width: 480px;
       max-height: 90vh;
       overflow-y: auto;
-      padding: 18px;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+      padding: 20px;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+      animation: modalSpringOpen 0.34s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .modal h3 {
@@ -936,7 +1124,7 @@
         <div class="app-brand">
           <img src="icon.svg" alt="Scuba Icon" class="app-logo" />
           <div>
-            <h1>스쿠버 투어 패킹 매니저</h1>
+            <h1>스쿠버 투어 패킹 매니저 <span id="fastapi-engine-badge" class="fastapi-badge">⚡ FastAPI v2.0</span></h1>
             <span style="font-size:0.78rem; color:var(--subtext-color);">투어별 수하물 무게 계산 & AI 장비 관리</span>
           </div>
         </div>
@@ -1088,6 +1276,9 @@
             </div>
             <div class="metric-value" id="checked-val">0.00 kg</div>
             <div class="metric-delta" id="checked-delta">↑ 23.00 kg 여유</div>
+            <div class="metric-bar-bg">
+              <div class="metric-bar-fill" id="checked-bar-fill"></div>
+            </div>
           </div>
           <div class="metric-card">
             <div class="metric-label">
@@ -1096,6 +1287,9 @@
             </div>
             <div class="metric-value" id="carryon-val">0.00 kg</div>
             <div class="metric-delta" id="carryon-delta">↑ 10.00 kg 여유</div>
+            <div class="metric-bar-bg">
+              <div class="metric-bar-fill" id="carryon-bar-fill"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -1774,8 +1968,11 @@
       }
     }
 
+    let lastToggledIdx = -1;
+
     function toggleCheck(idx) {
       items[idx].checked = !items[idx].checked;
+      lastToggledIdx = idx;
       syncCurrentTourToStorage();
       renderDetail();
     }
@@ -1823,24 +2020,40 @@
       const checkedRem = tour.checkedLimit - checkedW;
       const carryonRem = tour.carryonLimit - carryonW;
 
-      document.getElementById("checked-val").textContent = `${checkedW.toFixed(2)} kg`;
+      const checkedValEl = document.getElementById("checked-val");
+      checkedValEl.textContent = `${checkedW.toFixed(2)} kg`;
       const checkedDeltaEl = document.getElementById("checked-delta");
+      const checkedBarEl = document.getElementById("checked-bar-fill");
+      const checkedPct = tour.checkedLimit > 0 ? Math.min(100, (checkedW / tour.checkedLimit) * 100) : 0;
+      if (checkedBarEl) {
+        checkedBarEl.style.width = `${checkedPct.toFixed(1)}%`;
+      }
       if (checkedRem >= 0) {
         checkedDeltaEl.textContent = `↑ ${checkedRem.toFixed(2)} kg 여유`;
         checkedDeltaEl.classList.remove("over");
+        if (checkedBarEl) checkedBarEl.classList.remove("over");
       } else {
         checkedDeltaEl.textContent = `↓ ${Math.abs(checkedRem).toFixed(2)} kg 초과`;
         checkedDeltaEl.classList.add("over");
+        if (checkedBarEl) checkedBarEl.classList.add("over");
       }
 
-      document.getElementById("carryon-val").textContent = `${carryonW.toFixed(2)} kg`;
+      const carryonValEl = document.getElementById("carryon-val");
+      carryonValEl.textContent = `${carryonW.toFixed(2)} kg`;
       const carryonDeltaEl = document.getElementById("carryon-delta");
+      const carryonBarEl = document.getElementById("carryon-bar-fill");
+      const carryonPct = tour.carryonLimit > 0 ? Math.min(100, (carryonW / tour.carryonLimit) * 100) : 0;
+      if (carryonBarEl) {
+        carryonBarEl.style.width = `${carryonPct.toFixed(1)}%`;
+      }
       if (carryonRem >= 0) {
         carryonDeltaEl.textContent = `↑ ${carryonRem.toFixed(2)} kg 여유`;
         carryonDeltaEl.classList.remove("over");
+        if (carryonBarEl) carryonBarEl.classList.remove("over");
       } else {
         carryonDeltaEl.textContent = `↓ ${Math.abs(carryonRem).toFixed(2)} kg 초과`;
         carryonDeltaEl.classList.add("over");
+        if (carryonBarEl) carryonBarEl.classList.add("over");
       }
     }
 
@@ -1890,7 +2103,7 @@
           if (item.excluded || item.cat !== cat) return;
 
           const row = document.createElement("div");
-          row.className = `item-row ${item.checked ? "checked-row" : ""}`;
+          row.className = `item-row ${item.checked ? "checked-row" : ""} ${idx === lastToggledIdx ? "just-toggled" : ""}`;
 
           // 1. 체크박스
           const chkWrap = document.createElement("div");
@@ -2918,7 +3131,81 @@ JSON 응답 형식:
       box.style.display = "block";
     }
 
+    // --- 인터랙티브 스프링 리프트 & 물결(Ripple) 효과 핸들러 ---
+    (function setupInteractiveAnimations() {
+      const INTERACTIVE_SELECTOR = ".btn, .icon-btn, .cat-add-btn, .info-edit-btn, .pong-chip, .bag-option span, .tour-card";
+      document.addEventListener("pointerdown", (e) => {
+        const target = e.target.closest(INTERACTIVE_SELECTOR);
+        if (!target) return;
+
+        // 스프링 팝 애니메이션 트리거
+        target.classList.remove("spring-pop-active");
+        void target.offsetWidth; // reflow
+        target.classList.add("spring-pop-active");
+        setTimeout(() => target.classList.remove("spring-pop-active"), 380);
+
+        // 터치 물결(Ripple) 생성 (.btn 계열)
+        if (target.matches(".btn, .cat-add-btn, .info-edit-btn, .pong-chip")) {
+          const rect = target.getBoundingClientRect();
+          const size = Math.max(rect.width, rect.height) * 1.2;
+          const wave = document.createElement("span");
+          wave.className = "ripple-wave";
+          wave.style.width = `${size}px`;
+          wave.style.height = `${size}px`;
+          wave.style.left = `${e.clientX - rect.left - size / 2}px`;
+          wave.style.top = `${e.clientY - rect.top - size / 2}px`;
+          target.appendChild(wave);
+          setTimeout(() => wave.remove(), 560);
+        }
+      }, { passive: true });
+    })();
+
+    // --- FastAPI 백엔드 하이브리드 연동 (온라인 FastAPI 서버 + 오프라인 APK 자동 폴백) ---
+    async function checkFastApiStatus() {
+      const badge = document.getElementById("engine-status-badge");
+      try {
+        const res = await fetch("/api/status", { method: "GET" });
+        if (res.ok) {
+          const data = await res.json();
+          if (badge && data.engine === "FastAPI") {
+            badge.textContent = `⚡ FastAPI Connected (${(data.total_db_count || 6448).toLocaleString()} DB)`;
+          }
+          // FastAPI 서버의 투어 목록이 있으면 동기화
+          const toursRes = await fetch("/api/tours");
+          if (toursRes.ok) {
+            const tData = await toursRes.json();
+            if (Array.isArray(tData.tours) && tData.tours.length > 0) {
+              savedTours = tData.tours;
+              localStorage.setItem(TOURS_STORAGE_KEY, JSON.stringify(savedTours));
+              renderHome();
+            } else if (savedTours.length > 0) {
+              await fetch("/api/tours", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ tours: savedTours })
+              }).catch(() => {});
+            }
+          }
+        }
+      } catch (e) {
+        // 모바일 APK / 오프라인 모드에서는 내장 로컬 엔진으로 동작
+        if (badge) badge.textContent = "⚡ FastAPI UI v2.0";
+      }
+    }
+
+    // saveAllTours 호출 시 FastAPI 백엔드로도 비동기 백업
+    const _origSaveAllTours = saveAllTours;
+    saveAllTours = function () {
+      _origSaveAllTours();
+      fetch("/api/tours", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tours: savedTours })
+      }).catch(() => {});
+    };
+
     renderHome();
+    checkFastApiStatus();
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
