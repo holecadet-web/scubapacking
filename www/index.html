@@ -753,6 +753,51 @@
       border-color: rgba(244, 63, 94, 0.35);
     }
 
+    .icon-btn.exclude-btn {
+      color: #f87171;
+      border-color: rgba(248, 113, 113, 0.35);
+    }
+
+    .icon-btn.exclude-btn:hover {
+      background: rgba(248, 113, 113, 0.15);
+      border-color: #f87171;
+    }
+
+    /* 플로팅 이전단계(목록) 버튼 - 스크롤 내려도 항상 고정 위치 유지 */
+    .floating-back-btn {
+      position: fixed;
+      top: max(14px, env(safe-area-inset-top, 14px));
+      left: max(14px, calc(50% - 306px));
+      z-index: 95;
+      display: none;
+      align-items: center;
+      gap: 6px;
+      background: rgba(15, 23, 42, 0.92);
+      border: 1.5px solid rgba(56, 189, 248, 0.65);
+      color: #38bdf8;
+      padding: 7px 15px;
+      border-radius: 999px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5), 0 0 12px rgba(56, 189, 248, 0.25);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .floating-back-btn:hover {
+      background: rgba(30, 41, 59, 0.96);
+      border-color: #7dd3fc;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px rgba(56, 189, 248, 0.4);
+    }
+
+    .floating-back-btn:active {
+      transform: scale(0.96);
+    }
+
     /* 하단 고정 저장 바 */
     .bottom-save-bar {
       position: fixed;
@@ -1488,10 +1533,15 @@
       <div id="tour-list-container"></div>
     </div>
 
+  <!-- 플로팅 이전단계 (목록) 버튼: 스크롤해도 항상 고정 위치 유지 -->
+  <button id="floating-back-btn" class="floating-back-btn" onclick="saveAndGoHome()" title="이전 단계 (투어 목록)">
+    ← 목록
+  </button>
+
     <!-- ==================== 2. 투어 패킹 상세 화면 ==================== -->
     <div id="detail-view" style="display:none;">
       <div class="header-row">
-        <button class="btn" onclick="saveAndGoHome()">← 목록</button>
+        <div style="width: 76px; height: 32px;"></div>
         <div class="top-actions">
           <button class="circle-icon-btn" title="앱 사용법 보기" onclick="openHelpModal()">❓</button>
           <button class="btn btn-save" onclick="saveCurrentTourWithToast()">💾 저장</button>
@@ -1592,7 +1642,7 @@
         <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:5px; margin-bottom:10px;">
           <button class="btn" style="padding:6px 4px; font-size:0.74rem;" onclick="checkAllActive(true)">☑️ 전체</button>
           <button class="btn" style="padding:6px 4px; font-size:0.74rem;" onclick="checkAllActive(false)">⬜ 해제</button>
-          <button class="btn" style="padding:6px 4px; font-size:0.74rem; color:var(--red);" onclick="deleteCheckedItems()">🗑️ 선택삭제</button>
+          <button class="btn" style="padding:6px 4px; font-size:0.74rem; color:#f87171;" onclick="excludeCheckedItems()" title="체크된 물품들을 제외 품목으로 이동">🚫 선택제외</button>
           <button class="btn" style="padding:6px 4px; font-size:0.74rem;" onclick="saveAsDefaultTemplate()">📌 기본값</button>
         </div>
 
@@ -2339,6 +2389,8 @@
         document.getElementById("home-view").style.display = "none";
         document.getElementById("detail-view").style.display = "none";
         document.getElementById("bottom-save-bar").style.display = "none";
+        const fb = document.getElementById("floating-back-btn");
+        if (fb) fb.style.display = "none";
       } else {
         document.getElementById("auth-gate-view").style.display = "none";
         renderHome();
@@ -2427,6 +2479,8 @@
       document.getElementById("home-view").style.display = "block";
       document.getElementById("detail-view").style.display = "none";
       document.getElementById("bottom-save-bar").style.display = "none";
+      const fb = document.getElementById("floating-back-btn");
+      if (fb) fb.style.display = "none";
 
       const listContainer = document.getElementById("tour-list-container");
       listContainer.innerHTML = "";
@@ -2560,6 +2614,8 @@
       document.getElementById("home-view").style.display = "none";
       document.getElementById("detail-view").style.display = "block";
       document.getElementById("bottom-save-bar").style.display = "block";
+      const fb = document.getElementById("floating-back-btn");
+      if (fb) fb.style.display = "inline-flex";
       window.scrollTo(0, 0);
       renderDetail();
 
@@ -2628,27 +2684,36 @@
     function deleteItemDirect(idx) {
       if (!items[idx]) return;
       const targetName = items[idx].name;
-      if (confirm(`'${targetName}' 물품을 삭제할까요?`)) {
-        items.splice(idx, 1);
-        syncCurrentTourToStorage();
-        renderDetail();
-        showToast(`🗑️ 삭제 완료`);
+      const isEx = Boolean(items[idx].excluded);
+      if (isEx) {
+        if (confirm(`'${targetName}' 물품을 영구 삭제할까요?\n(복구할 수 없습니다.)`)) {
+          items.splice(idx, 1);
+          syncCurrentTourToStorage();
+          renderDetail();
+          showToast(`🗑️ 영구 삭제 완료`);
+        }
+      } else {
+        excludeItem(idx);
       }
     }
 
-    function deleteCheckedItems() {
-      const checkedCount = items.filter(i => !i.excluded && i.checked).length;
-      if (checkedCount === 0) {
-        alert("삭제할 물품을 먼저 체크(☑)해 주세요.");
+    function excludeCheckedItems() {
+      const checked = items.filter(i => !i.excluded && i.checked);
+      if (checked.length === 0) {
+        alert("제외 품목으로 이동할 물품을 먼저 체크(☑)해 주세요.");
         return;
       }
-      if (confirm(`체크된 ${checkedCount}개의 물품을 삭제할까요?`)) {
-        items = items.filter(i => i.excluded || !i.checked);
+      if (confirm(`체크된 ${checked.length}개의 물품을 제외 품목으로 이동할까요?`)) {
+        checked.forEach(i => {
+          i.excluded = true;
+          i.checked = false;
+        });
         syncCurrentTourToStorage();
         renderDetail();
-        showToast(`🗑️ ${checkedCount}개 삭제됨`);
+        showToast(`📦 ${checked.length}개 물품이 제외 품목으로 이동되었습니다.`);
       }
     }
+    const deleteCheckedItems = excludeCheckedItems;
 
     function saveAsDefaultTemplate() {
       if (confirm("현재 장비 구성을 기본 세트로 저장할까요?\n(새 투어 생성 시 이 목록이 기본 적용됩니다.)")) {
@@ -2703,11 +2768,13 @@
     }
 
     function excludeItem(idx) {
+      if (!items[idx]) return;
+      const targetName = items[idx].name;
       items[idx].excluded = true;
       items[idx].checked = false;
       syncCurrentTourToStorage();
       renderDetail();
-      showToast(`제외 품목으로 이동했습니다.`);
+      showToast(`📦 '${targetName}' 제외 품목으로 이동했습니다.`);
     }
 
     // --- 수온/환경에 따른 원터치 드라이슈트 / 웻슈트 모드 자동 전환 ---
@@ -2973,12 +3040,12 @@
           editBtn.onclick = () => openItemModal(idx);
           actionWrap.appendChild(editBtn);
 
-          const delBtn = document.createElement("button");
-          delBtn.className = "icon-btn del-btn";
-          delBtn.title = "삭제";
-          delBtn.textContent = "🗑️";
-          delBtn.onclick = () => deleteItemDirect(idx);
-          actionWrap.appendChild(delBtn);
+          const excludeBtn = document.createElement("button");
+          excludeBtn.className = "icon-btn exclude-btn";
+          excludeBtn.title = "제외 품목으로 이동";
+          excludeBtn.textContent = "🚫";
+          excludeBtn.onclick = () => excludeItem(idx);
+          actionWrap.appendChild(excludeBtn);
 
           row.appendChild(chkWrap);
           row.appendChild(info);
@@ -3748,7 +3815,8 @@ JSON 응답 형식:
         return copy;
       });
 
-      const base = (window.PONGDANG_DB || []).map((r, bIdx) => {
+      const rawBase = (typeof PONGDANG_DB !== "undefined" ? PONGDANG_DB : (window.PONGDANG_DB || []));
+      const base = rawBase.map((r, bIdx) => {
         const copy = r.slice();
         const key = copy[10] ? `no_${copy[10]}` : `idx_${bIdx}`;
         const ov = overrides[key];

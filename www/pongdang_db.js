@@ -1,6 +1,6 @@
 // Fourth Element Official Store (fourthelement.kr) & Pongdang.com Integrated Scuba DB (2026-11-10, 6403 items)
 // Schema: [0:fullName, 1:brand, 2:mainCat, 3:subCat, 4:appCat, 5:weightKg, 6:bag, 7:fixed(0|1), 8:priceWon, 9:thumbPath, 10:goodsNo]
-const PONGDANG_DB = [
+var PONGDANG_DB = window.PONGDANG_DB = [
 ["[포스엘리먼트] 아거노트 3.0 시그니처 블랙","포스엘리먼트","스쿠버","드라이슈트","핵심 장비",3.5,"위탁",0,8300000,"https://fourthelement.kr/web/product/medium/202610/3aea7772ea5647f22d55439698c18214.jpg","fe_1075"],
 ["[포스엘리먼트] PSI 드라이 글러브 시스템 PSI DRY GLOVE SYSTEM","포스엘리먼트","스쿠버","장갑","의류/보온",0.25,"위탁",0,580000,"https://fourthelement.kr/web/product/medium/202603/5da1dcbca5a23c196553b6438672b8c3.jpg","fe_1015"],
 ["[포스엘리먼트] 씨텍 드라이슈트 호스 Si-tech Drysuit Hose","포스엘리먼트","스쿠버","드라이슈트","핵심 장비",0.3,"위탁",0,95000,"https://fourthelement.kr/web/product/medium/202409/dc4af98810c7b099869cacb22d26f45d.jpg","fe_922"],
