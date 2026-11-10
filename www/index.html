@@ -1577,6 +1577,18 @@
           <button class="btn btn-ai" onclick="openAiModal()">📸 사진 인식</button>
         </div>
 
+        <!-- 슈트 모드 빠른 원터치 전환 바 (웻슈트 vs 드라이슈트 풀세팅) -->
+        <div style="display:flex; align-items:center; justify-content:space-between; background:rgba(30,41,59,0.7); border:1px solid rgba(56,189,248,0.25); border-radius:10px; padding:6px 10px; margin-bottom:8px; font-size:0.75rem;">
+          <div style="display:flex; align-items:center; gap:5px;">
+            <span>🤿 <strong>슈트 모드:</strong></span>
+            <span style="color:var(--subtext-color);">수온에 맞춰 장비 자동 교체</span>
+          </div>
+          <div style="display:flex; gap:5px;">
+            <button class="btn" style="padding:4px 9px; font-size:0.72rem; background:rgba(56,189,248,0.15); border:1px solid #38bdf8; color:#38bdf8;" onclick="applyWetSuitPreset()">☀️ 웻슈트(열대)</button>
+            <button class="btn" style="padding:4px 9px; font-size:0.72rem; background:rgba(147,197,253,0.2); border:1px solid #93c5fd; color:#93c5fd;" onclick="applyDrySuitPreset()">❄️ 드라이(동계)</button>
+          </div>
+        </div>
+
         <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:5px; margin-bottom:10px;">
           <button class="btn" style="padding:6px 4px; font-size:0.74rem;" onclick="checkAllActive(true)">☑️ 전체</button>
           <button class="btn" style="padding:6px 4px; font-size:0.74rem;" onclick="checkAllActive(false)">⬜ 해제</button>
@@ -2698,6 +2710,81 @@
       showToast(`제외 품목으로 이동했습니다.`);
     }
 
+    // --- 수온/환경에 따른 원터치 드라이슈트 / 웻슈트 모드 자동 전환 ---
+    function applyDrySuitPreset(silent) {
+      // 드라이 장비: 아거노트 드라이슈트, 아크틱 내피, 텍핀, 락호퍼 슈즈, 아르고백
+      // 웻 장비: 3mm 웻수트, 걸 워프 핀, 타비 삭스
+      let drySwitched = 0;
+      let wetSwitched = 0;
+
+      items.forEach((it, idx) => {
+        const n = it.name || "";
+        // 드라이 장비들 편입
+        if (n.includes("드라이슈트") || n.includes("드라이수트") || n.includes("아거노트") ||
+            n.includes("드라이내피") || n.includes("아크틱") ||
+            n.includes("텍 핀") || n.includes("텍핀") ||
+            n.includes("락호퍼") || n.includes("아르고백")) {
+          if (it.excluded) {
+            it.excluded = false;
+            it.checked = true;
+            drySwitched++;
+          }
+        }
+        // 웻슈트 / 워프핀 / 타비삭스는 제외 품목으로 이동
+        else if (n.includes("웻수트") || n.includes("웻슈트") || n.includes("프로테우스") ||
+                 n.includes("워프 핀") || n.includes("와프 핀") ||
+                 n.includes("타비") || n.includes("핀 삭스")) {
+          if (!it.excluded) {
+            it.excluded = true;
+            it.checked = false;
+            wetSwitched++;
+          }
+        }
+      });
+
+      syncCurrentTourToStorage();
+      renderDetail();
+      if (!silent) {
+        showToast("❄️ 드라이슈트 풀세팅 적용 (드라이/내피/텍핀/부츠 활성화, 웻수트 제외)");
+      }
+    }
+
+    function applyWetSuitPreset(silent) {
+      let drySwitched = 0;
+      let wetSwitched = 0;
+
+      items.forEach((it, idx) => {
+        const n = it.name || "";
+        // 웻 장비들 편입
+        if (n.includes("웻수트") || n.includes("웻슈트") || n.includes("프로테우스") ||
+            n.includes("워프 핀") || n.includes("와프 핀") ||
+            n.includes("타비") || n.includes("핀 삭스")) {
+          if (it.excluded) {
+            it.excluded = false;
+            it.checked = true;
+            wetSwitched++;
+          }
+        }
+        // 드라이 장비들은 제외 품목으로 보관
+        else if (n.includes("드라이슈트") || n.includes("드라이수트") || n.includes("아거노트") ||
+                 n.includes("드라이내피") || n.includes("아크틱") ||
+                 n.includes("텍 핀") || n.includes("텍핀") ||
+                 n.includes("락호퍼") || n.includes("아르고백")) {
+          if (!it.excluded) {
+            it.excluded = true;
+            it.checked = false;
+            drySwitched++;
+          }
+        }
+      });
+
+      syncCurrentTourToStorage();
+      renderDetail();
+      if (!silent) {
+        showToast("☀️ 웻슈트 세팅 적용 (3mm 웻수트/워프핀 활성화, 드라이 보관)");
+      }
+    }
+
     function updateMetrics() {
       document.getElementById("tour-title-display").textContent =
         `🤿 ${tour.place} (${tour.dates})`;
@@ -3120,6 +3207,33 @@
       closeTourModal();
 
       if (isNewTourMode) {
+        // 골드에디션: 장소나 일정에 동해, 고성, 울릉, 강릉, 제주 겨울 등 추운 지역이 들어있으면 초기 장비부터 드라이슈트 세팅으로 생성
+        const newItems = getDefaultItemsTemplate();
+        const pLower = place.toLowerCase();
+        const isColdPlace = pLower.includes("고성") || pLower.includes("문암") || pLower.includes("강원") ||
+                            pLower.includes("동해") || pLower.includes("울릉") || pLower.includes("독도") ||
+                            pLower.includes("속초") || pLower.includes("양양") || pLower.includes("포항") ||
+                            pLower.includes("영덕") || pLower.includes("남해") || pLower.includes("ice") ||
+                            pLower.includes("아이스") || pLower.includes("백령");
+
+        if (isColdPlace && !IS_PUBLIC_EDITION) {
+          newItems.forEach(it => {
+            const n = it.name || "";
+            if (n.includes("드라이슈트") || n.includes("드라이수트") || n.includes("아거노트") ||
+                n.includes("드라이내피") || n.includes("아크틱") ||
+                n.includes("텍 핀") || n.includes("텍핀") ||
+                n.includes("락호퍼") || n.includes("아르고백")) {
+              it.excluded = false;
+              it.checked = true;
+            } else if (n.includes("웻수트") || n.includes("웻슈트") || n.includes("프로테우스") ||
+                       n.includes("워프 핀") || n.includes("와프 핀") ||
+                       n.includes("타비") || n.includes("핀 삭스")) {
+              it.excluded = true;
+              it.checked = false;
+            }
+          });
+        }
+
         const newTour = {
           id: "tour_" + Date.now(),
           meta: {
@@ -3132,13 +3246,15 @@
             checkedLimit,
             carryonLimit
           },
-          items: getDefaultItemsTemplate(),
+          items: newItems,
           updatedAt: formatNow()
         };
         savedTours.unshift(newTour);
         saveAllTours();
         openTourById(newTour.id, true);
-        showToast("🚀 새 투어가 생성되었으며 AI 해황·이동편 분석을 시작합니다!");
+        showToast(isColdPlace && !IS_PUBLIC_EDITION
+          ? "❄️ 동해·국내 저수온 투어 감지: 드라이슈트 세팅으로 생성되었습니다!"
+          : "🚀 새 투어가 생성되었으며 AI 해황·이동편 분석을 시작합니다!");
       } else {
         tour.place = place;
         tour.startDate = startDate;
@@ -3245,6 +3361,7 @@ JSON 응답 형식:
   "airWeather": "기온 범위 및 날씨 특징 (예: 21~26°C, 선선한 바람·출수 후 체온 주의)",
   "waveWind": "예상 파고(m) 및 풍향/풍속 (예: 파고 1.0~1.5m, 북동풍 영향 포인트 선정 중요)",
   "visCurrent": "평균 시야(m) 및 조류 특징 (예: 시야 20~30m, 케라마 제도 약~중조류)",
+  "recommendedSuitType": "'DRY' 또는 'WET' (수온이 21도 이하이거나 동계 시즌이면 DRY, 22도 이상 따뜻하면 WET)",
   "suitGearTip": "수온/파고 맞춤 슈트 두께(웻/드라이/후드베스트/보트코트) 및 필수 안전장비(SMB 등) 추천 2~3문장",
   "transportTip": "한국 출발 추천 항공편/이동 루트(직항 항공사·소요시간·현지 공항에서 다이빙 지역 이동법) 및 마지막 날 비행 전 No-Fly(18~24시간 수면휴식) 스케줄 팁 2~3문장"
 }
@@ -3279,10 +3396,30 @@ JSON 응답 형식:
         if (parsed.shortFlight && !tour.flight) {
           tour.flight = parsed.shortFlight;
         }
+
+        // 수온 분석 결과가 춥거나 드라이슈트 권장일 경우 자동 드라이 세팅 전환
+        let isCold = false;
+        if (parsed.recommendedSuitType === "DRY") {
+          isCold = true;
+        } else if (parsed.suitGearTip && (parsed.suitGearTip.includes("드라이") || parsed.suitGearTip.includes("동계"))) {
+          isCold = true;
+        } else if (parsed.shortWaterTemp) {
+          const numMatch = parsed.shortWaterTemp.match(/(\d+(\.\d+)?)/);
+          if (numMatch && parseFloat(numMatch[1]) <= 21.0) {
+            isCold = true;
+          }
+        }
+
+        if (isCold && !IS_PUBLIC_EDITION) {
+          applyDrySuitPreset(true);
+          showToast("❄️ 수온 분석 반영: 드라이슈트 풀세팅(드라이/내피/텍핀/슈즈)으로 자동 전환되었습니다!");
+        } else {
+          showToast("🌊✈️ AI 이동편 & 해황 자동 브리핑 완료!");
+        }
+
         syncCurrentTourToStorage();
         updateMetrics();
         renderSavedBriefing();
-        showToast("🌊✈️ AI 이동편 & 해황 자동 브리핑 완료!");
       } catch (err) {
         statusEl.textContent = `❌ AI 분석 실패: ${err.message}`;
       }
