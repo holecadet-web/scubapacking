@@ -200,6 +200,11 @@
       align-items: center;
       justify-content: center;
       gap: 5px;
+      max-width: 100%;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      box-sizing: border-box;
     }
 
     .btn:hover,
@@ -1503,7 +1508,7 @@
         <div id="gate-error-msg" style="font-size:0.78rem; color:var(--red); margin-bottom:10px; display:none;"></div>
 
         <button class="btn btn-ai" id="gate-submit-btn" style="width:100%; padding:12px; font-size:0.92rem;" onclick="verifyAndCompleteOnboarding()">
-          🚀 Gemini 연결 확인 후 시작하기
+          🚀 연결 및 시작
         </button>
       </div>
     </div>
@@ -1556,14 +1561,14 @@
         <div id="tour-info-display">
           예상 수온: 25 ~ 26°C | 항공: 위탁 23.0kg / 기내 10.0kg
         </div>
-        <button class="info-edit-btn" onclick="openTourModal(false)">✏️ 일정·장소</button>
+        <button class="info-edit-btn" onclick="openTourModal(false)">✏️ 일정 수정</button>
       </div>
 
       <!-- AI 투어 이동편 추천 & 다이빙 바다/날씨(파고·수온·기온) 자동 브리핑 카드 -->
       <div class="briefing-card">
         <div class="briefing-header">
           <div class="briefing-title">
-            <span>🌊✈️ AI 이동편 & 바다/날씨 브리핑</span>
+            <span>🌊 AI 날씨·해황 브리핑</span>
           </div>
           <div style="display:flex; gap:5px;">
             <button class="icon-btn" title="AI 브리핑 다시 분석" onclick="generateTourAiBriefing()">🔄 재분석</button>
@@ -1607,50 +1612,44 @@
       <!-- 드로어(Drawer) 방식 장비 챙기기 헤더 버튼 (접고 열기 + 챙긴 개수 표시) -->
       <button class="gear-drawer-btn" id="gear-drawer-btn" onclick="toggleGearDrawer()">
         <div class="gear-drawer-left">
-          <span style="font-size:1.35rem;">🎒</span>
-          <div>
-            <div class="gear-drawer-title">장비 챙기기</div>
-            <div class="gear-drawer-sub" id="gear-drawer-count-text">챙긴 장비: 0 / 24개 (0%)</div>
-          </div>
+          <span style="font-size:1.25rem;">🎒</span>
+          <span class="gear-drawer-title">장비 챙기기</span>
         </div>
         <div class="gear-drawer-right">
-          <span class="gear-drawer-pill" id="gear-drawer-pill">0 / 24</span>
-          <span id="gear-drawer-arrow" style="font-size:0.8rem; font-weight:700; color:var(--subtext-color);">▲ 접기</span>
+          <span class="gear-drawer-pill" id="gear-drawer-pill">0/0</span>
+          <span id="gear-drawer-arrow" style="font-size:0.75rem; font-weight:700; color:var(--subtext-color);">▲</span>
         </div>
       </button>
 
       <!-- 드로어(Drawer) 내부: 장비 검색/추가 툴바 + 패킹 리스트 -->
       <div id="gear-drawer-body" class="gear-drawer-body">
-        <div style="display:grid; grid-template-columns: 1.2fr 1fr 1fr; gap:6px; margin-bottom:8px;">
-          <button class="btn btn-pongdang" onclick="openPongdangModal()">🔍 장비 검색/추가</button>
-          <button class="btn btn-blue" onclick="openItemModal(-1)">➕ 직접 추가</button>
-          <button class="btn btn-ai" onclick="openAiModal()">📸 사진 인식</button>
+        <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:6px; margin-bottom:8px;">
+          <button class="btn btn-pongdang" onclick="openPongdangModal()" title="통합 장비 DB 검색">🔍 DB 검색</button>
+          <button class="btn btn-blue" onclick="openItemModal(-1)" title="장비 직접 입력 추가">➕ 직접 추가</button>
+          <button class="btn btn-ai" onclick="openAiModal()" title="AI 카메라 사진 인식">📸 AI 인식</button>
         </div>
 
-        <!-- 슈트 모드 빠른 원터치 전환 바 (웻슈트 vs 드라이슈트 풀세팅) -->
-        <div style="display:flex; align-items:center; justify-content:space-between; background:rgba(30,41,59,0.7); border:1px solid rgba(56,189,248,0.25); border-radius:10px; padding:6px 10px; margin-bottom:8px; font-size:0.75rem;">
-          <div style="display:flex; align-items:center; gap:5px;">
-            <span>🤿 <strong>슈트 모드:</strong></span>
-            <span style="color:var(--subtext-color);">수온에 맞춰 장비 자동 교체</span>
-          </div>
-          <div style="display:flex; gap:5px;">
-            <button class="btn" style="padding:4px 9px; font-size:0.72rem; background:rgba(56,189,248,0.15); border:1px solid #38bdf8; color:#38bdf8;" onclick="applyWetSuitPreset()">☀️ 웻슈트(열대)</button>
-            <button class="btn" style="padding:4px 9px; font-size:0.72rem; background:rgba(147,197,253,0.2); border:1px solid #93c5fd; color:#93c5fd;" onclick="applyDrySuitPreset()">❄️ 드라이(동계)</button>
+        <!-- 슈트 모드 빠른 원터치 전환 바 -->
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:6px; background:rgba(30,41,59,0.7); border:1px solid rgba(56,189,248,0.25); border-radius:10px; padding:6px 10px; margin-bottom:8px; font-size:0.75rem;">
+          <span style="font-weight:600; color:#e2e8f0; white-space:nowrap;">🤿 슈트 전환</span>
+          <div style="display:flex; gap:5px; flex-shrink:0;">
+            <button class="btn" style="padding:4px 8px; font-size:0.74rem; background:rgba(56,189,248,0.15); border:1px solid #38bdf8; color:#38bdf8;" onclick="applyWetSuitPreset()" title="열대/수온 24°C 이상 웻슈트 세팅">☀️ 웻슈트</button>
+            <button class="btn" style="padding:4px 8px; font-size:0.74rem; background:rgba(147,197,253,0.2); border:1px solid #93c5fd; color:#93c5fd;" onclick="applyDrySuitPreset()" title="동계/수온 23°C 이하 드라이 세팅">❄️ 드라이</button>
           </div>
         </div>
 
         <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:5px; margin-bottom:10px;">
-          <button class="btn" style="padding:6px 4px; font-size:0.74rem;" onclick="checkAllActive(true)">☑️ 전체</button>
-          <button class="btn" style="padding:6px 4px; font-size:0.74rem;" onclick="checkAllActive(false)">⬜ 해제</button>
-          <button class="btn" style="padding:6px 4px; font-size:0.74rem; color:#f87171;" onclick="excludeCheckedItems()" title="체크된 물품들을 제외 품목으로 이동">🚫 선택제외</button>
-          <button class="btn" style="padding:6px 4px; font-size:0.74rem;" onclick="saveAsDefaultTemplate()">📌 기본값</button>
+          <button class="btn" style="padding:6px 2px; font-size:0.74rem;" onclick="checkAllActive(true)" title="전체 물품 챙김 체크">☑️ 전체</button>
+          <button class="btn" style="padding:6px 2px; font-size:0.74rem;" onclick="checkAllActive(false)" title="체크 전체 해제">⬜ 해제</button>
+          <button class="btn" style="padding:6px 2px; font-size:0.74rem; color:#f87171;" onclick="excludeCheckedItems()" title="체크된 물품을 제외 품목으로 이동">🚫 제외</button>
+          <button class="btn" style="padding:6px 2px; font-size:0.74rem;" onclick="saveAsDefaultTemplate()" title="현재 구성을 기본 세트로 저장">📌 기본</button>
         </div>
 
         <!-- 빠른 물품 추가 입력바 (자동완성 지원) -->
         <div class="quick-add-box">
           <div class="quick-add-title">
-            <span>⚡ 빠른 추가 (자동완성)</span>
-            <span style="font-size:0.72rem; color:var(--subtext-color);">이름 입력 시 무게 자동매칭</span>
+            <span>⚡ 빠른 추가</span>
+            <span style="font-size:0.72rem; color:var(--subtext-color);">무게 자동매칭</span>
           </div>
           <div class="quick-add-grid">
             <select id="quick-cat">
@@ -1673,7 +1672,7 @@
         <div id="excluded-container"></div>
 
         <div style="margin-top: 20px; text-align: center;">
-          <button class="btn" onclick="resetCurrentTour()">🔄 초기 장비로 복원</button>
+          <button class="btn" onclick="resetCurrentTour()" title="현재 투어 장비를 초기 기본 세트로 복원">🔄 장비 초기화</button>
         </div>
       </div>
     </div>
@@ -1683,7 +1682,7 @@
   <div class="bottom-save-bar" id="bottom-save-bar">
     <div class="bottom-save-inner">
       <button class="btn" onclick="saveCurrentTourWithToast()">💾 저장</button>
-      <button class="btn btn-save" onclick="saveAndGoHome()">🏠 저장·목록</button>
+      <button class="btn btn-save" onclick="saveAndGoHome()">🏠 저장 후 목록</button>
     </div>
   </div>
 
@@ -1847,9 +1846,12 @@
         </div>
       </div>
 
+      <div style="font-size:0.74rem; color:var(--subtext-color); margin-bottom:8px; text-align:right;">
+        ※ 저장 시 날씨 및 이동편을 Gemini AI가 자동 분석합니다.
+      </div>
       <div class="modal-footer">
         <button class="btn" onclick="closeTourModal()">취소</button>
-        <button class="btn btn-ai" onclick="saveTourConfigAndAutoAi()">🚀 저장 (AI 해황·이동편 자동분석)</button>
+        <button class="btn btn-ai" onclick="saveTourConfigAndAutoAi()">🚀 저장 & AI분석</button>
       </div>
     </div>
   </div>
@@ -1946,7 +1948,7 @@
 
       <div class="modal-footer">
         <button class="btn" onclick="closeAiModal()">닫기</button>
-        <button class="btn btn-ai" id="ai-add-btn" style="display:none;" onclick="addRecognizedItems()">+ 선택 장비 추가</button>
+        <button class="btn btn-ai" id="ai-add-btn" style="display:none;" onclick="addRecognizedItems()">+ 장비 추가</button>
       </div>
     </div>
   </div>
@@ -1965,8 +1967,8 @@
           </div>
         </div>
         <div style="display:flex; align-items:center; gap:6px;">
-          <button class="btn btn-blue" style="padding:6px 10px; font-size:0.76rem;" onclick="openNewDbItemModal()">
-            ➕ 신규 등록
+          <button class="btn btn-blue" style="padding:5px 8px; font-size:0.75rem;" onclick="openNewDbItemModal()">
+            ➕ 직접등록
           </button>
           <button class="modal-close-x" onclick="closePongdangModal()" title="닫기">✕</button>
         </div>
@@ -1975,10 +1977,10 @@
       <!-- 1단계: 대분류 탭 -->
       <div class="pong-filter-row" id="pong-maincat-row">
         <button class="pong-chip active" onclick="setPongMainCat('전체', this)">전체</button>
-        <button class="pong-chip" onclick="setPongMainCat('포스공홈', this)">🔥 포스엘리먼트 공홈</button>
+        <button class="pong-chip" onclick="setPongMainCat('포스공홈', this)">🔥 포스공홈</button>
         <button class="pong-chip" onclick="setPongMainCat('스쿠버', this)">🤿 스쿠버</button>
-        <button class="pong-chip" onclick="setPongMainCat('스쿠버 acc', this)">🧷 스쿠버 acc</button>
-        <button class="pong-chip" onclick="setPongMainCat('직접등록', this)">⭐ 신규/수정됨</button>
+        <button class="pong-chip" onclick="setPongMainCat('스쿠버 acc', this)">🧷 ACC</button>
+        <button class="pong-chip" onclick="setPongMainCat('직접등록', this)">⭐ 내장비</button>
       </div>
 
       <!-- 2단계: 장비 종류 / 브랜드 / 소팅 선택 -->
@@ -2175,10 +2177,10 @@
         <input type="file" id="db-new-photo-file" accept="image/*" onchange="handleNewDbThumbFile(event)" style="margin-bottom:6px;" />
         <input type="text" id="db-new-thumb-url" placeholder="또는 이미지 URL (https://...)" />
       </div>
-      <div class="modal-footer" style="flex-wrap:wrap;">
+      <div class="modal-footer">
         <button class="btn" onclick="closeNewDbItemModal()">취소</button>
-        <button class="btn btn-blue" onclick="saveNewDbItem(false)">DB만 등록</button>
-        <button class="btn btn-primary" onclick="saveNewDbItem(true)">등록 + 짐싸기 추가</button>
+        <button class="btn btn-blue" onclick="saveNewDbItem(false)">DB 저장</button>
+        <button class="btn btn-primary" onclick="saveNewDbItem(true)">저장+추가</button>
       </div>
     </div>
   </div>
@@ -2496,7 +2498,7 @@
             상단 <strong>[➕ 새 투어]</strong> 버튼을 눌러 여행지와 일정을 선택하면<br/>
             AI 이동편·바다 날씨 브리핑과 함께 6,403종 장비 DB에서 나만의 패킹 리스트를 구성할 수 있습니다.
           </div>
-          <button class="btn btn-primary" onclick="openNewTourModal()" style="padding:10px 18px; font-size:0.86rem;">➕ 첫 다이빙 투어 등록하기</button>
+          <button class="btn btn-primary" onclick="openNewTourModal()" style="padding:10px 18px; font-size:0.86rem;">➕ 새 투어 등록</button>
         `;
         listContainer.appendChild(emptyCard);
         return;
@@ -2580,10 +2582,10 @@
       const arrowEl = document.getElementById("gear-drawer-arrow");
       if (isGearDrawerOpen) {
         bodyEl.style.display = "block";
-        arrowEl.textContent = "▲ 접기";
+        if (arrowEl) arrowEl.textContent = "▲";
       } else {
         bodyEl.style.display = "none";
-        arrowEl.textContent = "▼ 펼치기";
+        if (arrowEl) arrowEl.textContent = "▼";
       }
     }
 
@@ -2593,13 +2595,9 @@
       const totalCount = activeItems.length;
       const pct = totalCount > 0 ? Math.round((checkedCount / totalCount) * 100) : 0;
 
-      const textEl = document.getElementById("gear-drawer-count-text");
       const pillEl = document.getElementById("gear-drawer-pill");
-      if (textEl) {
-        textEl.textContent = `챙긴 장비: ${checkedCount} / ${totalCount}개 (${pct}%)`;
-      }
       if (pillEl) {
-        pillEl.textContent = `${checkedCount} / ${totalCount}`;
+        pillEl.textContent = `${checkedCount}/${totalCount} (${pct}%)`;
       }
     }
 
