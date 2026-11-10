@@ -1,5 +1,5 @@
-const CACHE_NAME = "diving-packing-v11";
-const ASSETS = ["./", "./index.html", "./manifest.json", "./icon.png", "./icon.svg", "./pongdang_db.js"];
+const CACHE_NAME = "diving-packing-v12";
+const ASSETS = ["./", "./index.html", "./manifest.json", "./icon.png", "./icon.svg", "./edition.js", "./pongdang_db.js"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(

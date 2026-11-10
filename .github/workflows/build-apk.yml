@@ -26,24 +26,29 @@ jobs:
           distribution: 'temurin'
           java-version: 21
 
-      - name: Install Capacitor & Generate Android Project with Custom Photo Icon
+      - name: Install Dependencies & Initialize Android Project
         run: |
           npm install
           npm install --no-save sharp @capacitor/assets
+          cp www/icon_gold.png www/icon.png
+          echo 'window.APP_EDITION = "LIMITED";' > www/edition.js
           npx cap add android
           node -e "
             const sharp = require('sharp');
             const fs = require('fs');
-            const path = require('path');
             (async () => {
               fs.mkdirSync('assets', { recursive: true });
-              await sharp('www/icon.png').resize(1024, 1024, { fit: 'cover' }).png().toFile('assets/icon-only.png');
-              await sharp('www/icon.png').resize(1024, 1024, { fit: 'cover' }).png().toFile('assets/icon-foreground.png');
-              await sharp('www/icon.png').resize(1024, 1024, { fit: 'cover' }).png().toFile('assets/icon-background.png');
-              console.log('Prepared 1024x1024 assets');
+              await sharp('www/icon_gold.png').resize(1024, 1024, { fit: 'cover' }).png().toFile('assets/icon-only.png');
+              await sharp('www/icon_gold_adaptive.png').resize(1024, 1024, { fit: 'cover' }).png().toFile('assets/icon-foreground.png');
+              await sharp('www/icon_gold.png').resize(1024, 1024, { fit: 'cover' }).png().toFile('assets/icon-background.png');
             })();
           "
-          npx capacitor-assets generate --android --iconBackgroundColor '#0b2536' --splashBackgroundColor '#0f172a'
+          npx capacitor-assets generate --android --iconBackgroundColor '#D4AF37' --splashBackgroundColor '#0f172a'
+
+      - name: Build 1 - Personal Limited Edition (Gold Border + Okinawa 29-Item Preset)
+        run: |
+          cp www/icon_gold.png www/icon.png
+          echo 'window.APP_EDITION = "LIMITED";' > www/edition.js
           node -e "
             const sharp = require('sharp');
             const fs = require('fs');
@@ -67,44 +72,104 @@ jobs:
               for (const [folder, sz] of Object.entries(sizes)) {
                 const dir = path.join(resDir, folder);
                 if (fs.existsSync(dir)) {
-                  await sharp('www/icon.png').resize(sz, sz, { fit: 'cover' }).png().toFile(path.join(dir, 'ic_launcher.png'));
-                  const circleSvg = Buffer.from('<svg><circle cx=\"' + (sz/2) + '\" cy=\"' + (sz/2) + '\" r=\"' + (sz/2) + '\" /></svg>');
-                  await sharp('www/icon.png').resize(sz, sz, { fit: 'cover' }).composite([{ input: circleSvg, blend: 'dest-in' }]).png().toFile(path.join(dir, 'ic_launcher_round.png'));
+                  await sharp('www/icon_gold.png').resize(sz, sz, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } }).png().toFile(path.join(dir, 'ic_launcher.png'));
+                  await sharp('www/icon_gold.png').resize(sz, sz, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } }).png().toFile(path.join(dir, 'ic_launcher_round.png'));
                 }
               }
               for (const [folder, fsz] of Object.entries(fgSizes)) {
                 const dir = path.join(resDir, folder);
                 if (fs.existsSync(dir)) {
-                  await sharp('www/icon.png').resize(fsz, fsz, { fit: 'cover' }).png().toFile(path.join(dir, 'ic_launcher_foreground.png'));
+                  await sharp('www/icon_gold_adaptive.png').resize(fsz, fsz, { fit: 'cover' }).png().toFile(path.join(dir, 'ic_launcher_foreground.png'));
                 }
               }
-              console.log('Updated all Android mipmap icons with full-bleed photo');
+              console.log('Generated Gold Border icons for Limited Edition');
             })();
           "
           npx cap sync android
-
-      - name: Build Debug APK
-        working-directory: android
-        run: |
+          cd android
           chmod +x gradlew
           ./gradlew assembleDebug
-
-      - name: Rename APK
-        run: |
+          cd ..
+          cp android/app/build/outputs/apk/debug/app-debug.apk diving-check-gold.apk
           cp android/app/build/outputs/apk/debug/app-debug.apk okinawa-diving-packing.apk
 
-      - name: Upload APK Artifact
+      - name: Build 2 - Public Edition (White Border + Clean Empty State)
+        run: |
+          cp www/icon_white.png www/icon.png
+          echo 'window.APP_EDITION = "PUBLIC";' > www/edition.js
+          node -e "
+            const sharp = require('sharp');
+            const fs = require('fs');
+            const path = require('path');
+            const gradlePath = 'android/app/build.gradle';
+            let gradle = fs.readFileSync(gradlePath, 'utf8');
+            gradle = gradle.replace('applicationId \"com.okinawa.divingpacking\"', 'applicationId \"com.okinawa.divingpacking.public\"');
+            fs.writeFileSync(gradlePath, gradle, 'utf8');
+            const bgXmlPath = 'android/app/src/main/res/values/ic_launcher_background.xml';
+            if (fs.existsSync(bgXmlPath)) {
+              let bgXml = fs.readFileSync(bgXmlPath, 'utf8');
+              bgXml = bgXml.replace(/#[0-9A-Fa-f]{6}/g, '#FFFFFF');
+              fs.writeFileSync(bgXmlPath, bgXml, 'utf8');
+            }
+            const sizes = {
+              'mipmap-mdpi': 48,
+              'mipmap-hdpi': 72,
+              'mipmap-xhdpi': 96,
+              'mipmap-xxhdpi': 144,
+              'mipmap-xxxhdpi': 192
+            };
+            const fgSizes = {
+              'mipmap-mdpi': 108,
+              'mipmap-hdpi': 162,
+              'mipmap-xhdpi': 216,
+              'mipmap-xxhdpi': 324,
+              'mipmap-xxxhdpi': 432
+            };
+            (async () => {
+              const resDir = 'android/app/src/main/res';
+              for (const [folder, sz] of Object.entries(sizes)) {
+                const dir = path.join(resDir, folder);
+                if (fs.existsSync(dir)) {
+                  await sharp('www/icon_white.png').resize(sz, sz, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } }).png().toFile(path.join(dir, 'ic_launcher.png'));
+                  await sharp('www/icon_white.png').resize(sz, sz, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } }).png().toFile(path.join(dir, 'ic_launcher_round.png'));
+                }
+              }
+              for (const [folder, fsz] of Object.entries(fgSizes)) {
+                const dir = path.join(resDir, folder);
+                if (fs.existsSync(dir)) {
+                  await sharp('www/icon_white_adaptive.png').resize(fsz, fsz, { fit: 'cover' }).png().toFile(path.join(dir, 'ic_launcher_foreground.png'));
+                }
+              }
+              console.log('Generated White Border icons for Public Edition');
+            })();
+          "
+          npx cap copy android
+          cd android
+          ./gradlew assembleDebug
+          cd ..
+          cp android/app/build/outputs/apk/debug/app-debug.apk diving-check-public.apk
+
+      - name: Upload APK Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: okinawa-diving-packing-apk
-          path: okinawa-diving-packing.apk
+          path: |
+            diving-check-public.apk
+            diving-check-gold.apk
+            okinawa-diving-packing.apk
 
-      - name: Create GitHub Release with APK
+      - name: Create GitHub Release with Both APKs
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v1.0.0
-          name: "따이빙체크 APK (커스텀 다이버 아이콘 & 최신 기능 반영)"
-          body: "아래 Assets에서 `okinawa-diving-packing.apk` 파일을 다운로드해 설치하세요."
-          files: okinawa-diving-packing.apk
+          name: "따이빙체크 APK (배포용 흰색 테두리 & 한정판 금색 테두리)"
+          body: |
+            ### 🤿 따이빙체크 (Diving Check) Android APK 다운로드
+            - **`diving-check-public.apk` (일반 배포용)**: 흰색 테두리 아이콘 · 기본 투어 데이터 없음 (빈 상태에서 시작, 포스엘리먼트 & 퐁당닷컴 6,403종 통합 DB 탑재)
+            - **`diving-check-gold.apk` (개인 한정판)**: 금색 테두리 아이콘 · 오키나와 투어 및 DB 매칭 개인 장비 29종 기본 탑재
+          files: |
+            diving-check-public.apk
+            diving-check-gold.apk
+            okinawa-diving-packing.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

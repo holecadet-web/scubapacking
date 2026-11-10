@@ -2121,8 +2121,11 @@
     </div>
   </div>
 
+  <script src="edition.js"></script>
   <script src="pongdang_db.js"></script>
   <script>
+    const IS_PUBLIC_EDITION = (window.APP_EDITION === "PUBLIC");
+
     const DEFAULT_TOUR_META = {
       place: "오키나와 투어 패킹",
       dates: "11.12 ~ 15",
@@ -2132,8 +2135,8 @@
       carryonLimit: 10.0
     };
 
-    // 사용자 실제 보유 장비 리스트 — 포스엘리먼트 공식 스토어(fourthelement.kr) & 퐁당닷컴(pongdang.com) DB 제품 매칭 완료
-    const FACTORY_DEFAULT_ITEMS = [
+    // 한정판 전용: 사용자 실제 보유 장비 리스트 — 포스엘리먼트 공식 스토어(fourthelement.kr) & 퐁당닷컴(pongdang.com) DB 제품 매칭 완료
+    const LIMITED_DEFAULT_ITEMS = [
       // 1. 가방류 (2.20 kg)
       { name: "[포스엘리먼트] 익스페디션 더플백 90L 오렌지 EXPEDITION DUFFEL BAG", desc: "포스공홈 · 가방 | 메인 위탁 아우터 가방", cat: "가방류", weight: 1.50, bag: "위탁", fixed: true, checked: false, excluded: false, dbId: "fe_1037", thumb: "https://fourthelement.kr/web/product/medium/202607/94b6296dd664efdee877b23b5d37f99f.jpg" },
       { name: "[패디] 패디 대형 세척 가방, PADI LARGE MESH POUCH", desc: "퐁당닷컴 · 가방 | 내부에 OMS 메쉬 파우치 수납", cat: "가방류", weight: 0.40, bag: "위탁", fixed: true, checked: false, excluded: false, dbId: "47737", thumb: "/data/goods/77/2026/03/47737_temp_17731303377422list1.jpg" },
@@ -2180,6 +2183,9 @@
       { name: "[포스엘리먼트] 락호퍼 숏부츠 ROCK HOPPER 3MM SHOE", desc: "포스공홈 · 부츠 | 텍핀 전용 다이빙 슈즈", cat: "의류/보온", weight: 0.50, bag: "위탁", fixed: false, checked: false, excluded: true, dbId: "fe_124", thumb: "https://fourthelement.kr/web/product/medium/202609/512802b6d333eb8ed020f431ba96041d.jpg" }
     ];
 
+    // 배포용(PUBLIC)은 기본 오키나와/개인 장비 데이터를 비워두고 시작
+    const FACTORY_DEFAULT_ITEMS = IS_PUBLIC_EDITION ? [] : LIMITED_DEFAULT_ITEMS;
+
     const LEGACY_NAME_TO_DEFAULT_IDX = {
       "포스 익스페디션 주황색 90L 백": 0,
       "PADI 메쉬백 (OMS 파우치를 내부에 수납)": 1,
@@ -2212,12 +2218,13 @@
       "포스 락호퍼 슈즈": 28
     };
 
-    const TOURS_STORAGE_KEY = "scuba_saved_tours_v5";
-    const CUSTOM_DEFAULT_KEY = "scuba_custom_default_items_v6";
+    const TOURS_STORAGE_KEY = IS_PUBLIC_EDITION ? "scuba_public_saved_tours_v1" : "scuba_saved_tours_v5";
+    const CUSTOM_DEFAULT_KEY = IS_PUBLIC_EDITION ? "scuba_public_custom_default_v1" : "scuba_custom_default_items_v6";
     const API_KEY_STORAGE = "okinawa_gemini_api_key";
 
     function migrateItemListToDbMatched(itemList) {
       if (!Array.isArray(itemList)) return JSON.parse(JSON.stringify(FACTORY_DEFAULT_ITEMS));
+      if (IS_PUBLIC_EDITION) return { migrated: itemList, changed: false };
       let changed = false;
       const migrated = itemList.map((it) => {
         if (!it) return it;
@@ -2266,22 +2273,29 @@
         const raw = localStorage.getItem(TOURS_STORAGE_KEY);
         if (raw) {
           const parsed = JSON.parse(raw);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            let anyMigrated = false;
-            parsed.forEach(t => {
-              const res = migrateItemListToDbMatched(t.items);
-              if (res.changed) {
-                t.items = res.migrated;
-                anyMigrated = true;
+          if (Array.isArray(parsed)) {
+            if (IS_PUBLIC_EDITION) return parsed;
+            if (parsed.length > 0) {
+              let anyMigrated = false;
+              parsed.forEach(t => {
+                const res = migrateItemListToDbMatched(t.items);
+                if (res.changed) {
+                  t.items = res.migrated;
+                  anyMigrated = true;
+                }
+              });
+              if (anyMigrated) {
+                localStorage.setItem(TOURS_STORAGE_KEY, JSON.stringify(parsed));
               }
-            });
-            if (anyMigrated) {
-              localStorage.setItem(TOURS_STORAGE_KEY, JSON.stringify(parsed));
+              return parsed;
             }
-            return parsed;
           }
         }
       } catch (e) {}
+      if (IS_PUBLIC_EDITION) {
+        localStorage.setItem(TOURS_STORAGE_KEY, JSON.stringify([]));
+        return [];
+      }
       const initial = [{
         id: "tour_" + Date.now(),
         meta: Object.assign({}, DEFAULT_TOUR_META),
@@ -2405,6 +2419,23 @@
       const listContainer = document.getElementById("tour-list-container");
       listContainer.innerHTML = "";
 
+      if (savedTours.length === 0) {
+        const emptyCard = document.createElement("div");
+        emptyCard.className = "card";
+        emptyCard.style.cssText = "text-align:center; padding:30px 18px; border:1px dashed rgba(56,189,248,0.45); background:rgba(15,23,42,0.72);";
+        emptyCard.innerHTML = `
+          <div style="font-size:2.3rem; margin-bottom:8px;">🤿</div>
+          <div style="font-size:1rem; font-weight:700; color:#f8fafc; margin-bottom:6px;">등록된 다이빙 투어가 없습니다</div>
+          <div style="font-size:0.81rem; color:var(--subtext-color); line-height:1.55; margin-bottom:14px;">
+            상단 <strong>[➕ 새 투어]</strong> 버튼을 눌러 여행지와 일정을 선택하면<br/>
+            AI 이동편·바다 날씨 브리핑과 함께 6,403종 장비 DB에서 나만의 패킹 리스트를 구성할 수 있습니다.
+          </div>
+          <button class="btn btn-primary" onclick="openNewTourModal()" style="padding:10px 18px; font-size:0.86rem;">➕ 첫 다이빙 투어 등록하기</button>
+        `;
+        listContainer.appendChild(emptyCard);
+        return;
+      }
+
       savedTours.forEach((t) => {
         const activeItems = (t.items || []).filter(i => !i.excluded);
         const checkedItems = activeItems.filter(i => i.checked);
@@ -2460,7 +2491,7 @@
     }
 
     function deleteTour(id) {
-      if (savedTours.length <= 1) {
+      if (!IS_PUBLIC_EDITION && savedTours.length <= 1) {
         alert("최소 1개의 투어 목록은 남겨두어야 합니다.");
         return;
       }
@@ -2624,12 +2655,15 @@
     }
 
     function resetCurrentTour() {
-      if (confirm("초기 장비 세팅(원본 29종)으로 복원할까요?")) {
+      const msg = IS_PUBLIC_EDITION
+        ? "현재 투어의 장비 목록을 초기화(비우기)할까요?"
+        : "초기 장비 세팅(원본 29종)으로 복원할까요?";
+      if (confirm(msg)) {
         localStorage.removeItem(CUSTOM_DEFAULT_KEY);
         items = JSON.parse(JSON.stringify(FACTORY_DEFAULT_ITEMS));
         syncCurrentTourToStorage();
         renderDetail();
-        showToast("✅ 초기 장비로 복원되었습니다.");
+        showToast(IS_PUBLIC_EDITION ? "✅ 장비 목록이 초기화되었습니다." : "✅ 초기 장비로 복원되었습니다.");
       }
     }
 
@@ -2751,6 +2785,17 @@
 
       const container = document.getElementById("items-container");
       container.innerHTML = "";
+
+      if (activeItems.length === 0) {
+        const emptyBox = document.createElement("div");
+        emptyBox.style.cssText = "background:rgba(15,23,42,0.55); border:1px dashed rgba(56,189,248,0.3); border-radius:12px; padding:18px 14px; text-align:center; color:var(--subtext-color); font-size:0.84rem; margin-bottom:10px;";
+        emptyBox.innerHTML = `
+          <div style="font-size:1.3rem; margin-bottom:6px;">🎒</div>
+          <div style="color:#f8fafc; font-weight:700; margin-bottom:4px;">담긴 장비가 없습니다</div>
+          <div>위의 <strong>[🔍 장비 검색/추가]</strong>(포스엘리먼트·퐁당닷컴 6,403종 DB), <strong>[📸 AI 촬영]</strong> 또는 아래 <strong>[⚡ 빠른 장비 추가]</strong>로 장비를 담아보세요.</div>
+        `;
+        container.appendChild(emptyBox);
+      }
 
       presentCats.forEach(cat => {
         const catItems = activeItems.filter(i => i.cat === cat);
