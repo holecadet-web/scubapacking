@@ -1889,17 +1889,17 @@
     </div>
   </div>
 
-  <!-- 모달 4: 장비 검색/추가 (퐁당닷컴 DB) 모달 -->
+  <!-- 모달 4: 장비 검색/추가 (포스엘리먼트 공홈 & 퐁당닷컴 통합 DB) 모달 -->
   <div class="modal-backdrop" id="pongdang-modal">
     <div class="modal" style="max-width: 600px;">
       <div class="modal-top-bar">
         <div>
           <div style="display:flex; align-items:center; gap:6px;">
             <h3 style="margin:0;">🔍 장비 검색/추가</h3>
-            <span id="pong-total-badge" class="badge">6,448종</span>
+            <span id="pong-total-badge" class="badge">6,403종</span>
           </div>
           <div style="font-size:0.72rem; color:var(--subtext-color); margin-top:2px;">
-            퐁당닷컴 기준 (2026.11.10 수집) · 가격 터치 시 상품정보 열림 · ✏️ 무게/정보 편집 가능
+            포스엘리먼트 공홈 &amp; 퐁당닷컴 통합 DB (2026.11.10 기준) · 가격 터치 시 공식 상품정보 열림
           </div>
         </div>
         <div style="display:flex; align-items:center; gap:6px;">
@@ -1913,6 +1913,7 @@
       <!-- 1단계: 대분류 탭 -->
       <div class="pong-filter-row" id="pong-maincat-row">
         <button class="pong-chip active" onclick="setPongMainCat('전체', this)">전체</button>
+        <button class="pong-chip" onclick="setPongMainCat('포스공홈', this)">🔥 포스엘리먼트 공홈</button>
         <button class="pong-chip" onclick="setPongMainCat('스쿠버', this)">🤿 스쿠버</button>
         <button class="pong-chip" onclick="setPongMainCat('스쿠버 acc', this)">🧷 스쿠버 acc</button>
         <button class="pong-chip" onclick="setPongMainCat('직접등록', this)">⭐ 신규/수정됨</button>
@@ -1944,7 +1945,7 @@
 
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
         <span id="pong-status-text" style="font-size:0.74rem; color:var(--subtext-color);"></span>
-        <span style="font-size:0.72rem; color:#38bdf8;">💡 가격 터치 → 퐁당 제품 상세</span>
+        <span style="font-size:0.72rem; color:#38bdf8;">💡 가격 터치 → 포스공홈·퐁당 제품 상세</span>
       </div>
 
       <div class="pong-results-box" id="pong-results-list"></div>
@@ -2131,57 +2132,111 @@
       carryonLimit: 10.0
     };
 
-    // 사용자 실제 보유 장비 리스트 및 분리된 제외 품목 초기값 세팅
+    // 사용자 실제 보유 장비 리스트 — 포스엘리먼트 공식 스토어(fourthelement.kr) & 퐁당닷컴(pongdang.com) DB 제품 매칭 완료
     const FACTORY_DEFAULT_ITEMS = [
       // 1. 가방류 (2.20 kg)
-      { name: "포스 익스페디션 주황색 90L 백", desc: "메인 위탁 아우터 가방", cat: "가방류", weight: 1.50, bag: "위탁", fixed: true, checked: false, excluded: false },
-      { name: "PADI 메쉬백 (OMS 파우치를 내부에 수납)", desc: "내부에 OMS 메쉬 파우치 포함", cat: "가방류", weight: 0.40, bag: "위탁", fixed: true, checked: false, excluded: false },
-      { name: "OMS 메쉬 파우치 (PADI 메쉬백 내부에 수납)", desc: "[기내/위탁 변경 가능] 소품 수납", cat: "가방류", weight: 0.30, bag: "위탁", fixed: false, checked: false, excluded: false },
+      { name: "[포스엘리먼트] 익스페디션 더플백 90L 오렌지 EXPEDITION DUFFEL BAG", desc: "포스공홈 · 가방 | 메인 위탁 아우터 가방", cat: "가방류", weight: 1.50, bag: "위탁", fixed: true, checked: false, excluded: false, dbId: "fe_1037", thumb: "https://fourthelement.kr/web/product/medium/202607/94b6296dd664efdee877b23b5d37f99f.jpg" },
+      { name: "[패디] 패디 대형 세척 가방, PADI LARGE MESH POUCH", desc: "퐁당닷컴 · 가방 | 내부에 OMS 메쉬 파우치 수납", cat: "가방류", weight: 0.40, bag: "위탁", fixed: true, checked: false, excluded: false, dbId: "47737", thumb: "/data/goods/77/2026/03/47737_temp_17731303377422list1.jpg" },
+      { name: "[오엠에스] 메쉬 다용도 포켓 하네스 부착 가능", desc: "퐁당닷컴 · 가방 | [기내/위탁 변경 가능] 소품 수납", cat: "가방류", weight: 0.30, bag: "위탁", fixed: false, checked: false, excluded: false, dbId: "31217", thumb: "/data/goods/164/2025/04/31217_temp_17443393267562list1.jpg" },
 
       // 2. 핵심 장비 (15.05 kg)
-      { name: "OMS 프로엘리트 BC (90L 백 바닥 배치)", desc: "가방 바닥면에 수납", cat: "핵심 장비", weight: 7.25, bag: "위탁", fixed: false, checked: false, excluded: false },
-      { name: "포스엘리먼트 프로테우스 3mm 웻수트", desc: "11월 오키나와 웻수트", cat: "핵심 장비", weight: 1.65, bag: "위탁", fixed: false, checked: false, excluded: false },
-      { name: "걸 와프 핀 (풀풋 고무 핀)", desc: "타비 삭스와 세트 착용", cat: "핵심 장비", weight: 2.60, bag: "위탁", fixed: false, checked: false, excluded: false },
-      { name: "아펙스 XTX200 레귤레이터 세트 (파우치 포함)", desc: "[기내/위탁 변경 가능] 파손 방지 및 무게 분산", cat: "핵심 장비", weight: 3.25, bag: "기내", fixed: false, checked: false, excluded: false },
-      { name: "투사 파라곤 마스크 (클리어 렌즈)", desc: "[기내/위탁 변경 가능] 렌즈 보호", cat: "핵심 장비", weight: 0.30, bag: "기내", fixed: false, checked: false, excluded: false },
+      { name: "[오엠에스] 싱글 프로 컴포트 세트 Ⅱ (프로엘리트 BC)", desc: "퐁당닷컴 · BC 백플레이트 | 90L 백 바닥면에 수납", cat: "핵심 장비", weight: 7.25, bag: "위탁", fixed: false, checked: false, excluded: false, dbId: "28116", thumb: "/data/goods/164/2025/04/28116_temp_17437477292144list1.jpg" },
+      { name: "[포스엘리먼트] 프로테우스Ⅱ (남성용) 3mm 웻수트 PROTEUS II M", desc: "포스공홈 · 웨트슈트 | 11월 오키나와 3mm 웻수트", cat: "핵심 장비", weight: 1.65, bag: "위탁", fixed: false, checked: false, excluded: false, dbId: "fe_67", thumb: "https://fourthelement.kr/web/product/medium/20200401/58018e37b1dbd1f4818e3cb678786f29.jpg" },
+      { name: "[걸] 워프 핀 (풀풋 고무 핀)", desc: "퐁당닷컴 · 오리발 | 타비 삭스와 세트 착용", cat: "핵심 장비", weight: 2.60, bag: "위탁", fixed: false, checked: false, excluded: false, dbId: "42305", thumb: "/data/goods/70/2025/09/42305_temp_17567884759276list1.jpg" },
+      { name: "[아펙스] XTX 200 레귤레이터 세트 (파우치 포함)", desc: "퐁당닷컴 · 호흡기 | [기내/위탁 변경 가능] 파손 방지 및 무게 분산", cat: "핵심 장비", weight: 3.25, bag: "기내", fixed: false, checked: false, excluded: false, dbId: "57778", thumb: "/data/goods/72/2013/05/20663_tmp_5735637fb19e0d114a76e8065301cc8d3108list1.jpg" },
+      { name: "[투사] Paragon 파라곤 마스크 (클리어 렌즈)", desc: "퐁당닷컴 · 마스크 | [기내/위탁 변경 가능] 렌즈 보호", cat: "핵심 장비", weight: 0.30, bag: "기내", fixed: false, checked: false, excluded: false, dbId: "43954", thumb: "/data/goods/10/2024/08/43954_temp_17242922892111list1.png" },
 
       // 3. 의류/보온 (0.50 kg)
-      { name: "포스엘리먼트 3mm 다이빙 후드", desc: "개별 항목", cat: "의류/보온", weight: 0.15, bag: "위탁", fixed: false, checked: false, excluded: false },
-      { name: "포스엘리먼트 3mm 다이빙 글러브", desc: "개별 항목", cat: "의류/보온", weight: 0.15, bag: "위탁", fixed: false, checked: false, excluded: false },
-      { name: "걸 타비형 네오프렌 삭스", desc: "개별 항목", cat: "의류/보온", weight: 0.12, bag: "위탁", fixed: false, checked: false, excluded: false },
-      { name: "나이키 수영복 (브리프)", desc: "개별 항목", cat: "의류/보온", weight: 0.08, bag: "위탁", fixed: false, checked: false, excluded: false },
+      { name: "[포스엘리먼트] 3mm 다이빙 후드 3mm FE HOOD", desc: "포스공홈 · 후드 | 개별 항목", cat: "의류/보온", weight: 0.15, bag: "위탁", fixed: false, checked: false, excluded: false, dbId: "fe_111", thumb: "https://fourthelement.kr/web/product/medium/202607/09c313eb92fa6568a1deef2d8050b78b.jpg" },
+      { name: "[포스엘리먼트] 3mm 다이빙 글러브 3mm FE GLOVES", desc: "포스공홈 · 장갑 | 개별 항목", cat: "의류/보온", weight: 0.15, bag: "위탁", fixed: false, checked: false, excluded: false, dbId: "fe_476", thumb: "https://fourthelement.kr/web/product/medium/202107/b1c54771cd086ca2159ab7ebc86a8171.jpg" },
+      { name: "[걸] 핀 삭스(GA-5640) 2mm (타비형 네오프렌 삭스)", desc: "퐁당닷컴 · 삭스 | 개별 항목", cat: "의류/보온", weight: 0.12, bag: "위탁", fixed: false, checked: false, excluded: false, dbId: "23632", thumb: "/data/goods/70/2023/11/23632_temp_17005328848411list1.png" },
+      { name: "[나이키] 스윔 남성 브리프 수영복 (NIKE SWIM BRIEF)", desc: "퐁당닷컴 · 수영복 | 개별 항목", cat: "의류/보온", weight: 0.08, bag: "위탁", fixed: false, checked: false, excluded: false, dbId: "nike_brief_01", thumb: "/data/goods/1/2023/10/53733_2023101615180220.jpg" },
 
       // 4. 계기/전자 (0.30 kg)
-      { name: "가민 디센트 Mk3i 본체 (스트랩 포함)", desc: "[기내/위탁 변경 가능] 메인 컴퓨터", cat: "계기/전자", weight: 0.10, bag: "기내", fixed: false, checked: false, excluded: false },
-      { name: "가민 전용 충전 케이블", desc: "[기내/위탁 변경 가능] 필수 충전기", cat: "계기/전자", weight: 0.10, bag: "기내", fixed: false, checked: false, excluded: false },
-      { name: "히드프로 다이빙 컴퍼스", desc: "번지 마운트 나침반", cat: "계기/전자", weight: 0.10, bag: "위탁", fixed: false, checked: false, excluded: false },
+      { name: "[가민] 가민 디센트 MK3i 51mm 본체 (스트랩 포함)", desc: "퐁당닷컴 · 컴퓨터 | [기내/위탁 변경 가능] 메인 컴퓨터", cat: "계기/전자", weight: 0.10, bag: "기내", fixed: false, checked: false, excluded: false, dbId: "54365", thumb: "/data/goods/1/2024/01/54365_temp_17055560657874list1.jpg" },
+      { name: "[가민] 가민 디센트 클립 충전기 C타입 (전용 충전 케이블)", desc: "퐁당닷컴 · 컴퓨터 | [기내/위탁 변경 가능] 필수 충전기", cat: "계기/전자", weight: 0.10, bag: "기내", fixed: false, checked: false, excluded: false, dbId: "55248", thumb: "/data/goods/1/2024/03/55248_temp_17115924117123list1.jpg" },
+      { name: "[히드프로] 히드프로 번지 마운트 다이빙 컴퍼스", desc: "퐁당닷컴 · 게이지 | 번지 마운트 나침반", cat: "계기/전자", weight: 0.10, bag: "위탁", fixed: false, checked: false, excluded: false, dbId: "46119", thumb: "/data/goods/1/2021/05/46119_temp_16206371284357list1.jpg" },
 
       // 5. 조명/촬영 (1.70 kg)
-      { name: "다이브프로 S40 V2 수중 랜턴", desc: "[기내/위탁 변경 가능] 수중 랜턴", cat: "조명/촬영", weight: 0.60, bag: "기내", fixed: false, checked: false, excluded: false },
-      { name: "리튬이온 배터리 5알 (18650/26650)", desc: "[기내 고정] 리튬 배터리 보안 규정", cat: "조명/촬영", weight: 0.30, bag: "기내", fixed: true, checked: false, excluded: false },
-      { name: "리튬이온 배터리 4구 충전기", desc: "[기내/위탁 변경 가능] 4구 멀티 충전기", cat: "조명/촬영", weight: 0.40, bag: "기내", fixed: false, checked: false, excluded: false },
-      { name: "인스타360 에이스 프로 2 (하우징 세팅)", desc: "[기내/위탁 변경 가능] 액션캠 세트", cat: "조명/촬영", weight: 0.40, bag: "기내", fixed: false, checked: false, excluded: false },
+      { name: "[다이브프로] S40 ver.2 수중 랜턴", desc: "퐁당닷컴 · 라이트 | [기내/위탁 변경 가능] 수중 랜턴", cat: "조명/촬영", weight: 0.60, bag: "기내", fixed: false, checked: false, excluded: false, dbId: "39807", thumb: "/data/goods/134/2019/06/39807_temp_17853920980402list1.jpg" },
+      { name: "[판도라랩] 26650 / 18650 리튬이온 배터리 (5알 세트)", desc: "퐁당닷컴 · 라이트 | [기내 고정] 리튬 배터리 보안 규정", cat: "조명/촬영", weight: 0.30, bag: "기내", fixed: true, checked: false, excluded: false, dbId: "48365", thumb: "/data/goods/174/2023/09/48365_temp_16946524241341list1.jpg" },
+      { name: "[하이맥스] KC인증 26650 / 18650 리튬이온 배터리 4구 충전기", desc: "퐁당닷컴 · 라이트 | [기내/위탁 변경 가능] 4구 멀티 충전기", cat: "조명/촬영", weight: 0.40, bag: "기내", fixed: false, checked: false, excluded: false, dbId: "45115", thumb: "/data/goods/78/2025/07/45115_temp_17515971407554list1.jpg" },
+      { name: "[딥큐브] DC-360 ACE Delin (인스타360 에이스 프로 2 하우징 세팅)", desc: "퐁당닷컴 · 액션캠/하우징 | [기내/위탁 변경 가능] 액션캠 세트", cat: "조명/촬영", weight: 0.40, bag: "기내", fixed: false, checked: false, excluded: false, dbId: "56158", thumb: "/data/goods/102/2024/06/56158_temp_17174846102894list1.png" },
 
       // 6. 안전/소품 (0.60 kg)
-      { name: "360도 후방 손등 미러", desc: "안전용 거울", cat: "안전/소품", weight: 0.10, bag: "위탁", fixed: false, checked: false, excluded: false },
-      { name: "OMS 1.8m SMB + 핑거 스풀 세트", desc: "결합된 단일 품목", cat: "안전/소품", weight: 0.50, bag: "위탁", fixed: false, checked: false, excluded: false },
+      { name: "[퍼스트다이브] 다이빙 후사경 미러 (360도 후방 손등 미러)", desc: "퐁당닷컴 · 후사경 | 안전용 거울", cat: "안전/소품", weight: 0.10, bag: "위탁", fixed: false, checked: false, excluded: false, dbId: "61471", thumb: "/data/goods/320/2026/08/61471_temp_17870277867074list1.jpg" },
+      { name: "[오엠에스] SMB 부이 1.8m 반폐쇄형 + 핑거 스풀 세트", desc: "퐁당닷컴 · 소세지/부이 | 결합된 단일 품목", cat: "안전/소품", weight: 0.50, bag: "위탁", fixed: false, checked: false, excluded: false, dbId: "31193", thumb: "/data/goods/164/2025/04/31193_temp_17442658351689list1.jpg" },
 
       // 7. 공구/케어 (0.30 kg)
-      { name: "스파이더코 H2 다이빙 커터 (볼트스냅)", desc: "[위탁 고정] 기내 반입 불가", cat: "공구/케어", weight: 0.10, bag: "위탁", fixed: true, checked: false, excluded: false },
-      { name: "판도라툴 (만능렌치)", desc: "[위탁 고정] 장비 정비용 멀티툴", cat: "공구/케어", weight: 0.10, bag: "위탁", fixed: true, checked: false, excluded: false },
-      { name: "안티포그 스프레이 (Wiper G)", desc: "[위탁 고정] 액체류 필수", cat: "공구/케어", weight: 0.10, bag: "위탁", fixed: true, checked: false, excluded: false },
+      { name: "[스파이더코] ATLANTIC SALT C89SYL (H2 다이빙 커터 + 볼트스냅)", desc: "퐁당닷컴 · 나이프 | [위탁 고정] 기내 반입 불가", cat: "공구/케어", weight: 0.10, bag: "위탁", fixed: true, checked: false, excluded: false, dbId: "17491", thumb: "/data/goods/134/2011/04/17491_temp_17853776352922list1.jpg" },
+      { name: "[판도라랩] 판도라툴 3.0 티타늄 만능렌치 (Pandora Tool Ver 3.0)", desc: "퐁당닷컴 · 다이빙 공구 | [위탁 고정] 장비 정비용 멀티툴", cat: "공구/케어", weight: 0.10, bag: "위탁", fixed: true, checked: false, excluded: false, dbId: "52055", thumb: "/data/goods/174/2025/11/52055_temp_17635301285951list1.png" },
+      { name: "[오션테그] Anti-fog Wiper G 와이퍼 김서림방지제 스프레이 100ml", desc: "퐁당닷컴 · 마스크 케어 | [위탁 고정] 액체류 필수", cat: "공구/케어", weight: 0.10, bag: "위탁", fixed: true, checked: false, excluded: false, dbId: "51617", thumb: "/data/goods/247/2023/02/51617_temp_17896258484189list1.jpg" },
 
-      // 8. 제외 품목 (필요시 추가 가능 - 아거노트/내피/텍핀/락호퍼 모두 개별 분리)
-      { name: "포스 아르고백 (44L)", desc: "드라이수트/추가 장비 수납 백", cat: "가방류", weight: 1.00, bag: "위탁", fixed: false, checked: false, excluded: true },
-      { name: "아거노트 2.0 드라이수트", desc: "포스엘리먼트 드라이수트 본체 (내피 분리)", cat: "핵심 장비", weight: 3.50, bag: "위탁", fixed: false, checked: false, excluded: true },
-      { name: "드라이수트 내피", desc: "동계/드라이수트 보온 내피 (언더수트)", cat: "의류/보온", weight: 1.80, bag: "위탁", fixed: false, checked: false, excluded: true },
-      { name: "포스 텍핀", desc: "오픈힐 텍 다이빙 핀 (락호퍼 슈즈와 착용)", cat: "핵심 장비", weight: 2.30, bag: "위탁", fixed: false, checked: false, excluded: true },
-      { name: "포스 락호퍼 슈즈", desc: "텍핀 전용 다이빙 슈즈", cat: "의류/보온", weight: 0.50, bag: "위탁", fixed: false, checked: false, excluded: true }
+      // 8. 제외 품목 (필요시 추가 가능 — 포스엘리먼트 공식 스토어 매칭)
+      { name: "[포스엘리먼트] 아르고백 ARGO BAG GREY (44L)", desc: "포스공홈 · 가방 | 드라이수트/추가 장비 수납 백", cat: "가방류", weight: 1.00, bag: "위탁", fixed: false, checked: false, excluded: true, dbId: "fe_130", thumb: "https://fourthelement.kr/web/product/medium/202503/fe760f28f7d4e2cf308232f5a468c75a.jpg" },
+      { name: "[포스엘리먼트] 아거노트 2.0 플렉스 드라이슈트 ARGONAUT 2.0 FLEX", desc: "포스공홈 · 드라이슈트 | 포스엘리먼트 드라이수트 본체 (내피 분리)", cat: "핵심 장비", weight: 3.50, bag: "위탁", fixed: false, checked: false, excluded: true, dbId: "fe_807", thumb: "https://fourthelement.kr/web/product/medium/20200325/e5da88caeff45b80e3914ba897ae80c8.jpg" },
+      { name: "[포스엘리먼트] NEW 아크틱 드라이내피 남성용 세트 ARCTIC M SET", desc: "포스공홈 · 드라이내피 | 동계/드라이수트 보온 내피 (언더수트)", cat: "의류/보온", weight: 1.80, bag: "위탁", fixed: false, checked: false, excluded: true, dbId: "fe_1083", thumb: "https://fourthelement.kr/web/product/medium/202611/51f3190ff0e92669090b7c647bf0cc45.jpg" },
+      { name: "[포스엘리먼트] 포스엘리먼트 텍 핀 Tech Fin", desc: "포스공홈 · 오리발 | 오픈힐 텍 다이빙 핀 (락호퍼 슈즈와 착용)", cat: "핵심 장비", weight: 2.30, bag: "위탁", fixed: false, checked: false, excluded: true, dbId: "fe_1047", thumb: "https://fourthelement.kr/web/product/medium/202609/7801fccf55af994d1d55816146d6b6d2.jpeg" },
+      { name: "[포스엘리먼트] 락호퍼 숏부츠 ROCK HOPPER 3MM SHOE", desc: "포스공홈 · 부츠 | 텍핀 전용 다이빙 슈즈", cat: "의류/보온", weight: 0.50, bag: "위탁", fixed: false, checked: false, excluded: true, dbId: "fe_124", thumb: "https://fourthelement.kr/web/product/medium/202609/512802b6d333eb8ed020f431ba96041d.jpg" }
     ];
 
+    const LEGACY_NAME_TO_DEFAULT_IDX = {
+      "포스 익스페디션 주황색 90L 백": 0,
+      "PADI 메쉬백 (OMS 파우치를 내부에 수납)": 1,
+      "OMS 메쉬 파우치 (PADI 메쉬백 내부에 수납)": 2,
+      "OMS 프로엘리트 BC (90L 백 바닥 배치)": 3,
+      "포스엘리먼트 프로테우스 3mm 웻수트": 4,
+      "걸 와프 핀 (풀풋 고무 핀)": 5,
+      "아펙스 XTX200 레귤레이터 세트 (파우치 포함)": 6,
+      "투사 파라곤 마스크 (클리어 렌즈)": 7,
+      "포스엘리먼트 3mm 다이빙 후드": 8,
+      "포스엘리먼트 3mm 다이빙 글러브": 9,
+      "걸 타비형 네오프렌 삭스": 10,
+      "나이키 수영복 (브리프)": 11,
+      "가민 디센트 Mk3i 본체 (스트랩 포함)": 12,
+      "가민 전용 충전 케이블": 13,
+      "히드프로 다이빙 컴퍼스": 14,
+      "다이브프로 S40 V2 수중 랜턴": 15,
+      "리튬이온 배터리 5알 (18650/26650)": 16,
+      "리튬이온 배터리 4구 충전기": 17,
+      "인스타360 에이스 프로 2 (하우징 세팅)": 18,
+      "360도 후방 손등 미러": 19,
+      "OMS 1.8m SMB + 핑거 스풀 세트": 20,
+      "스파이더코 H2 다이빙 커터 (볼트스냅)": 21,
+      "판도라툴 (만능렌치)": 22,
+      "안티포그 스프레이 (Wiper G)": 23,
+      "포스 아르고백 (44L)": 24,
+      "아거노트 2.0 드라이수트": 25,
+      "드라이수트 내피": 26,
+      "포스 텍핀": 27,
+      "포스 락호퍼 슈즈": 28
+    };
+
     const TOURS_STORAGE_KEY = "scuba_saved_tours_v5";
-    const CUSTOM_DEFAULT_KEY = "scuba_custom_default_items_v5";
+    const CUSTOM_DEFAULT_KEY = "scuba_custom_default_items_v6";
     const API_KEY_STORAGE = "okinawa_gemini_api_key";
+
+    function migrateItemListToDbMatched(itemList) {
+      if (!Array.isArray(itemList)) return JSON.parse(JSON.stringify(FACTORY_DEFAULT_ITEMS));
+      let changed = false;
+      const migrated = itemList.map((it) => {
+        if (!it) return it;
+        const mIdx = LEGACY_NAME_TO_DEFAULT_IDX[it.name];
+        if (mIdx !== undefined && FACTORY_DEFAULT_ITEMS[mIdx]) {
+          const def = FACTORY_DEFAULT_ITEMS[mIdx];
+          changed = true;
+          return Object.assign({}, it, {
+            name: def.name,
+            desc: def.desc,
+            cat: def.cat,
+            dbId: def.dbId,
+            thumb: def.thumb
+          });
+        }
+        return it;
+      });
+      return { migrated, changed };
+    }
 
     function getDefaultItemsTemplate() {
       try {
@@ -2211,7 +2266,20 @@
         const raw = localStorage.getItem(TOURS_STORAGE_KEY);
         if (raw) {
           const parsed = JSON.parse(raw);
-          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            let anyMigrated = false;
+            parsed.forEach(t => {
+              const res = migrateItemListToDbMatched(t.items);
+              if (res.changed) {
+                t.items = res.migrated;
+                anyMigrated = true;
+              }
+            });
+            if (anyMigrated) {
+              localStorage.setItem(TOURS_STORAGE_KEY, JSON.stringify(parsed));
+            }
+            return parsed;
+          }
         }
       } catch (e) {}
       const initial = [{
@@ -2493,15 +2561,18 @@
       const weight = parseFloat(weightInput.value) || 0.20;
       const db = getCombinedPongdangDb();
       const foundDb = db.find(r => r[0] === name);
+      const isFe = foundDb && String(foundDb[10] || "").startsWith("fe_");
       items.push({
         name,
-        desc: foundDb ? (foundDb[3] ? `${foundDb[2]} · ${foundDb[3]}` : "장비 DB") : "직접 추가",
+        desc: foundDb ? `${isFe ? "포스공홈" : "퐁당닷컴"} · ${foundDb[3] || foundDb[2]}` : "직접 추가",
         cat,
         weight,
         bag: foundDb ? (foundDb[6] || "위탁") : "위탁",
         fixed: foundDb ? Boolean(foundDb[7]) : false,
         checked: true,
-        excluded: false
+        excluded: false,
+        dbId: foundDb ? (foundDb[10] || "") : "",
+        thumb: foundDb ? (foundDb[9] || "") : ""
       });
       nameInput.value = "";
       const suggestBox = document.getElementById("quick-suggest-box");
@@ -2710,12 +2781,27 @@
           chk.addEventListener("change", () => toggleCheck(idx));
           chkWrap.appendChild(chk);
 
+          if (item.thumb) {
+            const thumbEl = document.createElement("img");
+            thumbEl.src = resolveThumbUrl(item.thumb);
+            thumbEl.alt = item.name;
+            thumbEl.loading = "lazy";
+            thumbEl.style.cssText = "width:34px; height:34px; border-radius:8px; object-fit:cover; background:#fff; border:1px solid rgba(56,189,248,0.25); flex-shrink:0; cursor:pointer;";
+            thumbEl.onerror = function() { this.style.display = "none"; };
+            thumbEl.onclick = () => toggleCheck(idx);
+            chkWrap.appendChild(thumbEl);
+          }
+
           const info = document.createElement("div");
           info.className = "item-info";
           info.addEventListener("click", () => toggleCheck(idx));
+          const prodUrl = item.dbId ? getProductUrlById(item.dbId, item.name) : "";
+          const linkBadge = prodUrl
+            ? ` · <a href="${prodUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation();" style="color:#38bdf8; text-decoration:none; font-weight:600;">상품보기🔗</a>`
+            : "";
           const descHtml = item.desc
-            ? `<span class="item-desc">${item.desc} · <span class="item-weight-tag">${Number(item.weight).toFixed(2)} kg</span></span>`
-            : `<span class="item-desc"><span class="item-weight-tag">${Number(item.weight).toFixed(2)} kg</span></span>`;
+            ? `<span class="item-desc">${item.desc} · <span class="item-weight-tag">${Number(item.weight).toFixed(2)} kg</span>${linkBadge}</span>`
+            : `<span class="item-desc"><span class="item-weight-tag">${Number(item.weight).toFixed(2)} kg</span>${linkBadge}</span>`;
           info.innerHTML = `
             <span class="item-name">${item.name}</span>
             ${descHtml}
@@ -2789,13 +2875,31 @@
           const row = document.createElement("div");
           row.className = "excluded-row";
 
+          const leftWrap = document.createElement("div");
+          leftWrap.style.cssText = "display:flex; align-items:center; gap:9px; flex:1; min-width:0;";
+
+          if (item.thumb) {
+            const thumbEl = document.createElement("img");
+            thumbEl.src = resolveThumbUrl(item.thumb);
+            thumbEl.alt = item.name;
+            thumbEl.loading = "lazy";
+            thumbEl.style.cssText = "width:34px; height:34px; border-radius:8px; object-fit:cover; background:#fff; border:1px solid rgba(56,189,248,0.25); flex-shrink:0;";
+            thumbEl.onerror = function() { this.style.display = "none"; };
+            leftWrap.appendChild(thumbEl);
+          }
+
           const info = document.createElement("div");
           info.className = "item-info";
           info.onclick = () => openItemModal(idx);
+          const prodUrl = item.dbId ? getProductUrlById(item.dbId, item.name) : "";
+          const linkBadge = prodUrl
+            ? ` · <a href="${prodUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation();" style="color:#38bdf8; text-decoration:none; font-weight:600;">상품보기🔗</a>`
+            : "";
           info.innerHTML = `
             <span class="item-name">${item.name}</span>
-            <span class="item-desc">[${item.cat}] ${item.desc || "보관 품목"} · <span class="item-weight-tag">${Number(item.weight).toFixed(2)} kg</span></span>
+            <span class="item-desc">[${item.cat}] ${item.desc || "보관 품목"} · <span class="item-weight-tag">${Number(item.weight).toFixed(2)} kg</span>${linkBadge}</span>
           `;
+          leftWrap.appendChild(info);
 
           const actionWrap = document.createElement("div");
           actionWrap.className = "item-actions";
@@ -2820,7 +2924,7 @@
           delBtn.onclick = () => deleteItemDirect(idx);
           actionWrap.appendChild(delBtn);
 
-          row.appendChild(info);
+          row.appendChild(leftWrap);
           row.appendChild(actionWrap);
           excludedContainer.appendChild(row);
         });
@@ -3499,13 +3603,31 @@ JSON 응답 형식:
       return thumb;
     }
 
-    function getPongdangProductUrl(row) {
-      const goodsNo = row[10];
-      if (goodsNo && /^\d+$/.test(String(goodsNo))) {
-        return `https://pongdang.com/goods/view?no=${goodsNo}`;
+    function getProductUrlById(dbId, fallbackName) {
+      const idStr = String(dbId || "").trim();
+      if (idStr.startsWith("fe_")) {
+        const feNo = idStr.replace(/^fe_/, "");
+        return `https://fourthelement.kr/product/detail.html?product_no=${encodeURIComponent(feNo)}`;
       }
-      const cleanQ = (row[0] || "").replace(/^\[[^\]]+\]\s*/, "").trim();
-      return `https://pongdang.com/goods/search?search_text=${encodeURIComponent(cleanQ || row[0])}`;
+      if (idStr && /^\d+$/.test(idStr)) {
+        return `https://pongdang.com/goods/view?no=${idStr}`;
+      }
+      const cleanQ = (fallbackName || "").replace(/^\[[^\]]+\]\s*/, "").trim();
+      if ((fallbackName || "").includes("포스엘리먼트")) {
+        return `https://fourthelement.kr/product/search.html?keyword=${encodeURIComponent(cleanQ || fallbackName)}`;
+      }
+      return `https://pongdang.com/goods/search?search_text=${encodeURIComponent(cleanQ || fallbackName || "")}`;
+    }
+
+    function getPongdangProductUrl(row) {
+      return getProductUrlById(row[10], row[0]);
+    }
+
+    function matchesPongMainCat(r, mainCat) {
+      if (mainCat === "전체") return true;
+      if (mainCat === "직접등록") return Boolean(r[11] || r[14]);
+      if (mainCat === "포스공홈") return String(r[10] || "").startsWith("fe_") || r[1] === "포스엘리먼트";
+      return r[2] === mainCat;
     }
 
     function openPongdangModal() {
@@ -3541,11 +3663,7 @@ JSON 응답 형식:
       const counts = {};
       for (let i = 0; i < db.length; i++) {
         const r = db[i];
-        if (currentPongMainCat === "직접등록") {
-          if (!r[11] && !r[14]) continue;
-        } else if (currentPongMainCat !== "전체" && r[2] !== currentPongMainCat) {
-          continue;
-        }
+        if (!matchesPongMainCat(r, currentPongMainCat)) continue;
         const sc = r[3] || "기타";
         counts[sc] = (counts[sc] || 0) + 1;
       }
@@ -3566,11 +3684,7 @@ JSON 응답 형식:
       const counts = {};
       for (let i = 0; i < db.length; i++) {
         const r = db[i];
-        if (currentPongMainCat === "직접등록") {
-          if (!r[11] && !r[14]) continue;
-        } else if (currentPongMainCat !== "전체" && r[2] !== currentPongMainCat) {
-          continue;
-        }
+        if (!matchesPongMainCat(r, currentPongMainCat)) continue;
         if (selectedSubCat !== "전체" && (r[3] || "기타") !== selectedSubCat) continue;
         const br = r[1] || "기타";
         counts[br] = (counts[br] || 0) + 1;
@@ -3605,11 +3719,7 @@ JSON 응답 형식:
 
       for (let i = 0; i < db.length; i++) {
         const r = db[i];
-        if (currentPongMainCat === "직접등록") {
-          if (!r[11] && !r[14]) continue;
-        } else if (currentPongMainCat !== "전체" && r[2] !== currentPongMainCat) {
-          continue;
-        }
+        if (!matchesPongMainCat(r, currentPongMainCat)) continue;
         if (selectedSubCat !== "전체" && (r[3] || "기타") !== selectedSubCat) continue;
         if (selectedBrand !== "전체" && (r[1] || "기타") !== selectedBrand) continue;
 
@@ -3660,10 +3770,12 @@ JSON 응답 형식:
         thumbImg.alt = fullName;
         thumbImg.onerror = function () { this.onerror = null; this.src = "icon.svg"; };
 
+        const isFeOfficial = String(goodsNo || "").startsWith("fe_");
+        const storeName = isFeOfficial ? "포스공홈" : "퐁당닷컴";
         const productUrl = getPongdangProductUrl(row);
         const priceLabel = price && Number(price) > 0
-          ? `💰 ${Number(price).toLocaleString()}원 🔗`
-          : `🔍 제품 상세보기 🔗`;
+          ? `💰 ${Number(price).toLocaleString()}원 (${storeName} 🔗)`
+          : `🔍 ${storeName} 상세보기 🔗`;
 
         const statusBadge = isCustom
           ? `<span class="badge ok" style="font-size:0.66rem; padding:1px 5px; margin-left:4px;">신규</span>`
@@ -3673,8 +3785,8 @@ JSON 응답 형식:
         infoDiv.className = "pong-item-info";
         infoDiv.innerHTML = `
           <span class="pong-item-title">${fullName}${statusBadge}</span>
-          <span class="pong-item-sub">${mainCat} &gt; ${subCat || "일반"} · ${appCat} (${bag})</span>
-          <a class="pong-price-link" href="${productUrl}" target="_blank" rel="noopener" title="브라우저에서 퐁당닷컴 상품 정보 보기">${priceLabel}</a>
+          <span class="pong-item-sub">${storeName} · ${mainCat} &gt; ${subCat || "일반"} · ${appCat} (${bag})</span>
+          <a class="pong-price-link" href="${productUrl}" target="_blank" rel="noopener" title="브라우저에서 ${storeName} 상품 정보 보기">${priceLabel}</a>
         `;
 
         const actDiv = document.createElement("div");
@@ -3848,18 +3960,22 @@ JSON 응답 형식:
       const db = getCombinedPongdangDb();
       const row = db[dbIdx];
       if (!row) return;
-      const [fullName, brand, mainCat, subCat, appCat, weight, bag, fixed] = row;
+      const [fullName, brand, mainCat, subCat, appCat, weight, bag, fixed, price, thumb, goodsNo] = row;
       const finalW = customWeight !== undefined ? customWeight : (Number(weight) || 0.25);
+      const isFe = String(goodsNo || "").startsWith("fe_");
+      const storeLabel = isFe ? "포스공홈" : "퐁당닷컴";
 
       items.push({
         name: fullName,
-        desc: subCat ? `${mainCat} · ${subCat}` : "장비 DB",
+        desc: subCat ? `${storeLabel} · ${subCat}` : `${storeLabel} · ${mainCat}`,
         cat: appCat || "핵심 장비",
         weight: finalW,
         bag: bag || "위탁",
         fixed: Boolean(fixed),
         checked: !asExcluded,
-        excluded: Boolean(asExcluded)
+        excluded: Boolean(asExcluded),
+        dbId: goodsNo || "",
+        thumb: thumb || ""
       });
       syncCurrentTourToStorage();
       renderDetail();
