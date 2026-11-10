@@ -1,4 +1,4 @@
-const CACHE_NAME = "diving-packing-v15";
+const CACHE_NAME = "diving-packing-v16";
 const ASSETS = ["./", "./index.html", "./manifest.json", "./icon.png", "./icon.svg", "./edition.js", "./pongdang_db.js"];
 
 self.addEventListener("install", (e) => {
