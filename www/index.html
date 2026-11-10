@@ -1114,85 +1114,386 @@
     .quick-suggest-item:active {
       background: var(--card-bg);
     }
+
+    /* 버튼 텍스트 넘침 방지 및 깔끔한 정렬 */
+    .btn {
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.25;
+    }
+
+    /* 원형 아이콘 버튼 (?, 🔑 등) */
+    .circle-icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border-color);
+      background: var(--card-bg);
+      color: var(--text-color);
+      font-size: 0.95rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-rest);
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s ease;
+    }
+
+    .circle-icon-btn:hover {
+      transform: translateY(-2px) scale(1.05);
+      border-color: var(--accent);
+    }
+
+    /* 최초 접속 Gemini API 인증 게이트 */
+    #auth-gate-view {
+      min-height: 82vh;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 16px 4px;
+    }
+
+    .gate-card {
+      width: 100%;
+      max-width: 440px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 24px 20px;
+      box-shadow: var(--shadow-lift);
+      backdrop-filter: blur(14px);
+    }
+
+    .gate-step-box {
+      background: var(--bg-color);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 13px 14px;
+      margin: 14px 0;
+      font-size: 0.82rem;
+      line-height: 1.65;
+    }
+
+    .gate-step-box ol {
+      margin: 6px 0 0 18px;
+      padding: 0;
+    }
+
+    .gate-step-box li {
+      margin-bottom: 5px;
+    }
+
+    /* 모달 상단 헤더 & 우측 상단 닫기(✕) 버튼 */
+    .modal-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 12px;
+      position: sticky;
+      top: -20px;
+      background: var(--bg-color);
+      padding: 14px 0 10px 0;
+      margin-top: -14px;
+      z-index: 15;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .modal-close-x {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      background: var(--card-bg);
+      color: var(--text-color);
+      font-size: 1rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .modal-close-x:hover {
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    /* 사용법 모달 문단/카드 스타일 */
+    .help-card-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .help-card-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #38bdf8;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .help-card-body {
+      font-size: 0.82rem;
+      line-height: 1.65;
+      color: var(--text-color);
+    }
+
+    .help-card-body p {
+      margin: 0 0 8px 0;
+    }
+
+    .help-card-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* 장비 챙기기 드로어 (접고 열기) */
+    .gear-drawer-btn {
+      width: 100%;
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.18), rgba(99, 102, 241, 0.16));
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      border-radius: 14px;
+      padding: 13px 15px;
+      margin: 12px 0 8px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-color);
+      cursor: pointer;
+      box-shadow: var(--shadow-rest);
+      text-align: left;
+    }
+
+    .gear-drawer-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .gear-drawer-title {
+      font-size: 0.96rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .gear-drawer-sub {
+      font-size: 0.77rem;
+      color: #38bdf8;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .gear-drawer-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .gear-drawer-pill {
+      background: rgba(14, 165, 233, 0.22);
+      border: 1px solid rgba(56, 189, 248, 0.5);
+      color: #38bdf8;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    .gear-drawer-body {
+      overflow: hidden;
+      transition: opacity 0.25s ease;
+    }
+
+    /* 퐁당닷컴 가격 클릭 링크 */
+    .pong-price-link {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #38bdf8;
+      margin-top: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      text-decoration: none;
+      background: rgba(14, 165, 233, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 2px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .pong-price-link:hover {
+      background: rgba(14, 165, 233, 0.24);
+      text-decoration: underline;
+    }
+
+    /* 구글맵 검색 & 미리보기 */
+    .spot-chip-row {
+      display: flex;
+      gap: 5px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      margin-top: 6px;
+    }
+
+    .spot-chip {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .spot-chip:hover {
+      border-color: var(--accent);
+      color: #38bdf8;
+    }
+
+    .map-search-results {
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background: var(--card-bg);
+      max-height: 150px;
+      overflow-y: auto;
+      margin-top: 6px;
+      display: none;
+    }
+
+    .map-search-item {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.78rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .map-search-item:hover {
+      background: rgba(14, 165, 233, 0.14);
+    }
+
+    .map-preview-wrap {
+      margin-top: 8px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      background: var(--card-bg);
+    }
+
+    .map-preview-frame {
+      width: 100%;
+      height: 165px;
+      border: 0;
+      display: block;
+    }
+
+    input[type="date"] {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: var(--card-bg);
+      color: var(--text-color);
+      font-size: 0.84rem;
+      font-family: inherit;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- ==================== 1. 메인 홈 화면 (투어 목록 관리 & 제미나이 연결 & 사용법) ==================== -->
-    <div id="home-view">
+    <!-- ==================== 0. 최초 접속 Gemini API 인증 게이트 ==================== -->
+    <div id="auth-gate-view">
+      <div class="gate-card">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+          <img src="icon.svg" alt="Scuba Icon" class="app-logo" style="width:52px; height:52px;" />
+          <div>
+            <h1 style="font-size:1.2rem; margin:0;">스쿠버 투어 패킹 매니저</h1>
+            <span style="font-size:0.78rem; color:#38bdf8; font-weight:600;">AI 해황·이동편 자동분석 & 스마트 짐싸기</span>
+          </div>
+        </div>
+
+        <p style="font-size:0.83rem; color:var(--subtext-color); line-height:1.55; margin:8px 0;">
+          이 앱은 투어 장소·일정별 <strong>AI 바다 날씨(수온·파고·시야)·이동편 자동 브리핑</strong>과 <strong>장비 사진 AI 인식</strong>을 위해 <strong>Gemini API 연결</strong>이 필수입니다.
+        </p>
+
+        <div class="gate-step-box">
+          <strong style="color:#38bdf8;">🔑 Google 계정으로 30초 무료 연결하기</strong>
+          <ol>
+            <li>아래 <strong>[Google 로그인으로 무료 키 발급]</strong> 버튼을 누릅니다.</li>
+            <li>구글 로그인 후 파란색 <strong>Create API key</strong>를 눌러 키(<code>AIzaSy...</code>)를 복사합니다.</li>
+            <li>복사한 키를 아래 칸에 붙여넣고 <strong>[시작하기]</strong>를 누르면 바로 입장됩니다!</li>
+          </ol>
+          <div style="margin-top:10px;">
+            <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener" class="btn btn-blue" style="width:100%; text-decoration:none; padding:10px;">
+              🔑 Google 로그인으로 무료 키 발급 (AI Studio) ↗
+            </a>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-top:14px;">
+          <label>Gemini API Key 입력</label>
+          <input type="password" id="gate-api-key-input" placeholder="AIzaSy... 로 시작하는 키 붙여넣기" autocomplete="off" />
+        </div>
+
+        <div id="gate-error-msg" style="font-size:0.78rem; color:var(--red); margin-bottom:10px; display:none;"></div>
+
+        <button class="btn btn-ai" id="gate-submit-btn" style="width:100%; padding:12px; font-size:0.92rem;" onclick="verifyAndCompleteOnboarding()">
+          🚀 Gemini 연결 확인 후 시작하기
+        </button>
+      </div>
+    </div>
+
+    <!-- ==================== 1. 메인 홈 화면 (투어 목록 관리) ==================== -->
+    <div id="home-view" style="display:none;">
       <div class="header-row">
         <div class="app-brand">
           <img src="icon.svg" alt="Scuba Icon" class="app-logo" />
           <div>
-            <h1>스쿠버 투어 패킹 매니저 <span id="fastapi-engine-badge" class="fastapi-badge">⚡ FastAPI v2.0</span></h1>
-            <span style="font-size:0.78rem; color:var(--subtext-color);">투어별 수하물 무게 계산 & AI 장비 관리</span>
+            <h1>스쿠버 투어 패킹 <span id="fastapi-engine-badge" class="fastapi-badge">⚡ FastAPI</span></h1>
+            <span style="font-size:0.75rem; color:var(--subtext-color);">AI 해황·이동편 분석 & 장비 무게 관리</span>
           </div>
         </div>
-        <button class="btn btn-primary" onclick="createNewTour()">➕ 새 투어 만들기</button>
+        <div style="display:flex; align-items:center; gap:6px;">
+          <button class="circle-icon-btn" title="Gemini API 키 설정" onclick="openApiKeyModal()">🔑</button>
+          <button class="circle-icon-btn" title="앱 사용법 보기" onclick="openHelpModal()">❓</button>
+          <button class="btn btn-primary" onclick="openNewTourModal()">➕ 새 투어</button>
+        </div>
       </div>
 
       <!-- 저장된 투어 패킹 목록 -->
       <div class="section-title">
-        <span>📂 저장된 투어 패킹 목록</span>
-        <span style="font-size:0.78rem; color:var(--subtext-color); font-weight:500;">터치하여 열기</span>
+        <span>📂 내 다이빙 투어 목록</span>
+        <span style="font-size:0.75rem; color:var(--subtext-color); font-weight:500;">터치하여 열기</span>
       </div>
       <div id="tour-list-container"></div>
-
-      <!-- 메인화면 제미나이(Gemini AI) 연결 설정 및 안내 카드 -->
-      <div class="section-title" style="margin-top: 24px;">
-        <span>🤖 제미나이(Gemini AI) 사진 인식 연결</span>
-        <span id="home-gemini-badge" class="status-pill disconnected">미연결</span>
-      </div>
-      <div class="guide-card">
-        <div class="guide-step">
-          장비를 일일이 타이핑할 필요 없이, <strong>카메라로 장비 사진을 찍으면 제미나이 AI가 장비명·카테고리·예상 무게·위탁/기내 위치를 자동 인식</strong>해 목록에 넣어줍니다.
-        </div>
-        <div class="guide-step" style="background:var(--bg-color); padding:10px 12px; border-radius:8px; border:1px solid var(--border-color); margin-bottom:10px;">
-          <strong>[1분 무료 연결 방법]</strong><br/>
-          1. 아래 <a class="help-link" href="https://aistudio.google.com/app/apikey" target="_blank">👉 Google AI Studio 무료 키 발급 페이지 열기 ↗</a> 터치<br/>
-          2. 구글 로그인 후 파란색 <strong>Create API key</strong> 버튼 클릭<br/>
-          3. 생성된 키(<code>AIzaSy...</code>로 시작)를 복사해 아래 칸에 붙여넣고 <strong>연결 저장</strong> 클릭!
-        </div>
-        <div style="display:flex; gap:8px;">
-          <input type="password" id="home-api-key-input" placeholder="여기에 AIzaSy... 키 붙여넣기" style="flex:1;" />
-          <button class="btn btn-ai" onclick="saveHomeApiKey()">연결 저장</button>
-        </div>
-      </div>
-
-      <!-- 메인화면 앱 전체 사용법 안내 카드 -->
-      <div class="section-title" style="margin-top: 24px;">
-        <span>📖 앱 사용법 완벽 가이드</span>
-      </div>
-      <div class="guide-card">
-        <div class="guide-step">
-          <strong>1️⃣ 투어 목록 저장 & AI 이동편·해황(파고/수온/기온) 브리핑</strong><br/>
-          • 투어의 <strong>장소와 일정(날짜)</strong>을 입력하고 <strong>🌊✈️ AI 이동편 & 바다/날씨 분석</strong> 버튼을 누르면, 제미나이 AI가 해당 지역의 <strong>추천 항공/선박 이동편</strong>과 <strong>예상 수온·기온·파고·시야·추천 슈트 두께</strong>를 맞춤 브리핑해 줍니다 (가까운 날짜는 단기 기상 경향, 먼 날짜는 해당 시즌 평년 바다 컨디션 자동 분석).<br/>
-          • <strong>💾 저장</strong> 버튼을 누르면 언제든 메인 화면 목록에 저장되어 다시 열어볼 수 있습니다.
-        </div>
-        <div class="guide-step">
-          <strong>2️⃣ 퐁당닷컴 6,448종 장비 DB (썸네일·홈페이지 기준 소팅·가격·신규등록)</strong><br/>
-          • 퐁당닷컴(PONGDANG.COM) 홈페이지의 <strong>스쿠버 / 스쿠버 acc 분류 및 브랜드 기준</strong>으로 정렬·필터링하며, <strong>장비 썸네일 사진과 판매 가격(DB 전용 표시)</strong>을 확인하고 짐싸기에 담을 수 있습니다.<br/>
-          • 신제품이 나오면 DB 화면의 <strong>➕ 신규 장비 DB 등록</strong> 버튼으로 직접 DB에 추가할 수도 있습니다.
-        </div>
-        <div class="guide-step">
-          <strong>3️⃣ 드라이수트 / 텍핀 등 제외 품목 간편 편입</strong><br/>
-          • 웻수트 투어에서 제외된 <strong>아거노트 드라이수트(3.5kg), 내피(1.8kg), 포스 텍핀(2.3kg), 락호퍼 슈즈(0.5kg), 아르고백(1.0kg)</strong>은 패킹 화면 맨 아래 <strong>[제외 품목]</strong>에 분리되어 있습니다.<br/>
-          • <strong>+ 편입</strong> 버튼만 누르면 즉시 본 리스트에 편입되고, <strong>🗑️</strong> 버튼으로 삭제도 가능합니다.
-        </div>
-        <div class="guide-step" style="margin-bottom:0;">
-          <strong>4️⃣ 실시간 위탁 / 기내 무게 계산 & 일정 편집</strong><br/>
-          • 챙긴 장비를 체크(☑)하면 상단 고정 대시보드에 <strong>위탁/기내 수하물 무게 합계와 여유 무게</strong>가 실시간 계산됩니다 (짐싸기 리스트에서는 가격을 숨기고 깔끔하게 무게만 표시).
-        </div>
-      </div>
     </div>
 
     <!-- ==================== 2. 투어 패킹 상세 화면 ==================== -->
     <div id="detail-view" style="display:none;">
       <div class="header-row">
-        <button class="btn" onclick="saveAndGoHome()">← 목록으로</button>
+        <button class="btn" onclick="saveAndGoHome()">← 목록</button>
         <div class="top-actions">
-          <button class="btn" onclick="checkAllActive(true)">전체체크</button>
-          <button class="btn" onclick="checkAllActive(false)">체크해제</button>
+          <button class="circle-icon-btn" title="앱 사용법 보기" onclick="openHelpModal()">❓</button>
           <button class="btn btn-save" onclick="saveCurrentTourWithToast()">💾 저장</button>
         </div>
       </div>
@@ -1205,68 +1506,27 @@
         <div id="tour-info-display">
           예상 수온: 25 ~ 26°C | 항공: 위탁 23.0kg / 기내 10.0kg
         </div>
-        <button class="info-edit-btn" onclick="openTourModal()">✏️ 일정/항공 편집</button>
+        <button class="info-edit-btn" onclick="openTourModal(false)">✏️ 일정·장소</button>
       </div>
 
-      <!-- AI 투어 이동편 추천 & 다이빙 바다/날씨(파고·수온·기온) 브리핑 카드 -->
+      <!-- AI 투어 이동편 추천 & 다이빙 바다/날씨(파고·수온·기온) 자동 브리핑 카드 -->
       <div class="briefing-card">
         <div class="briefing-header">
           <div class="briefing-title">
-            <span>🌊✈️ AI 이동편 추천 & 다이빙 해황/날씨 브리핑</span>
+            <span>🌊✈️ AI 이동편 & 바다/날씨 브리핑</span>
           </div>
-          <div style="display:flex; gap:6px;">
-            <button class="btn btn-ai" style="padding:6px 10px; font-size:0.78rem;" onclick="generateTourAiBriefing()">
-              🤖 장소·일정 맞춤 분석
-            </button>
-            <button class="btn" id="briefing-toggle-btn" style="padding:6px 9px; font-size:0.75rem; display:none;" onclick="toggleBriefingBody()">
-              접기 ▲
-            </button>
+          <div style="display:flex; gap:5px;">
+            <button class="icon-btn" title="AI 브리핑 다시 분석" onclick="generateTourAiBriefing()">🔄 재분석</button>
+            <button class="icon-btn" id="briefing-toggle-btn" style="display:none;" onclick="toggleBriefingBody()">▲ 접기</button>
           </div>
         </div>
         <div id="briefing-status" style="font-size:0.78rem; color:var(--subtext-color); margin-top:4px;">
-          장소와 일정을 바탕으로 추천 항공/이동편과 예상 수온·파고·기온·추천 슈트를 AI가 분석합니다.
+          투어 장소와 일정이 설정되면 Gemini AI가 이동편과 해황(파고·수온·기온)을 자동 분석합니다.
         </div>
         <div id="briefing-body" style="display:none;"></div>
       </div>
 
-      <!-- 물품 추가 / 삭제 전용 툴바 -->
-      <div style="margin-bottom: 8px;">
-        <button class="btn btn-pongdang" style="width:100%; padding:11px; font-size:0.9rem;" onclick="openPongdangModal()">
-          🔍 퐁당닷컴 장비 DB 검색 & 추가 (썸네일·브랜드/종류 소팅)
-        </button>
-      </div>
-      <div class="toolbar">
-        <button class="btn btn-blue" onclick="openItemModal(-1)">➕ 새 물품 직접 추가</button>
-        <button class="btn btn-ai" onclick="openAiModal()">📸 AI 사진으로 물품 추가</button>
-      </div>
-      <div class="toolbar-sub">
-        <button class="btn" style="color:var(--red);" onclick="deleteCheckedItems()">🗑️ 체크한 물품 삭제</button>
-        <button class="btn" onclick="saveAsDefaultTemplate()">📌 현재 목록을 기본값으로 등록</button>
-      </div>
-
-      <!-- 1초 빠른 물품 추가 입력바 (퐁당닷컴 DB 실시간 자동완성 연동) -->
-      <div class="quick-add-box">
-        <div class="quick-add-title">
-          <span>⚡ 빠른 물품 추가 (퐁당 DB 자동완성 지원)</span>
-          <span style="font-size:0.74rem; color:var(--subtext-color); font-weight:500;">장비명 입력 시 중량 자동매칭</span>
-        </div>
-        <div class="quick-add-grid">
-          <select id="quick-cat">
-            <option value="가방류">가방류</option>
-            <option value="핵심 장비" selected>핵심 장비</option>
-            <option value="의류/보온">의류/보온</option>
-            <option value="계기/전자">계기/전자</option>
-            <option value="조명/촬영">조명/촬영</option>
-            <option value="안전/소품">안전/소품</option>
-            <option value="공구/케어">공구/케어</option>
-          </select>
-          <input type="text" id="quick-name" placeholder="물품/브랜드명 입력 (예: 제트핀, 가민)" oninput="onQuickNameInput()" autocomplete="off" />
-          <input type="number" step="0.05" id="quick-weight" placeholder="무게(kg)" value="0.50" />
-          <button class="btn btn-primary" onclick="quickAddItem()">+ 추가</button>
-        </div>
-        <div class="quick-suggest-box" id="quick-suggest-box"></div>
-      </div>
-
+      <!-- 상단 고정 위탁/기내 수하물 무게 게이지 -->
       <div class="metrics-wrapper">
         <div class="metrics-grid">
           <div class="metric-card">
@@ -1294,11 +1554,65 @@
         </div>
       </div>
 
-      <div id="items-container"></div>
-      <div id="excluded-container"></div>
+      <!-- 드로어(Drawer) 방식 장비 챙기기 헤더 버튼 (접고 열기 + 챙긴 개수 표시) -->
+      <button class="gear-drawer-btn" id="gear-drawer-btn" onclick="toggleGearDrawer()">
+        <div class="gear-drawer-left">
+          <span style="font-size:1.35rem;">🎒</span>
+          <div>
+            <div class="gear-drawer-title">장비 챙기기</div>
+            <div class="gear-drawer-sub" id="gear-drawer-count-text">챙긴 장비: 0 / 24개 (0%)</div>
+          </div>
+        </div>
+        <div class="gear-drawer-right">
+          <span class="gear-drawer-pill" id="gear-drawer-pill">0 / 24</span>
+          <span id="gear-drawer-arrow" style="font-size:0.8rem; font-weight:700; color:var(--subtext-color);">▲ 접기</span>
+        </div>
+      </button>
 
-      <div style="margin-top: 24px; text-align: center;">
-        <button class="btn" onclick="resetCurrentTour()">🔄 초기 장비 세팅으로 전체 복원</button>
+      <!-- 드로어(Drawer) 내부: 장비 검색/추가 툴바 + 패킹 리스트 -->
+      <div id="gear-drawer-body" class="gear-drawer-body">
+        <div style="display:grid; grid-template-columns: 1.2fr 1fr 1fr; gap:6px; margin-bottom:8px;">
+          <button class="btn btn-pongdang" onclick="openPongdangModal()">🔍 장비 검색/추가</button>
+          <button class="btn btn-blue" onclick="openItemModal(-1)">➕ 직접 추가</button>
+          <button class="btn btn-ai" onclick="openAiModal()">📸 사진 인식</button>
+        </div>
+
+        <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:5px; margin-bottom:10px;">
+          <button class="btn" style="padding:6px 4px; font-size:0.74rem;" onclick="checkAllActive(true)">☑️ 전체</button>
+          <button class="btn" style="padding:6px 4px; font-size:0.74rem;" onclick="checkAllActive(false)">⬜ 해제</button>
+          <button class="btn" style="padding:6px 4px; font-size:0.74rem; color:var(--red);" onclick="deleteCheckedItems()">🗑️ 선택삭제</button>
+          <button class="btn" style="padding:6px 4px; font-size:0.74rem;" onclick="saveAsDefaultTemplate()">📌 기본값</button>
+        </div>
+
+        <!-- 빠른 물품 추가 입력바 (자동완성 지원) -->
+        <div class="quick-add-box">
+          <div class="quick-add-title">
+            <span>⚡ 빠른 추가 (자동완성)</span>
+            <span style="font-size:0.72rem; color:var(--subtext-color);">이름 입력 시 무게 자동매칭</span>
+          </div>
+          <div class="quick-add-grid">
+            <select id="quick-cat">
+              <option value="가방류">가방류</option>
+              <option value="핵심 장비" selected>핵심 장비</option>
+              <option value="의류/보온">의류/보온</option>
+              <option value="계기/전자">계기/전자</option>
+              <option value="조명/촬영">조명/촬영</option>
+              <option value="안전/소품">안전/소품</option>
+              <option value="공구/케어">공구/케어</option>
+            </select>
+            <input type="text" id="quick-name" placeholder="장비/브랜드명 (예: 제트핀)" oninput="onQuickNameInput()" autocomplete="off" />
+            <input type="number" step="0.05" id="quick-weight" placeholder="kg" value="0.50" />
+            <button class="btn btn-primary" onclick="quickAddItem()">+ 추가</button>
+          </div>
+          <div class="quick-suggest-box" id="quick-suggest-box"></div>
+        </div>
+
+        <div id="items-container"></div>
+        <div id="excluded-container"></div>
+
+        <div style="margin-top: 20px; text-align: center;">
+          <button class="btn" onclick="resetCurrentTour()">🔄 초기 장비로 복원</button>
+        </div>
       </div>
     </div>
   </div>
@@ -1306,35 +1620,159 @@
   <!-- 패킹 화면 하단 고정 저장 바 -->
   <div class="bottom-save-bar" id="bottom-save-bar">
     <div class="bottom-save-inner">
-      <button class="btn" onclick="saveCurrentTourWithToast()">💾 현재 상태 저장</button>
-      <button class="btn btn-save" onclick="saveAndGoHome()">💾 저장 후 메인 목록으로</button>
+      <button class="btn" onclick="saveCurrentTourWithToast()">💾 저장</button>
+      <button class="btn btn-save" onclick="saveAndGoHome()">🏠 저장·목록</button>
     </div>
   </div>
 
   <!-- 저장 완료 토스트 알림 -->
   <div class="toast" id="toast-msg">✅ 투어 패킹이 저장되었습니다!</div>
 
-  <!-- 모달 1: 투어/항공편 정보 편집 모달 -->
-  <div class="modal-backdrop" id="tour-modal">
-    <div class="modal">
-      <h3>✈️ 투어 장소 · 일정 · 수하물 설정</h3>
-      <div class="form-group">
-        <label>투어 장소 / 다이빙 지역</label>
-        <input type="text" id="input-place" placeholder="예: 오키나와, 보홀, 팔라우, 제주도, 시밀란" />
+  <!-- 모달 0: 앱 사용법 가이드 모달 (❓ 버튼 클릭 시 열림) -->
+  <div class="modal-backdrop" id="help-modal">
+    <div class="modal" style="max-width: 520px;">
+      <div class="modal-top-bar">
+        <div>
+          <h3 style="margin:0;">📖 스쿠버 패킹 매니저 사용법</h3>
+          <span style="font-size:0.74rem; color:var(--subtext-color);">단계별 핵심 기능 안내</span>
+        </div>
+        <button class="modal-close-x" onclick="closeHelpModal()" title="닫기">✕</button>
       </div>
+
+      <div class="help-card-item">
+        <div class="help-card-title">1️⃣ 새 투어 등록 (구글맵 장소 & 달력 일정) + AI 자동 분석</div>
+        <div class="help-card-body">
+          <p>• 홈 화면의 <strong>[➕ 새 투어]</strong> 또는 투어 화면의 <strong>[✏️ 일정·장소]</strong> 버튼을 누릅니다.</p>
+          <p>• <strong>구글맵 검색</strong>으로 다이빙 지역을 고르고, <strong>달력</strong>에서 출발일과 복귀일을 선택한 뒤 저장하면 <strong>Gemini AI가 자동으로 항공/이동편과 바다 상황(수온·기온·파고·시야·추천 슈트)</strong>을 브리핑해 줍니다.</p>
+        </div>
+      </div>
+
+      <div class="help-card-item">
+        <div class="help-card-title">2️⃣ 장비 챙기기 드로어(Drawer) & 실시간 무게 계산</div>
+        <div class="help-card-body">
+          <p>• 브리핑 아래의 <strong>[🎒 장비 챙기기 (챙긴 장비: X / Y개)]</strong> 바를 터치하면 장비 목록을 스르륵 접거나 펼칠 수 있습니다.</p>
+          <p>• 챙긴 장비를 체크(☑)하면 상단 고정 카드에 <strong>위탁/기내 수하물 무게 합계와 여유 무게 게이지</strong>가 실시간으로 표시됩니다.</p>
+        </div>
+      </div>
+
+      <div class="help-card-item">
+        <div class="help-card-title">3️⃣ 장비 검색/추가 (DB 편집·저장 & 퐁당닷컴 상품 연동)</div>
+        <div class="help-card-body">
+          <p>• <strong>[🔍 장비 검색/추가]</strong> 버튼을 누르면 스쿠버/acc 장비 6,448종을 브랜드·종류별로 찾아 담을 수 있습니다.</p>
+          <p>• 각 장비의 <strong>[✏️]</strong> 버튼을 눌러 잘못된 무게나 이름을 직접 수정·저장할 수 있으며, <strong>[💰 가격 🔗]</strong>을 터치하면 브라우저로 해당 제품의 <strong>퐁당닷컴 상세 페이지</strong>가 열립니다.</p>
+        </div>
+      </div>
+
+      <div class="help-card-item" style="margin-bottom:0;">
+        <div class="help-card-title">4️⃣ AI 사진 인식 & 제외 품목(드라이수트·텍핀) 편입</div>
+        <div class="help-card-body">
+          <p>• <strong>[📸 사진 인식]</strong>으로 장비를 촬영하면 AI가 장비명과 예상 무게를 자동 인식해 추가합니다.</p>
+          <p>• 하단 <strong>[제외 품목]</strong>에 분리된 드라이수트(3.5kg), 내피(1.8kg), 텍핀(2.3kg), 락호퍼 슈즈(0.5kg), 아르고백(1.0kg)은 <strong>[+ 편입]</strong> 버튼으로 언제든 본 리스트에 넣을 수 있습니다.</p>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="closeHelpModal()">확인</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 모달 0-2: Gemini API 키 변경 모달 (🔑 버튼 클릭 시 열림) -->
+  <div class="modal-backdrop" id="apikey-modal">
+    <div class="modal" style="max-width: 440px;">
+      <div class="modal-top-bar">
+        <div>
+          <h3 style="margin:0;">🔑 Gemini API 키 관리</h3>
+          <span style="font-size:0.74rem; color:var(--subtext-color);">AI 해황 브리핑 및 사진 인식용 키</span>
+        </div>
+        <button class="modal-close-x" onclick="closeApiKeyModal()" title="닫기">✕</button>
+      </div>
+      <div class="form-group">
+        <label>
+          현재 등록된 Gemini API Key
+          <a class="help-link" href="https://aistudio.google.com/app/apikey" target="_blank" style="margin-left:6px;">새 키 발급 ↗</a>
+        </label>
+        <input type="password" id="modal-api-key-input" placeholder="AIzaSy..." />
+      </div>
+      <div class="modal-footer">
+        <button class="btn" onclick="closeApiKeyModal()">취소</button>
+        <button class="btn btn-ai" onclick="saveModalApiKey()">💾 저장</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 모달 1: 새 투어 등록 / 일정·장소 편집 모달 (구글맵 검색 + 달력 선택) -->
+  <div class="modal-backdrop" id="tour-modal">
+    <div class="modal" style="max-width: 540px;">
+      <div class="modal-top-bar">
+        <div>
+          <h3 id="tour-modal-title" style="margin:0;">✈️ 투어 장소 · 일정 설정</h3>
+          <span style="font-size:0.74rem; color:var(--subtext-color);">구글맵 장소 선택 & 달력 일정 입력 시 AI가 자동 분석합니다</span>
+        </div>
+        <button class="modal-close-x" onclick="closeTourModal()" title="닫기">✕</button>
+      </div>
+
+      <!-- 1. 구글맵 기반 장소 검색 -->
+      <div class="form-group">
+        <label>📍 다이빙 투어 장소 (구글맵 검색)</label>
+        <div style="display:flex; gap:6px;">
+          <input type="text" id="input-place" placeholder="지역/다이빙 포인트 입력 (예: 오키나와, 보홀 발리카삭, 팔라우)" onkeydown="if(event.key==='Enter'){event.preventDefault();searchGoogleMapPlace();}" style="flex:1;" />
+          <button type="button" class="btn btn-blue" onclick="searchGoogleMapPlace()">🗺️ 검색</button>
+        </div>
+
+        <!-- 인기 다이빙 명소 원터치 칩 -->
+        <div class="spot-chip-row">
+          <button type="button" class="spot-chip" onclick="selectQuickSpot('오키나와 (Okinawa, Japan)')">🇯🇵 오키나와</button>
+          <button type="button" class="spot-chip" onclick="selectQuickSpot('보홀 팡라오 (Bohol, Philippines)')">🇵🇭 보홀</button>
+          <button type="button" class="spot-chip" onclick="selectQuickSpot('세부 모알보알 (Moalboal, Cebu)')">🇵🇭 세부·모알보알</button>
+          <button type="button" class="spot-chip" onclick="selectQuickSpot('애니라오 (Anilao, Batangas)')">🇵🇭 애니라오</button>
+          <button type="button" class="spot-chip" onclick="selectQuickSpot('팔라우 코로르 (Koror, Palau)')">🇵🇼 팔라우</button>
+          <button type="button" class="spot-chip" onclick="selectQuickSpot('시파단 셈포르나 (Semporna, Sabah)')">🇲🇾 시파단</button>
+          <button type="button" class="spot-chip" onclick="selectQuickSpot('발리 누사페니다 (Nusa Penida, Bali)')">🇮🇩 발리</button>
+          <button type="button" class="spot-chip" onclick="selectQuickSpot('다합 (Dahab, Egypt)')">🇪🇬 홍해 다합</button>
+          <button type="button" class="spot-chip" onclick="selectQuickSpot('제주 서귀포 문섬 (Seogwipo, Jeju)')">🇰🇷 제주 서귀포</button>
+          <button type="button" class="spot-chip" onclick="selectQuickSpot('강원도 고성 문암 (Goseong, Gangwon)')">🇰🇷 동해 고성</button>
+        </div>
+
+        <!-- 지도 검색 결과 드롭다운 -->
+        <div id="map-search-results" class="map-search-results"></div>
+
+        <!-- 구글맵 실시간 지도 미리보기 -->
+        <div class="map-preview-wrap">
+          <iframe id="google-map-iframe" class="map-preview-frame" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=Okinawa&t=m&z=9&output=embed&hl=ko"></iframe>
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 10px; font-size:0.74rem; color:var(--subtext-color);">
+            <span id="map-selected-label">📍 선택된 위치: 오키나와</span>
+            <a id="google-map-ext-link" href="https://www.google.com/maps/search/?api=1&query=Okinawa" target="_blank" rel="noopener" class="help-link" style="font-size:0.74rem;">구글맵 앱 열기 ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. 달력 기반 투어 일정 입력 -->
       <div class="form-row">
         <div class="form-group">
-          <label>일정 / 날짜</label>
-          <input type="text" id="input-dates" placeholder="예: 11.12 ~ 15" />
+          <label>📅 출발일 (달력 선택)</label>
+          <input type="date" id="input-start-date" onchange="syncDatesFromCalendar()" />
         </div>
         <div class="form-group">
-          <label>항공편/이동편 (선택)</label>
-          <input type="text" id="input-flight" placeholder="예: 진에어 LJ241" />
+          <label>📅 복귀일 (달력 선택)</label>
+          <input type="date" id="input-end-date" onchange="syncDatesFromCalendar()" />
         </div>
       </div>
-      <div class="form-group">
-        <label>예상 수온 / 다이빙 환경 메모</label>
-        <input type="text" id="input-temp" placeholder="예: 25 ~ 26°C" />
+      <div class="form-group" style="margin-top:-4px;">
+        <label>표시될 일정 텍스트 (달력 선택 시 자동 완성)</label>
+        <input type="text" id="input-dates" placeholder="예: 2026.11.12 ~ 11.15" />
+      </div>
+
+      <!-- 3. 항공편/수온/수하물 한도 -->
+      <div class="form-row">
+        <div class="form-group">
+          <label>항공편/이동편 (선택)</label>
+          <input type="text" id="input-flight" placeholder="미입력 시 AI가 추천" />
+        </div>
+        <div class="form-group">
+          <label>예상 수온 (AI 자동 반영)</label>
+          <input type="text" id="input-temp" placeholder="예: 25 ~ 26°C" />
+        </div>
       </div>
       <div class="form-row">
         <div class="form-group">
@@ -1346,18 +1784,21 @@
           <input type="number" step="0.5" id="input-carryon-limit" />
         </div>
       </div>
-      <div class="modal-footer" style="flex-wrap:wrap;">
-        <button class="btn btn-ai" style="margin-right:auto;" onclick="saveTourAndRunAi()">🌊✈️ 저장 후 AI 이동편·해황 분석</button>
+
+      <div class="modal-footer">
         <button class="btn" onclick="closeTourModal()">취소</button>
-        <button class="btn btn-primary" onclick="saveTourConfig()">저장</button>
+        <button class="btn btn-ai" onclick="saveTourConfigAndAutoAi()">🚀 저장 (AI 해황·이동편 자동분석)</button>
       </div>
     </div>
   </div>
 
-  <!-- 모달 2: 장비 추가/편집 모달 -->
+  <!-- 모달 2: 패킹 리스트 내 개별 물품 추가/편집 모달 -->
   <div class="modal-backdrop" id="item-modal">
     <div class="modal">
-      <h3 id="item-modal-title">물품 추가 / 수정</h3>
+      <div class="modal-top-bar">
+        <h3 id="item-modal-title" style="margin:0;">물품 추가 / 수정</h3>
+        <button class="modal-close-x" onclick="closeItemModal()" title="닫기">✕</button>
+      </div>
       <input type="hidden" id="edit-item-idx" value="-1" />
       <div class="form-group">
         <label>물품 이름</label>
@@ -1409,9 +1850,9 @@
         </select>
       </div>
       <div class="modal-footer">
-        <button class="btn" id="delete-item-btn" style="color:var(--red); margin-right:auto; display:none;" onclick="deleteCurrentItem()">🗑️ 물품 삭제</button>
+        <button class="btn" id="delete-item-btn" style="color:var(--red); margin-right:auto; display:none;" onclick="deleteCurrentItem()">🗑️ 삭제</button>
         <button class="btn" onclick="closeItemModal()">취소</button>
-        <button class="btn btn-primary" onclick="saveItemModal()">저장</button>
+        <button class="btn btn-primary" onclick="saveItemModal()">💾 저장</button>
       </div>
     </div>
   </div>
@@ -1419,17 +1860,20 @@
   <!-- 모달 3: 제미나이 AI 장비 사진 인식 모달 -->
   <div class="modal-backdrop" id="ai-modal">
     <div class="modal">
-      <h3>📸 제미나이 AI 장비 사진 인식</h3>
+      <div class="modal-top-bar">
+        <h3 style="margin:0;">📸 AI 장비 사진 인식</h3>
+        <button class="modal-close-x" onclick="closeAiModal()" title="닫기">✕</button>
+      </div>
       <div class="form-group">
         <label>
-          Gemini API Key (메인 화면에서 등록했으면 자동 입력됨)
-          <a class="help-link" href="https://aistudio.google.com/app/apikey" target="_blank">무료 키 발급받기 ↗</a>
+          Gemini API Key
+          <a class="help-link" href="https://aistudio.google.com/app/apikey" target="_blank">무료 키 발급 ↗</a>
         </label>
-        <input type="password" id="gemini-api-key" placeholder="AIzaSy... 키를 붙여넣으세요" onchange="saveApiKeyFromModal()" />
+        <input type="password" id="gemini-api-key" placeholder="AIzaSy... 키" onchange="saveApiKeyFromModal()" />
       </div>
 
       <div class="form-group">
-        <label>장비 사진 촬영 또는 앨범 선택 (여러 개를 바닥에 두고 찍어도 됩니다)</label>
+        <label>장비 사진 촬영 또는 앨범 선택</label>
         <input type="file" id="ai-photo-input" accept="image/*" capture="environment" onchange="handlePhotoSelected(event)" style="margin-top:4px;" />
       </div>
 
@@ -1440,59 +1884,67 @@
 
       <div class="modal-footer">
         <button class="btn" onclick="closeAiModal()">닫기</button>
-        <button class="btn btn-ai" id="ai-add-btn" style="display:none;" onclick="addRecognizedItems()">선택한 장비 목록에 추가</button>
+        <button class="btn btn-ai" id="ai-add-btn" style="display:none;" onclick="addRecognizedItems()">+ 선택 장비 추가</button>
       </div>
     </div>
   </div>
 
-  <!-- 모달 4: 퐁당닷컴 스쿠버 & 스쿠버 acc 전 상품 DB (6,448종 + 신규등록) 검색 모달 -->
+  <!-- 모달 4: 장비 검색/추가 (퐁당닷컴 DB) 모달 -->
   <div class="modal-backdrop" id="pongdang-modal">
     <div class="modal" style="max-width: 600px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:10px; flex-wrap:wrap;">
-        <div style="display:flex; align-items:center; gap:6px;">
-          <h3 style="margin:0;">🔍 퐁당닷컴 장비 DB</h3>
-          <span id="pong-total-badge" class="badge">총 6,448종</span>
+      <div class="modal-top-bar">
+        <div>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <h3 style="margin:0;">🔍 장비 검색/추가</h3>
+            <span id="pong-total-badge" class="badge">6,448종</span>
+          </div>
+          <div style="font-size:0.72rem; color:var(--subtext-color); margin-top:2px;">
+            퐁당닷컴 기준 (2026.11.10 수집) · 가격 터치 시 상품정보 열림 · ✏️ 무게/정보 편집 가능
+          </div>
         </div>
-        <button class="btn btn-blue" style="padding:6px 10px; font-size:0.78rem;" onclick="openNewDbItemModal()">
-          ➕ 신규 장비 DB 등록
-        </button>
+        <div style="display:flex; align-items:center; gap:6px;">
+          <button class="btn btn-blue" style="padding:6px 10px; font-size:0.76rem;" onclick="openNewDbItemModal()">
+            ➕ 신규 등록
+          </button>
+          <button class="modal-close-x" onclick="closePongdangModal()" title="닫기">✕</button>
+        </div>
       </div>
 
-      <!-- 1단계: 퐁당닷컴 홈페이지 대분류 탭 -->
+      <!-- 1단계: 대분류 탭 -->
       <div class="pong-filter-row" id="pong-maincat-row">
-        <button class="pong-chip active" onclick="setPongMainCat('전체', this)">전체 (스쿠버+acc)</button>
+        <button class="pong-chip active" onclick="setPongMainCat('전체', this)">전체</button>
         <button class="pong-chip" onclick="setPongMainCat('스쿠버', this)">🤿 스쿠버</button>
         <button class="pong-chip" onclick="setPongMainCat('스쿠버 acc', this)">🧷 스쿠버 acc</button>
-        <button class="pong-chip" onclick="setPongMainCat('직접등록', this)">⭐ 신규등록 장비</button>
+        <button class="pong-chip" onclick="setPongMainCat('직접등록', this)">⭐ 신규/수정됨</button>
       </div>
 
-      <!-- 2단계: 홈페이지 기준 장비 종류 / 브랜드 / 소팅 선택 -->
+      <!-- 2단계: 장비 종류 / 브랜드 / 소팅 선택 -->
       <div class="pong-select-grid">
         <select id="pong-subcat-select" onchange="onPongSubCatChange()">
-          <option value="전체">📂 장비 종류 (전체)</option>
+          <option value="전체">📂 종류 (전체)</option>
         </select>
         <select id="pong-brand-select" onchange="renderPongdangResults()">
           <option value="전체">🏷️ 브랜드 (전체)</option>
         </select>
         <select id="pong-sort-select" onchange="renderPongdangResults()">
-          <option value="default">🔃 홈페이지 기본순</option>
-          <option value="brand">가나다: 브랜드순</option>
-          <option value="subcat">분류: 장비 종류순</option>
+          <option value="default">🔃 기본순</option>
+          <option value="brand">브랜드순</option>
+          <option value="subcat">장비종류순</option>
           <option value="price_asc">💰 가격 낮은순</option>
           <option value="price_desc">💰 가격 높은순</option>
-          <option value="weight_asc">⚖️ 무게 가벼운순</option>
-          <option value="weight_desc">⚖️ 무게 무거운순</option>
+          <option value="weight_asc">⚖️ 가벼운순</option>
+          <option value="weight_desc">⚖️ 무거운순</option>
         </select>
       </div>
 
       <!-- 3단계: 검색어 입력 -->
       <div class="form-group" style="margin-bottom:6px;">
-        <input type="text" id="pong-search-input" placeholder="장비명 또는 모델명 검색 (예: MK25, 제트핀, 프로테우스, 페레그린...)" oninput="renderPongdangResults()" autocomplete="off" />
+        <input type="text" id="pong-search-input" placeholder="장비명·브랜드 검색 (예: MK25, 제트핀, 프로테우스, 가민...)" oninput="renderPongdangResults()" autocomplete="off" />
       </div>
 
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-        <span id="pong-status-text" style="font-size:0.75rem; color:var(--subtext-color);"></span>
-        <span style="font-size:0.72rem; color:var(--subtext-color);">※ 가격은 DB에서만 표시됨</span>
+        <span id="pong-status-text" style="font-size:0.74rem; color:var(--subtext-color);"></span>
+        <span style="font-size:0.72rem; color:#38bdf8;">💡 가격 터치 → 퐁당 제품 상세</span>
       </div>
 
       <div class="pong-results-box" id="pong-results-list"></div>
@@ -1503,17 +1955,83 @@
     </div>
   </div>
 
+  <!-- 모달 4-2: DB 장비 정보/무게 편집 및 저장 모달 -->
+  <div class="modal-backdrop" id="db-edit-modal">
+    <div class="modal" style="max-width: 480px;">
+      <div class="modal-top-bar">
+        <div>
+          <h3 style="margin:0;">✏️ DB 장비 무게 · 정보 수정</h3>
+          <span style="font-size:0.73rem; color:var(--subtext-color);">저장하면 장비 DB에 영구 반영됩니다</span>
+        </div>
+        <button class="modal-close-x" onclick="closeDbEditModal()" title="닫기">✕</button>
+      </div>
+      <input type="hidden" id="db-edit-idx" value="-1" />
+      <div class="form-group">
+        <label>장비 이름 (모델명)</label>
+        <input type="text" id="db-edit-name" />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>브랜드</label>
+          <input type="text" id="db-edit-brand" />
+        </div>
+        <div class="form-group">
+          <label>장비 종류 (분류)</label>
+          <input type="text" id="db-edit-subcat" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>⚖️ 실제 무게 (kg)</label>
+          <input type="number" step="0.01" id="db-edit-weight" />
+        </div>
+        <div class="form-group">
+          <label>짐싸기 카테고리</label>
+          <select id="db-edit-appcat">
+            <option value="핵심 장비">핵심 장비</option>
+            <option value="가방류">가방류</option>
+            <option value="의류/보온">의류/보온</option>
+            <option value="계기/전자">계기/전자</option>
+            <option value="조명/촬영">조명/촬영</option>
+            <option value="안전/소품">안전/소품</option>
+            <option value="공구/케어">공구/케어</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>수하물 위치</label>
+          <select id="db-edit-bag">
+            <option value="위탁">위탁 수하물</option>
+            <option value="기내">기내 수하물</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>가격 (원, DB 전용)</label>
+          <input type="number" step="1000" id="db-edit-price" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" onclick="closeDbEditModal()">취소</button>
+        <button class="btn btn-save" onclick="saveDbEditModal()">💾 DB에 저장</button>
+      </div>
+    </div>
+  </div>
+
   <!-- 모달 5: 신규 장비 DB 직접 등록 모달 -->
   <div class="modal-backdrop" id="new-db-item-modal">
     <div class="modal">
-      <h3>➕ 신규 장비를 DB에 추가</h3>
+      <div class="modal-top-bar">
+        <h3 style="margin:0;">➕ 신규 장비 DB 등록</h3>
+        <button class="modal-close-x" onclick="closeNewDbItemModal()" title="닫기">✕</button>
+      </div>
       <div class="form-row">
         <div class="form-group">
           <label>브랜드명</label>
           <input type="text" id="db-new-brand" placeholder="예: 스쿠버프로, 포스엘리먼트" />
         </div>
         <div class="form-group">
-          <label>홈페이지 대분류</label>
+          <label>대분류</label>
           <select id="db-new-maincat">
             <option value="스쿠버">스쿠버</option>
             <option value="스쿠버 acc">스쿠버 acc</option>
@@ -1522,8 +2040,8 @@
       </div>
       <div class="form-row">
         <div class="form-group">
-          <label>장비 종류 (홈페이지 분류)</label>
-          <input type="text" id="db-new-subcat" list="db-subcat-datalist" placeholder="예: 호흡기, 오리발, 마스크, 컴퓨터" />
+          <label>장비 종류</label>
+          <input type="text" id="db-new-subcat" list="db-subcat-datalist" placeholder="예: 호흡기, 오리발, 마스크" />
           <datalist id="db-subcat-datalist">
             <option value="호흡기, 보조 호흡기"></option>
             <option value="BC 백플레이트"></option>
@@ -1547,7 +2065,7 @@
           </datalist>
         </div>
         <div class="form-group">
-          <label>짐싸기 앱 카테고리</label>
+          <label>짐싸기 카테고리</label>
           <select id="db-new-appcat">
             <option value="핵심 장비">핵심 장비</option>
             <option value="가방류">가방류</option>
@@ -1561,7 +2079,7 @@
       </div>
       <div class="form-group">
         <label>장비 이름 (모델명)</label>
-        <input type="text" id="db-new-name" placeholder="예: 가민 디센트 Mk3i 51mm 티타늄" />
+        <input type="text" id="db-new-name" placeholder="예: 가민 디센트 Mk3i 51mm" />
       </div>
       <div class="form-row">
         <div class="form-group">
@@ -1569,7 +2087,7 @@
           <input type="number" step="0.01" id="db-new-weight" value="0.50" />
         </div>
         <div class="form-group">
-          <label>가격 (원, DB 전용 표시)</label>
+          <label>가격 (원, DB 전용)</label>
           <input type="number" step="1000" id="db-new-price" placeholder="예: 450000" />
         </div>
       </div>
@@ -1590,14 +2108,14 @@
         </div>
       </div>
       <div class="form-group">
-        <label>장비 사진 등록 (선택 - 사진 촬영/앨범 또는 이미지 주소)</label>
+        <label>장비 사진 (선택)</label>
         <input type="file" id="db-new-photo-file" accept="image/*" onchange="handleNewDbThumbFile(event)" style="margin-bottom:6px;" />
         <input type="text" id="db-new-thumb-url" placeholder="또는 이미지 URL (https://...)" />
       </div>
       <div class="modal-footer" style="flex-wrap:wrap;">
         <button class="btn" onclick="closeNewDbItemModal()">취소</button>
-        <button class="btn btn-blue" onclick="saveNewDbItem(false)">DB에만 등록</button>
-        <button class="btn btn-primary" onclick="saveNewDbItem(true)">DB 등록 + 현재 짐싸기에 담기</button>
+        <button class="btn btn-blue" onclick="saveNewDbItem(false)">DB만 등록</button>
+        <button class="btn btn-primary" onclick="saveNewDbItem(true)">등록 + 짐싸기 추가</button>
       </div>
     </div>
   </div>
@@ -1719,22 +2237,102 @@
       setTimeout(() => { el.style.display = "none"; }, 2200);
     }
 
-    // ==================== 메인 홈 화면 렌더링 ====================
+    // ==================== 0. 최초 접속 Gemini API 인증 게이트 & 모달 제어 ====================
+    function initAppEntry() {
+      const savedKey = (localStorage.getItem(API_KEY_STORAGE) || "").trim();
+      if (!savedKey || savedKey.length < 15) {
+        document.getElementById("auth-gate-view").style.display = "flex";
+        document.getElementById("home-view").style.display = "none";
+        document.getElementById("detail-view").style.display = "none";
+        document.getElementById("bottom-save-bar").style.display = "none";
+      } else {
+        document.getElementById("auth-gate-view").style.display = "none";
+        renderHome();
+      }
+    }
+
+    async function verifyAndCompleteOnboarding() {
+      const inputEl = document.getElementById("gate-api-key-input");
+      const errEl = document.getElementById("gate-error-msg");
+      const btnEl = document.getElementById("gate-submit-btn");
+      const key = (inputEl.value || "").trim();
+
+      if (!key || key.length < 15) {
+        errEl.textContent = "⚠️ 유효한 Gemini API 키(AIzaSy...로 시작)를 입력해 주세요.";
+        errEl.style.display = "block";
+        inputEl.focus();
+        return;
+      }
+
+      errEl.style.display = "none";
+      btnEl.disabled = true;
+      btnEl.textContent = "⏳ Gemini API 연결 확인 중...";
+
+      try {
+        const res = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(key)}`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: "ok" }] }],
+              generationConfig: { maxOutputTokens: 5 }
+            })
+          }
+        );
+
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.error?.message || `유효하지 않은 API 키입니다 (${res.status})`);
+        }
+
+        localStorage.setItem(API_KEY_STORAGE, key);
+        document.getElementById("auth-gate-view").style.display = "none";
+        showToast("✅ Gemini AI 연결이 완료되었습니다!");
+        renderHome();
+      } catch (err) {
+        errEl.textContent = `❌ 연결 실패: ${err.message}`;
+        errEl.style.display = "block";
+      } finally {
+        btnEl.disabled = false;
+        btnEl.textContent = "🚀 Gemini 연결 확인 후 시작하기";
+      }
+    }
+
+    function openHelpModal() {
+      document.getElementById("help-modal").classList.add("active");
+    }
+
+    function closeHelpModal() {
+      document.getElementById("help-modal").classList.remove("active");
+    }
+
+    function openApiKeyModal() {
+      document.getElementById("modal-api-key-input").value = localStorage.getItem(API_KEY_STORAGE) || "";
+      document.getElementById("apikey-modal").classList.add("active");
+    }
+
+    function closeApiKeyModal() {
+      document.getElementById("apikey-modal").classList.remove("active");
+    }
+
+    function saveModalApiKey() {
+      const val = (document.getElementById("modal-api-key-input").value || "").trim();
+      if (!val || val.length < 15) {
+        alert("유효한 Gemini API 키를 입력해 주세요.");
+        return;
+      }
+      localStorage.setItem(API_KEY_STORAGE, val);
+      closeApiKeyModal();
+      showToast("✅ Gemini API 키가 저장되었습니다!");
+    }
+
+    // ==================== 1. 메인 홈 화면 렌더링 ====================
     function renderHome() {
+      document.getElementById("auth-gate-view").style.display = "none";
       document.getElementById("home-view").style.display = "block";
       document.getElementById("detail-view").style.display = "none";
       document.getElementById("bottom-save-bar").style.display = "none";
-
-      const savedKey = localStorage.getItem(API_KEY_STORAGE) || "";
-      document.getElementById("home-api-key-input").value = savedKey;
-      const badgeEl = document.getElementById("home-gemini-badge");
-      if (savedKey && savedKey.length > 10) {
-        badgeEl.textContent = "✅ 연결 완료";
-        badgeEl.className = "status-pill connected";
-      } else {
-        badgeEl.textContent = "⚠️ 미연결";
-        badgeEl.className = "status-pill disconnected";
-      }
 
       const listContainer = document.getElementById("tour-list-container");
       listContainer.innerHTML = "";
@@ -1762,12 +2360,12 @@
             예상 수온: ${t.meta.temp}${flightInfo}
           </div>
           <div class="tour-card-badges">
-            <span class="badge ${isCheckedOver ? "over" : "ok"}">위탁: ${checkedW.toFixed(2)} / ${t.meta.checkedLimit.toFixed(1)}kg</span>
-            <span class="badge ${isCarryonOver ? "over" : "ok"}">기내: ${carryonW.toFixed(2)} / ${t.meta.carryonLimit.toFixed(1)}kg</span>
-            <span class="badge">챙긴 장비: ${checkedItems.length} / ${activeItems.length}개</span>
+            <span class="badge ${isCheckedOver ? "over" : "ok"}">위탁 ${checkedW.toFixed(2)}/${t.meta.checkedLimit.toFixed(1)}kg</span>
+            <span class="badge ${isCarryonOver ? "over" : "ok"}">기내 ${carryonW.toFixed(2)}/${t.meta.carryonLimit.toFixed(1)}kg</span>
+            <span class="badge">🎒 장비 ${checkedItems.length}/${activeItems.length}개</span>
           </div>
           <div class="tour-card-footer">
-            <span>최근 저장: ${t.updatedAt || "-"}</span>
+            <span>저장: ${t.updatedAt || "-"}</span>
             <div style="display:flex; gap:6px;" onclick="event.stopPropagation();">
               <button class="icon-btn" onclick="duplicateTour('${t.id}')">📋 복제</button>
               <button class="icon-btn del-btn" onclick="deleteTour('${t.id}')">🗑️ 삭제</button>
@@ -1776,42 +2374,6 @@
         `;
         listContainer.appendChild(card);
       });
-    }
-
-    function saveHomeApiKey() {
-      const val = document.getElementById("home-api-key-input").value.trim();
-      if (!val) {
-        localStorage.removeItem(API_KEY_STORAGE);
-        showToast("API 키가 삭제되었습니다.");
-      } else {
-        localStorage.setItem(API_KEY_STORAGE, val);
-        showToast("✅ 제미나이 API 키가 연결 및 저장되었습니다!");
-      }
-      renderHome();
-    }
-
-    function createNewTour() {
-      const place = prompt("새 투어 이름(장소)을 입력하세요:", "제주도/해외 다이빙 투어");
-      if (!place) return;
-      const dates = prompt("투어 일정(날짜)을 입력하세요:", "12.01 ~ 04") || "일정 미정";
-
-      const newTour = {
-        id: "tour_" + Date.now(),
-        meta: {
-          place: place.trim(),
-          dates: dates.trim(),
-          flight: "",
-          temp: "24 ~ 26°C",
-          checkedLimit: 23.0,
-          carryonLimit: 10.0
-        },
-        items: getDefaultItemsTemplate(),
-        updatedAt: formatNow()
-      };
-      savedTours.unshift(newTour);
-      saveAllTours();
-      openTourById(newTour.id);
-      showToast("✅ 새 투어 패킹 리스트가 생성되었습니다!");
     }
 
     function duplicateTour(id) {
@@ -1844,19 +2406,55 @@
       }
     }
 
-    // ==================== 상세 패킹 화면 열기 & 물품 추가/삭제 ====================
-    function openTourById(id) {
+    // ==================== 2. 상세 패킹 화면 & 드로어(Drawer) 제어 ====================
+    let isGearDrawerOpen = true;
+
+    function toggleGearDrawer() {
+      isGearDrawerOpen = !isGearDrawerOpen;
+      const bodyEl = document.getElementById("gear-drawer-body");
+      const arrowEl = document.getElementById("gear-drawer-arrow");
+      if (isGearDrawerOpen) {
+        bodyEl.style.display = "block";
+        arrowEl.textContent = "▲ 접기";
+      } else {
+        bodyEl.style.display = "none";
+        arrowEl.textContent = "▼ 펼치기";
+      }
+    }
+
+    function updateGearDrawerHeader() {
+      const activeItems = items.filter(i => !i.excluded);
+      const checkedCount = activeItems.filter(i => i.checked).length;
+      const totalCount = activeItems.length;
+      const pct = totalCount > 0 ? Math.round((checkedCount / totalCount) * 100) : 0;
+
+      const textEl = document.getElementById("gear-drawer-count-text");
+      const pillEl = document.getElementById("gear-drawer-pill");
+      if (textEl) {
+        textEl.textContent = `챙긴 장비: ${checkedCount} / ${totalCount}개 (${pct}%)`;
+      }
+      if (pillEl) {
+        pillEl.textContent = `${checkedCount} / ${totalCount}`;
+      }
+    }
+
+    function openTourById(id, autoRunAi) {
       const found = savedTours.find(t => t.id === id);
       if (!found) return;
       currentTourId = found.id;
       tour = found.meta;
       items = found.items;
 
+      document.getElementById("auth-gate-view").style.display = "none";
       document.getElementById("home-view").style.display = "none";
       document.getElementById("detail-view").style.display = "block";
       document.getElementById("bottom-save-bar").style.display = "block";
       window.scrollTo(0, 0);
       renderDetail();
+
+      if (autoRunAi) {
+        generateTourAiBriefing();
+      }
     }
 
     function syncCurrentTourToStorage() {
@@ -1871,12 +2469,12 @@
 
     function saveCurrentTourWithToast() {
       syncCurrentTourToStorage();
-      showToast("💾 현재 투어 패킹 상태가 저장되었습니다!");
+      showToast("💾 저장되었습니다!");
     }
 
     function saveAndGoHome() {
       syncCurrentTourToStorage();
-      showToast("💾 저장 완료! 목록 화면으로 이동합니다.");
+      showToast("💾 저장 완료!");
       renderHome();
       window.scrollTo(0, 0);
     }
@@ -1895,10 +2493,9 @@
       const weight = parseFloat(weightInput.value) || 0.20;
       const db = getCombinedPongdangDb();
       const foundDb = db.find(r => r[0] === name);
-      // schema: [0:fullName, 1:brand, 2:mainCat, 3:subCat, 4:appCat, 5:weight, 6:bag, 7:fixed, 8:price, 9:thumb]
       items.push({
         name,
-        desc: foundDb ? (foundDb[3] ? `퐁당닷컴 DB (${foundDb[3]})` : "퐁당닷컴 장비 DB") : "직접 추가 항목",
+        desc: foundDb ? (foundDb[3] ? `${foundDb[2]} · ${foundDb[3]}` : "장비 DB") : "직접 추가",
         cat,
         weight,
         bag: foundDb ? (foundDb[6] || "위탁") : "위탁",
@@ -1914,39 +2511,36 @@
       showToast(`➕ '${name}' (${weight.toFixed(2)}kg) 추가됨!`);
     }
 
-    // 개별 물품 즉시 삭제 버튼
     function deleteItemDirect(idx) {
       if (!items[idx]) return;
       const targetName = items[idx].name;
-      if (confirm(`'${targetName}' 물품을 목록에서 삭제할까요?`)) {
+      if (confirm(`'${targetName}' 물품을 삭제할까요?`)) {
         items.splice(idx, 1);
         syncCurrentTourToStorage();
         renderDetail();
-        showToast(`🗑️ '${targetName}' 삭제 완료`);
+        showToast(`🗑️ 삭제 완료`);
       }
     }
 
-    // 체크된 물품 일괄 삭제
     function deleteCheckedItems() {
       const checkedCount = items.filter(i => !i.excluded && i.checked).length;
       if (checkedCount === 0) {
         alert("삭제할 물품을 먼저 체크(☑)해 주세요.");
         return;
       }
-      if (confirm(`현재 체크(☑)된 ${checkedCount}개의 물품을 한 번에 삭제할까요?`)) {
+      if (confirm(`체크된 ${checkedCount}개의 물품을 삭제할까요?`)) {
         items = items.filter(i => i.excluded || !i.checked);
         syncCurrentTourToStorage();
         renderDetail();
-        showToast(`🗑️ 체크된 물품 ${checkedCount}개가 삭제되었습니다.`);
+        showToast(`🗑️ ${checkedCount}개 삭제됨`);
       }
     }
 
-    // 현재 물품 구성을 기본 장비 템플릿으로 등록
     function saveAsDefaultTemplate() {
-      if (confirm("현재 추가/삭제된 물품 구성을 내 기본 장비 세트로 등록할까요?\n(앞으로 새 투어를 만들 때 이 물품 목록이 기본으로 불러와집니다.)")) {
+      if (confirm("현재 장비 구성을 기본 세트로 저장할까요?\n(새 투어 생성 시 이 목록이 기본 적용됩니다.)")) {
         const cleanTemplate = items.map(i => Object.assign({}, i, { checked: false }));
         localStorage.setItem(CUSTOM_DEFAULT_KEY, JSON.stringify(cleanTemplate));
-        showToast("📌 현재 물품 구성이 기본 장비 세트로 등록되었습니다!");
+        showToast("📌 기본 장비 세트로 등록되었습니다!");
       }
     }
 
@@ -1959,12 +2553,12 @@
     }
 
     function resetCurrentTour() {
-      if (confirm("현재 투어의 장비 목록을 처음 출고 상태(원본 29종)로 복원할까요?")) {
+      if (confirm("초기 장비 세팅(원본 29종)으로 복원할까요?")) {
         localStorage.removeItem(CUSTOM_DEFAULT_KEY);
         items = JSON.parse(JSON.stringify(FACTORY_DEFAULT_ITEMS));
         syncCurrentTourToStorage();
         renderDetail();
-        showToast("✅ 원본 초기 장비 세팅으로 복원되었습니다.");
+        showToast("✅ 초기 장비로 복원되었습니다.");
       }
     }
 
@@ -1988,7 +2582,7 @@
       items[idx].checked = true;
       syncCurrentTourToStorage();
       renderDetail();
-      showToast(`➕ '${items[idx].name}' 항목이 편입되었습니다.`);
+      showToast(`➕ '${items[idx].name}' 편입됨`);
     }
 
     function excludeItem(idx) {
@@ -1996,16 +2590,16 @@
       items[idx].checked = false;
       syncCurrentTourToStorage();
       renderDetail();
-      showToast(`'${items[idx].name}' 항목이 하단 제외 품목으로 이동했습니다.`);
+      showToast(`제외 품목으로 이동했습니다.`);
     }
 
     function updateMetrics() {
       document.getElementById("tour-title-display").textContent =
         `🤿 ${tour.place} (${tour.dates})`;
 
-      const flightText = tour.flight ? ` | 항공편: ${tour.flight}` : "";
+      const flightText = tour.flight ? ` | ✈️ ${tour.flight}` : "";
       document.getElementById("tour-info-display").textContent =
-        `예상 수온: ${tour.temp}${flightText} | 항공: 위탁 ${tour.checkedLimit.toFixed(1)}kg / 기내 ${tour.carryonLimit.toFixed(1)}kg`;
+        `수온: ${tour.temp}${flightText} | 위탁 ${tour.checkedLimit.toFixed(1)}kg / 기내 ${tour.carryonLimit.toFixed(1)}kg`;
 
       document.getElementById("checked-limit-label").textContent = `/ ${tour.checkedLimit.toFixed(1)}kg`;
       document.getElementById("carryon-limit-label").textContent = `/ ${tour.carryonLimit.toFixed(1)}kg`;
@@ -2055,6 +2649,8 @@
         carryonDeltaEl.classList.add("over");
         if (carryonBarEl) carryonBarEl.classList.add("over");
       }
+
+      updateGearDrawerHeader();
     }
 
     const CATEGORY_ORDER = [
@@ -2087,14 +2683,15 @@
 
       presentCats.forEach(cat => {
         const catItems = activeItems.filter(i => i.cat === cat);
+        const catChecked = catItems.filter(i => i.checked).length;
         const catTotalWeight = catItems.reduce((acc, cur) => acc + Number(cur.weight || 0), 0);
 
         const header = document.createElement("h2");
         header.innerHTML = `
-          <span>${cat}</span>
+          <span>${cat} <small style="font-size:0.75rem; color:#38bdf8; font-weight:600;">(${catChecked}/${catItems.length})</small></span>
           <div class="cat-header-right">
             <span class="cat-weight-badge">${catTotalWeight.toFixed(2)} kg</span>
-            <button class="cat-add-btn" onclick="openItemModal(-1, '${cat}')">+ 물품 추가</button>
+            <button class="cat-add-btn" onclick="openItemModal(-1, '${cat}')">+ 추가</button>
           </div>
         `;
         container.appendChild(header);
@@ -2105,7 +2702,6 @@
           const row = document.createElement("div");
           row.className = `item-row ${item.checked ? "checked-row" : ""} ${idx === lastToggledIdx ? "just-toggled" : ""}`;
 
-          // 1. 체크박스
           const chkWrap = document.createElement("div");
           chkWrap.className = "checkbox-wrap";
           const chk = document.createElement("input");
@@ -2114,7 +2710,6 @@
           chk.addEventListener("change", () => toggleCheck(idx));
           chkWrap.appendChild(chk);
 
-          // 2. 장비 이름, 설명, 무게
           const info = document.createElement("div");
           info.className = "item-info";
           info.addEventListener("click", () => toggleCheck(idx));
@@ -2126,7 +2721,6 @@
             ${descHtml}
           `;
 
-          // 3. 우측 컨트롤 (위탁/기내 토글 + 수정(✏️) + 삭제(🗑️) 상시 노출)
           const actionWrap = document.createElement("div");
           actionWrap.className = "item-actions";
 
@@ -2156,14 +2750,14 @@
 
           const editBtn = document.createElement("button");
           editBtn.className = "icon-btn";
-          editBtn.title = "물품 수정";
+          editBtn.title = "수정";
           editBtn.textContent = "✏️";
           editBtn.onclick = () => openItemModal(idx);
           actionWrap.appendChild(editBtn);
 
           const delBtn = document.createElement("button");
           delBtn.className = "icon-btn del-btn";
-          delBtn.title = "물품 삭제";
+          delBtn.title = "삭제";
           delBtn.textContent = "🗑️";
           delBtn.onclick = () => deleteItemDirect(idx);
           actionWrap.appendChild(delBtn);
@@ -2175,7 +2769,6 @@
         });
       });
 
-      // 하단 제외 품목 (필요시 추가 가능) 렌더링
       const excludedContainer = document.getElementById("excluded-container");
       excludedContainer.innerHTML = "";
       const excludedItems = items.map((item, idx) => ({ item, idx })).filter(x => x.item.excluded);
@@ -2183,10 +2776,10 @@
       const exTotal = excludedItems.reduce((acc, cur) => acc + Number(cur.item.weight || 0), 0);
       const exHeader = document.createElement("h2");
       exHeader.innerHTML = `
-        <span>제외 품목 (필요시 추가 가능)</span>
+        <span>제외 품목 (${excludedItems.length})</span>
         <div class="cat-header-right">
           <span class="cat-weight-badge">${exTotal.toFixed(2)} kg</span>
-          <button class="cat-add-btn" onclick="openItemModal(-1, '핵심 장비', true)">+ 제외품목 추가</button>
+          <button class="cat-add-btn" onclick="openItemModal(-1, '핵심 장비', true)">+ 추가</button>
         </div>
       `;
       excludedContainer.appendChild(exHeader);
@@ -2201,7 +2794,7 @@
           info.onclick = () => openItemModal(idx);
           info.innerHTML = `
             <span class="item-name">${item.name}</span>
-            <span class="item-desc">[${item.cat}] ${item.desc || "버튼으로 리스트 편입 가능"} · <span class="item-weight-tag">${Number(item.weight).toFixed(2)} kg</span></span>
+            <span class="item-desc">[${item.cat}] ${item.desc || "보관 품목"} · <span class="item-weight-tag">${Number(item.weight).toFixed(2)} kg</span></span>
           `;
 
           const actionWrap = document.createElement("div");
@@ -2209,6 +2802,8 @@
 
           const addBtn = document.createElement("button");
           addBtn.className = "btn btn-blue";
+          addBtn.style.padding = "5px 9px";
+          addBtn.style.fontSize = "0.75rem";
           addBtn.textContent = "+ 편입";
           addBtn.onclick = () => includeItem(idx);
           actionWrap.appendChild(addBtn);
@@ -2232,14 +2827,130 @@
       }
     }
 
-    // --- 투어/항공편 모달 로직 ---
-    function openTourModal() {
-      document.getElementById("input-place").value = tour.place;
-      document.getElementById("input-dates").value = tour.dates;
+    // ==================== 3. 새 투어 등록 / 편집 (구글맵 검색 + 달력 선택 + 자동 AI 분석) ====================
+    let isNewTourMode = false;
+
+    function getIsoDateOffset(daysOffset) {
+      const d = new Date();
+      d.setDate(d.getDate() + daysOffset);
+      return d.toISOString().slice(0, 10);
+    }
+
+    function updateGoogleMapPreview(placeQuery) {
+      const q = (placeQuery || "Okinawa").trim();
+      const iframe = document.getElementById("google-map-iframe");
+      const label = document.getElementById("map-selected-label");
+      const extLink = document.getElementById("google-map-ext-link");
+      if (iframe) {
+        iframe.src = `https://maps.google.com/maps?q=${encodeURIComponent(q)}&t=m&z=10&output=embed&hl=ko`;
+      }
+      if (label) {
+        label.textContent = `📍 지도 위치: ${q}`;
+      }
+      if (extLink) {
+        extLink.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+      }
+    }
+
+    function selectQuickSpot(spotName) {
+      document.getElementById("input-place").value = spotName;
+      document.getElementById("map-search-results").style.display = "none";
+      updateGoogleMapPreview(spotName);
+    }
+
+    async function searchGoogleMapPlace() {
+      const q = (document.getElementById("input-place").value || "").trim();
+      if (!q) {
+        alert("검색할 다이빙 지역이나 장소를 입력해 주세요.");
+        return;
+      }
+      updateGoogleMapPreview(q);
+
+      const box = document.getElementById("map-search-results");
+      box.style.display = "block";
+      box.innerHTML = `<div style="padding:8px 10px; font-size:0.76rem; color:var(--subtext-color);">🗺️ '${q}' 주변 지도 위치를 검색 중...</div>`;
+
+      try {
+        const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}&limit=5&accept-language=ko`);
+        const data = await res.json();
+        if (!Array.isArray(data) || data.length === 0) {
+          box.innerHTML = `<div class="map-search-item" onclick="document.getElementById('map-search-results').style.display='none'"><span>📍 '${q}' 위치로 설정됨 (아래 지도 확인)</span><span style="color:#38bdf8;">선택 ✓</span></div>`;
+          return;
+        }
+        box.innerHTML = "";
+        data.forEach(place => {
+          const displayName = place.display_name || q;
+          const shortName = displayName.split(",").slice(0, 3).join(", ").trim();
+          const item = document.createElement("div");
+          item.className = "map-search-item";
+          item.innerHTML = `
+            <span style="word-break:keep-all;">📍 ${displayName}</span>
+            <span style="color:#38bdf8; font-weight:700; white-space:nowrap;">선택</span>
+          `;
+          item.onclick = () => {
+            document.getElementById("input-place").value = shortName;
+            box.style.display = "none";
+            updateGoogleMapPreview(displayName);
+          };
+          box.appendChild(item);
+        });
+      } catch (e) {
+        box.innerHTML = `<div class="map-search-item" onclick="document.getElementById('map-search-results').style.display='none'"><span>📍 '${q}' 위치로 구글맵 표시 완료</span><span style="color:#38bdf8;">확인 ✓</span></div>`;
+      }
+    }
+
+    function syncDatesFromCalendar() {
+      const s = document.getElementById("input-start-date").value;
+      const e = document.getElementById("input-end-date").value;
+      if (!s) return;
+      if (e && e < s) {
+        document.getElementById("input-end-date").value = s;
+      }
+      const endVal = document.getElementById("input-end-date").value || s;
+      const [sy, sm, sd] = s.split("-");
+      const [ey, em, ed] = endVal.split("-");
+      if (sy === ey) {
+        document.getElementById("input-dates").value = `${sy}.${sm}.${sd} ~ ${em}.${ed}`;
+      } else {
+        document.getElementById("input-dates").value = `${sy}.${sm}.${sd} ~ ${ey}.${em}.${ed}`;
+      }
+    }
+
+    function openNewTourModal() {
+      isNewTourMode = true;
+      document.getElementById("tour-modal-title").textContent = "➕ 새 다이빙 투어 등록";
+      const sDate = getIsoDateOffset(7);
+      const eDate = getIsoDateOffset(10);
+      document.getElementById("input-place").value = "오키나와";
+      document.getElementById("input-start-date").value = sDate;
+      document.getElementById("input-end-date").value = eDate;
+      syncDatesFromCalendar();
+      document.getElementById("input-flight").value = "";
+      document.getElementById("input-temp").value = "AI 자동 분석";
+      document.getElementById("input-checked-limit").value = "23.0";
+      document.getElementById("input-carryon-limit").value = "10.0";
+      document.getElementById("map-search-results").style.display = "none";
+      updateGoogleMapPreview("오키나와");
+      document.getElementById("tour-modal").classList.add("active");
+    }
+
+    function openTourModal(isNew) {
+      if (isNew) {
+        openNewTourModal();
+        return;
+      }
+      isNewTourMode = false;
+      document.getElementById("tour-modal-title").textContent = "✏️ 투어 장소 · 일정 설정";
+      document.getElementById("input-place").value = tour.place || "";
+      document.getElementById("input-start-date").value = tour.startDate || getIsoDateOffset(3);
+      document.getElementById("input-end-date").value = tour.endDate || getIsoDateOffset(6);
+      document.getElementById("input-dates").value = tour.dates || "";
       document.getElementById("input-flight").value = tour.flight || "";
-      document.getElementById("input-temp").value = tour.temp;
-      document.getElementById("input-checked-limit").value = tour.checkedLimit;
-      document.getElementById("input-carryon-limit").value = tour.carryonLimit;
+      document.getElementById("input-temp").value = tour.temp || "";
+      document.getElementById("input-checked-limit").value = tour.checkedLimit || 23.0;
+      document.getElementById("input-carryon-limit").value = tour.carryonLimit || 10.0;
+      document.getElementById("map-search-results").style.display = "none";
+      updateGoogleMapPreview(tour.place || "오키나와");
       document.getElementById("tour-modal").classList.add("active");
     }
 
@@ -2247,34 +2958,63 @@
       document.getElementById("tour-modal").classList.remove("active");
     }
 
-    function saveTourConfig() {
-      tour.place = document.getElementById("input-place").value.trim() || "오키나와 투어 패킹";
-      tour.dates = document.getElementById("input-dates").value.trim() || "11.12 ~ 15";
-      tour.flight = document.getElementById("input-flight").value.trim();
-      tour.temp = document.getElementById("input-temp").value.trim() || "25 ~ 26°C";
-      tour.checkedLimit = parseFloat(document.getElementById("input-checked-limit").value) || 23.0;
-      tour.carryonLimit = parseFloat(document.getElementById("input-carryon-limit").value) || 10.0;
-      syncCurrentTourToStorage();
+    function saveTourConfigAndAutoAi() {
+      const place = (document.getElementById("input-place").value || "").trim() || "오키나와 다이빙 투어";
+      const startDate = document.getElementById("input-start-date").value || "";
+      const endDate = document.getElementById("input-end-date").value || "";
+      const dates = (document.getElementById("input-dates").value || "").trim() || "일정 미정";
+      const flight = (document.getElementById("input-flight").value || "").trim();
+      const temp = (document.getElementById("input-temp").value || "").trim() || "분석 중...";
+      const checkedLimit = parseFloat(document.getElementById("input-checked-limit").value) || 23.0;
+      const carryonLimit = parseFloat(document.getElementById("input-carryon-limit").value) || 10.0;
+
       closeTourModal();
-      renderDetail();
-      showToast("✅ 일정 및 항공 설정이 저장되었습니다.");
+
+      if (isNewTourMode) {
+        const newTour = {
+          id: "tour_" + Date.now(),
+          meta: {
+            place,
+            startDate,
+            endDate,
+            dates,
+            flight,
+            temp,
+            checkedLimit,
+            carryonLimit
+          },
+          items: getDefaultItemsTemplate(),
+          updatedAt: formatNow()
+        };
+        savedTours.unshift(newTour);
+        saveAllTours();
+        openTourById(newTour.id, true);
+        showToast("🚀 새 투어가 생성되었으며 AI 해황·이동편 분석을 시작합니다!");
+      } else {
+        tour.place = place;
+        tour.startDate = startDate;
+        tour.endDate = endDate;
+        tour.dates = dates;
+        tour.flight = flight;
+        tour.temp = temp;
+        tour.checkedLimit = checkedLimit;
+        tour.carryonLimit = carryonLimit;
+        syncCurrentTourToStorage();
+        renderDetail();
+        generateTourAiBriefing();
+      }
     }
 
-    function saveTourAndRunAi() {
-      saveTourConfig();
-      generateTourAiBriefing();
-    }
-
-    // --- AI 투어 이동편 추천 & 바다/날씨(파고·수온·기온) 브리핑 로직 ---
+    // --- AI 투어 이동편 추천 & 바다/날씨(파고·수온·기온) 자동 브리핑 로직 ---
     function toggleBriefingBody() {
       const bodyEl = document.getElementById("briefing-body");
       const btnEl = document.getElementById("briefing-toggle-btn");
       if (bodyEl.style.display === "none") {
         bodyEl.style.display = "block";
-        btnEl.textContent = "접기 ▲";
+        btnEl.textContent = "▲ 접기";
       } else {
         bodyEl.style.display = "none";
-        btnEl.textContent = "펼치기 ▼";
+        btnEl.textContent = "▼ 펼치기";
       }
     }
 
@@ -2284,7 +3024,7 @@
       const toggleBtn = document.getElementById("briefing-toggle-btn");
 
       if (!tour || !tour.aiBriefing) {
-        statusEl.textContent = `'${tour ? tour.place : "투어 지역"}' (${tour ? tour.dates : "일정"}) 기준 추천 이동편과 파고·수온·기온을 AI로 확인해 보세요.`;
+        statusEl.textContent = `'${tour ? tour.place : "투어 지역"}' (${tour ? tour.dates : "일정"}) 기준 이동편과 바다 상황(파고·수온·기온)을 AI가 분석합니다.`;
         bodyEl.style.display = "none";
         bodyEl.innerHTML = "";
         toggleBtn.style.display = "none";
@@ -2294,17 +3034,17 @@
       const b = tour.aiBriefing;
       statusEl.innerHTML = `<span style="color:#38bdf8; font-weight:600;">✅ ${b.basisLabel || "맞춤 해황·이동편 분석 완료"}</span> (${b.analyzedAt || ""})`;
       toggleBtn.style.display = "inline-flex";
-      toggleBtn.textContent = "접기 ▲";
+      toggleBtn.textContent = "▲ 접기";
       bodyEl.style.display = "block";
 
       bodyEl.innerHTML = `
         <div class="briefing-grid">
           <div class="briefing-stat">
-            <div class="briefing-stat-label">🌡️ 예상 수온 (표층/수심)</div>
+            <div class="briefing-stat-label">🌡️ 예상 수온</div>
             <div class="briefing-stat-val">${b.waterTemp || "-"}</div>
           </div>
           <div class="briefing-stat">
-            <div class="briefing-stat-label">☀️ 예상 기온 & 날씨</div>
+            <div class="briefing-stat-label">☀️ 기온 & 날씨</div>
             <div class="briefing-stat-val">${b.airWeather || "-"}</div>
           </div>
           <div class="briefing-stat">
@@ -2317,42 +3057,26 @@
           </div>
         </div>
         <div class="briefing-section">
-          <strong>🤿 추천 슈트 & 다이빙 준비 팁:</strong><br/>
+          <strong>🤿 추천 슈트 & 다이빙 준비:</strong><br/>
           ${b.suitGearTip || "-"}
         </div>
         <div class="briefing-section">
-          <strong>✈️ 추천 이동편 (항공/선박/현지이동) & No-Fly 팁:</strong><br/>
+          <strong>✈️ 추천 이동편 & No-Fly 팁:</strong><br/>
           ${b.transportTip || "-"}
         </div>
-        <div style="margin-top:8px; display:flex; justify-content:flex-end;">
-          <button class="btn btn-blue" style="padding:6px 11px; font-size:0.78rem;" onclick="applyBriefingToTour()">
-            ✅ 예상 수온·추천 이동편을 상단 투어 정보에 자동 반영
-          </button>
-        </div>
       `;
-    }
-
-    function applyBriefingToTour() {
-      if (!tour || !tour.aiBriefing) return;
-      const b = tour.aiBriefing;
-      if (b.shortWaterTemp) tour.temp = b.shortWaterTemp;
-      else if (b.waterTemp) tour.temp = b.waterTemp;
-      if (b.shortFlight && !tour.flight) tour.flight = b.shortFlight;
-      syncCurrentTourToStorage();
-      updateMetrics();
-      showToast("✅ 브리핑된 예상 수온과 이동편 정보가 투어에 반영되었습니다!");
     }
 
     async function generateTourAiBriefing() {
       const apiKey = (localStorage.getItem(API_KEY_STORAGE) || "").trim();
       if (!apiKey) {
-        alert("AI 이동편·해황 브리핑을 사용하려면 먼저 메인 화면(또는 📸 AI 사진 모달)에서 무료 Gemini API 키를 등록해 주세요!");
+        initAppEntry();
         return;
       }
 
       const statusEl = document.getElementById("briefing-status");
       const bodyEl = document.getElementById("briefing-body");
-      statusEl.textContent = `⏳ '${tour.place}' (${tour.dates}) 이동편 및 바다 컨디션(파고·수온·기온)을 제미나이 AI가 분석 중입니다...`;
+      statusEl.textContent = `⏳ '${tour.place}' (${tour.dates}) 이동편 및 바다 컨디션(파고·수온·기온)을 Gemini AI가 자동 분석 중입니다...`;
       bodyEl.style.display = "none";
 
       const todayStr = new Date().toISOString().slice(0, 10);
@@ -2373,7 +3097,7 @@ JSON 응답 형식:
   "waveWind": "예상 파고(m) 및 풍향/풍속 (예: 파고 1.0~1.5m, 북동풍 영향 포인트 선정 중요)",
   "visCurrent": "평균 시야(m) 및 조류 특징 (예: 시야 20~30m, 케라마 제도 약~중조류)",
   "suitGearTip": "수온/파고 맞춤 슈트 두께(웻/드라이/후드베스트/보트코트) 및 필수 안전장비(SMB 등) 추천 2~3문장",
-  "transportTip": "한국 출발 추천 항공편/이동 루트(직항 항공사·소요시간· 현지 공항에서 다이빙 지역 이동법) 및 마지막 날 비행 전 No-Fly(18~24시간 수면휴식) 스케줄 팁 2~3문장"
+  "transportTip": "한국 출발 추천 항공편/이동 루트(직항 항공사·소요시간·현지 공항에서 다이빙 지역 이동법) 및 마지막 날 비행 전 No-Fly(18~24시간 수면휴식) 스케줄 팁 2~3문장"
 }
 반드시 순수 JSON 객체만 출력하세요.`;
 
@@ -2403,12 +3127,15 @@ JSON 응답 형식:
         if (parsed.shortWaterTemp) {
           tour.temp = parsed.shortWaterTemp;
         }
+        if (parsed.shortFlight && !tour.flight) {
+          tour.flight = parsed.shortFlight;
+        }
         syncCurrentTourToStorage();
         updateMetrics();
         renderSavedBriefing();
-        showToast("🌊✈️ AI 이동편 & 바다/날씨 브리핑이 완료되었습니다!");
+        showToast("🌊✈️ AI 이동편 & 해황 자동 브리핑 완료!");
       } catch (err) {
-        statusEl.textContent = `❌ AI 브리핑 분석 실패: ${err.message}`;
+        statusEl.textContent = `❌ AI 분석 실패: ${err.message}`;
       }
     }
 
@@ -2419,7 +3146,7 @@ JSON 응답 형식:
 
       if (idx >= 0 && items[idx]) {
         const item = items[idx];
-        document.getElementById("item-modal-title").textContent = "✏️ 물품 정보/무게 수정";
+        document.getElementById("item-modal-title").textContent = "✏️ 물품 수정";
         document.getElementById("item-name-input").value = item.name;
         document.getElementById("item-desc-input").value = item.desc || "";
         document.getElementById("item-cat-input").value = item.cat;
@@ -2474,18 +3201,18 @@ JSON 응답 형식:
       syncCurrentTourToStorage();
       closeItemModal();
       renderDetail();
-      showToast("✅ 물품 정보가 저장되었습니다.");
+      showToast("✅ 저장되었습니다.");
     }
 
     function deleteCurrentItem() {
       const idx = parseInt(document.getElementById("edit-item-idx").value, 10);
       if (idx >= 0 && items[idx]) {
-        if (confirm(`'${items[idx].name}' 물품을 목록에서 완전히 삭제할까요?`)) {
+        if (confirm(`'${items[idx].name}' 물품을 삭제할까요?`)) {
           items.splice(idx, 1);
           syncCurrentTourToStorage();
           closeItemModal();
           renderDetail();
-          showToast("🗑️ 물품이 삭제되었습니다.");
+          showToast("🗑️ 삭제되었습니다.");
         }
       }
     }
@@ -2554,7 +3281,7 @@ JSON 응답 형식:
 
       const apiKey = document.getElementById("gemini-api-key").value.trim();
       if (!apiKey) {
-        alert("먼저 상단(또는 메인화면)에 Gemini API Key를 입력해 주세요!");
+        alert("Gemini API Key를 먼저 입력해 주세요!");
         event.target.value = "";
         return;
       }
@@ -2567,7 +3294,7 @@ JSON 응답 형식:
 
       resultsEl.innerHTML = "";
       addBtn.style.display = "none";
-      statusEl.textContent = "⏳ 사진을 분석하여 다이빙 장비를 식별하고 있습니다...";
+      statusEl.textContent = "⏳ 사진 속 다이빙 장비를 AI가 식별 중입니다...";
 
       try {
         const { dataUrl, base64, mimeType } = await compressImageToBase64(file);
@@ -2615,21 +3342,21 @@ JSON 응답 형식:
         const parsed = JSON.parse(rawText);
 
         if (!Array.isArray(parsed) || parsed.length === 0) {
-          statusEl.textContent = "⚠️ 사진에서 장비를 찾지 못했습니다. 다시 촬영해 보세요.";
+          statusEl.textContent = "⚠️ 장비를 찾지 못했습니다. 다시 촬영해 보세요.";
           return;
         }
 
         recognizedPending = parsed.map(item => ({
           selected: true,
           name: item.name || "인식된 장비",
-          desc: item.desc || "AI 사진 인식 항목",
+          desc: item.desc || "AI 사진 인식",
           cat: CATEGORY_ORDER.includes(item.cat) ? item.cat : "핵심 장비",
           weight: Number(item.weight) || 0.30,
           bag: item.bag === "기내" ? "기내" : "위탁",
           fixed: Boolean(item.fixed)
         }));
 
-        statusEl.textContent = `✅ 총 ${recognizedPending.length}개의 장비를 인식했습니다! 확인 후 추가하세요.`;
+        statusEl.textContent = `✅ 총 ${recognizedPending.length}개 장비 인식 완료!`;
         renderRecognizedPending();
         addBtn.style.display = "inline-flex";
       } catch (err) {
@@ -2656,7 +3383,7 @@ JSON 응답 형식:
     function addRecognizedItems() {
       const toAdd = recognizedPending.filter(i => i.selected && i.name.trim());
       if (toAdd.length === 0) {
-        alert("추가할 장비를 하나 이상 선택해 주세요.");
+        alert("추가할 장비를 선택해 주세요.");
         return;
       }
       toAdd.forEach(item => {
@@ -2674,12 +3401,14 @@ JSON 응답 형식:
       syncCurrentTourToStorage();
       closeAiModal();
       renderDetail();
-      showToast(`📸 ${toAdd.length}개 장비가 추가 및 저장되었습니다!`);
+      showToast(`📸 ${toAdd.length}개 장비가 추가되었습니다!`);
     }
 
-    // --- 퐁당닷컴 스쿠버 & 스쿠버 acc DB (6,448종 + 사용자 신규 등록) 검색 · 소팅 · 썸네일 · 가격 로직 ---
-    // Row schema: [0:fullName, 1:brand, 2:mainCat, 3:subCat, 4:appCat, 5:weight, 6:bag, 7:fixed, 8:price, 9:thumb, 10:isCustom]
+    // ==================== 4. 장비 검색/추가 (퐁당닷컴 DB + 편집/저장 + 가격 클릭 시 제품 상세 이동) ====================
+    // Built-in PONGDANG_DB row schema: [0:fullName, 1:brand, 2:mainCat, 3:subCat, 4:appCat, 5:weight, 6:bag, 7:fixed, 8:price, 9:thumb, 10:goodsNo]
+    // Combined row schema adds: [11:isCustom, 12:customIdx, 13:baseKey, 14:isEdited]
     const CUSTOM_PONGDANG_KEY = "scuba_custom_pongdang_db_v1";
+    const OVERRIDES_PONGDANG_KEY = "scuba_pongdang_overrides_v1";
     let currentPongMainCat = "전체";
 
     function loadCustomPongdangDb() {
@@ -2699,14 +3428,63 @@ JSON 응답 형식:
       } catch (e) {}
     }
 
+    function loadPongdangOverrides() {
+      try {
+        const raw = localStorage.getItem(OVERRIDES_PONGDANG_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === "object") return parsed;
+        }
+      } catch (e) {}
+      return {};
+    }
+
+    function savePongdangOverrides(obj) {
+      try {
+        localStorage.setItem(OVERRIDES_PONGDANG_KEY, JSON.stringify(obj));
+        fetch("/api/pongdang/overrides", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ overrides: obj })
+        }).catch(() => {});
+      } catch (e) {}
+    }
+
     function getCombinedPongdangDb() {
+      const overrides = loadPongdangOverrides();
       const custom = loadCustomPongdangDb().map((r, cIdx) => {
         const copy = r.slice();
-        copy[10] = true;
-        copy[11] = cIdx;
+        while (copy.length < 11) copy.push("");
+        copy[11] = true;      // isCustom
+        copy[12] = cIdx;      // customIdx
+        copy[13] = `custom_${cIdx}`;
+        copy[14] = true;
         return copy;
       });
-      const base = window.PONGDANG_DB || [];
+
+      const base = (window.PONGDANG_DB || []).map((r, bIdx) => {
+        const copy = r.slice();
+        const key = copy[10] ? `no_${copy[10]}` : `idx_${bIdx}`;
+        const ov = overrides[key];
+        let isEdited = false;
+        if (ov) {
+          if (ov.fullName !== undefined) copy[0] = ov.fullName;
+          if (ov.brand !== undefined) copy[1] = ov.brand;
+          if (ov.mainCat !== undefined) copy[2] = ov.mainCat;
+          if (ov.subCat !== undefined) copy[3] = ov.subCat;
+          if (ov.appCat !== undefined) copy[4] = ov.appCat;
+          if (ov.weight !== undefined) copy[5] = Number(ov.weight);
+          if (ov.bag !== undefined) copy[6] = ov.bag;
+          if (ov.price !== undefined) copy[8] = Number(ov.price);
+          isEdited = true;
+        }
+        copy[11] = false;     // isCustom
+        copy[12] = bIdx;      // baseIdx
+        copy[13] = key;       // overrideKey
+        copy[14] = isEdited;
+        return copy;
+      });
+
       return custom.concat(base);
     }
 
@@ -2721,9 +3499,18 @@ JSON 응답 형식:
       return thumb;
     }
 
+    function getPongdangProductUrl(row) {
+      const goodsNo = row[10];
+      if (goodsNo && /^\d+$/.test(String(goodsNo))) {
+        return `https://pongdang.com/goods/view?no=${goodsNo}`;
+      }
+      const cleanQ = (row[0] || "").replace(/^\[[^\]]+\]\s*/, "").trim();
+      return `https://pongdang.com/goods/search?search_text=${encodeURIComponent(cleanQ || row[0])}`;
+    }
+
     function openPongdangModal() {
       const db = getCombinedPongdangDb();
-      document.getElementById("pong-total-badge").textContent = `총 ${db.length.toLocaleString()}종`;
+      document.getElementById("pong-total-badge").textContent = `${db.length.toLocaleString()}종`;
       document.getElementById("pong-search-input").value = "";
       document.getElementById("pong-sort-select").value = "default";
       currentPongMainCat = "전체";
@@ -2755,7 +3542,7 @@ JSON 응답 형식:
       for (let i = 0; i < db.length; i++) {
         const r = db[i];
         if (currentPongMainCat === "직접등록") {
-          if (!r[10]) continue;
+          if (!r[11] && !r[14]) continue;
         } else if (currentPongMainCat !== "전체" && r[2] !== currentPongMainCat) {
           continue;
         }
@@ -2764,7 +3551,7 @@ JSON 응답 형식:
       }
       const entries = Object.entries(counts).sort((a, b) => b[1] - a[1]);
       const sel = document.getElementById("pong-subcat-select");
-      sel.innerHTML = `<option value="전체">📂 장비 종류 전체 (${entries.length}분류)</option>`;
+      sel.innerHTML = `<option value="전체">📂 종류 전체 (${entries.length})</option>`;
       entries.forEach(([sc, cnt]) => {
         const opt = document.createElement("option");
         opt.value = sc;
@@ -2780,7 +3567,7 @@ JSON 응답 형식:
       for (let i = 0; i < db.length; i++) {
         const r = db[i];
         if (currentPongMainCat === "직접등록") {
-          if (!r[10]) continue;
+          if (!r[11] && !r[14]) continue;
         } else if (currentPongMainCat !== "전체" && r[2] !== currentPongMainCat) {
           continue;
         }
@@ -2790,7 +3577,7 @@ JSON 응답 형식:
       }
       const entries = Object.entries(counts).sort((a, b) => b[1] - a[1]);
       const sel = document.getElementById("pong-brand-select");
-      sel.innerHTML = `<option value="전체">🏷️ 브랜드 전체 (${entries.length}개)</option>`;
+      sel.innerHTML = `<option value="전체">🏷️ 브랜드 전체 (${entries.length})</option>`;
       entries.forEach(([br, cnt]) => {
         const opt = document.createElement("option");
         opt.value = br;
@@ -2818,9 +3605,8 @@ JSON 응답 형식:
 
       for (let i = 0; i < db.length; i++) {
         const r = db[i];
-        // [0:fullName, 1:brand, 2:mainCat, 3:subCat, 4:appCat, 5:weight, 6:bag, 7:fixed, 8:price, 9:thumb, 10:isCustom, 11:customIdx]
         if (currentPongMainCat === "직접등록") {
-          if (!r[10]) continue;
+          if (!r[11] && !r[14]) continue;
         } else if (currentPongMainCat !== "전체" && r[2] !== currentPongMainCat) {
           continue;
         }
@@ -2854,16 +3640,16 @@ JSON 응답 형식:
       }
 
       const shown = filtered.slice(0, 80);
-      statusEl.textContent = `검색된 장비: ${filtered.length.toLocaleString()}건 (상위 ${shown.length}건 표시)`;
+      statusEl.textContent = `검색: ${filtered.length.toLocaleString()}건 (상위 ${shown.length}건)`;
 
       listEl.innerHTML = "";
       if (shown.length === 0) {
-        listEl.innerHTML = `<div style="padding:24px; text-align:center; font-size:0.84rem; color:var(--subtext-color);">조건에 맞는 장비가 없습니다.<br/>우측 상단 <strong>[➕ 신규 장비 DB 등록]</strong>으로 새 장비를 직접 추가할 수도 있습니다.</div>`;
+        listEl.innerHTML = `<div style="padding:24px; text-align:center; font-size:0.84rem; color:var(--subtext-color);">조건에 맞는 장비가 없습니다.<br/>우측 상단 <strong>[➕ 신규 등록]</strong>으로 직접 추가할 수 있습니다.</div>`;
         return;
       }
 
       shown.forEach(({ idx, row }) => {
-        const [fullName, brand, mainCat, subCat, appCat, weight, bag, fixed, price, thumb, isCustom, customIdx] = row;
+        const [fullName, brand, mainCat, subCat, appCat, weight, bag, fixed, price, thumb, goodsNo, isCustom, customIdx, overrideKey, isEdited] = row;
         const itemDiv = document.createElement("div");
         itemDiv.className = "pong-item";
 
@@ -2874,18 +3660,21 @@ JSON 응답 형식:
         thumbImg.alt = fullName;
         thumbImg.onerror = function () { this.onerror = null; this.src = "icon.svg"; };
 
-        const priceFormatted = price && Number(price) > 0
-          ? `<span class="pong-item-price">💰 ${Number(price).toLocaleString()}원</span>`
-          : `<span class="pong-item-sub" style="display:inline;">가격정보 없음</span>`;
+        const productUrl = getPongdangProductUrl(row);
+        const priceLabel = price && Number(price) > 0
+          ? `💰 ${Number(price).toLocaleString()}원 🔗`
+          : `🔍 제품 상세보기 🔗`;
 
-        const customBadge = isCustom ? `<span class="badge ok" style="font-size:0.68rem; padding:1px 6px; margin-left:4px;">신규등록</span>` : "";
+        const statusBadge = isCustom
+          ? `<span class="badge ok" style="font-size:0.66rem; padding:1px 5px; margin-left:4px;">신규</span>`
+          : (isEdited ? `<span class="badge" style="font-size:0.66rem; padding:1px 5px; margin-left:4px;">수정됨</span>` : "");
 
         const infoDiv = document.createElement("div");
         infoDiv.className = "pong-item-info";
         infoDiv.innerHTML = `
-          <span class="pong-item-title">${fullName}${customBadge}</span>
-          <span class="pong-item-sub">${mainCat} &gt; ${subCat || "일반"} · 패킹분류: ${appCat} (${bag})</span>
-          ${priceFormatted}
+          <span class="pong-item-title">${fullName}${statusBadge}</span>
+          <span class="pong-item-sub">${mainCat} &gt; ${subCat || "일반"} · ${appCat} (${bag})</span>
+          <a class="pong-price-link" href="${productUrl}" target="_blank" rel="noopener" title="브라우저에서 퐁당닷컴 상품 정보 보기">${priceLabel}</a>
         `;
 
         const actDiv = document.createElement("div");
@@ -2898,13 +3687,17 @@ JSON 응답 형식:
         weightInput.type = "number";
         weightInput.step = "0.05";
         weightInput.value = Number(weight).toFixed(2);
-        weightInput.style.width = "64px";
-        weightInput.style.padding = "4px 6px";
-        weightInput.style.fontSize = "0.78rem";
-        weightInput.title = "무게(kg) 수정 가능";
+        weightInput.style.width = "60px";
+        weightInput.style.padding = "4px 5px";
+        weightInput.style.fontSize = "0.76rem";
+        weightInput.title = "무게(kg) 수정 시 자동 저장";
+        weightInput.onchange = () => {
+          const newW = parseFloat(weightInput.value);
+          if (newW > 0) saveQuickDbWeight(idx, newW);
+        };
 
         const unitSpan = document.createElement("span");
-        unitSpan.style.fontSize = "0.73rem";
+        unitSpan.style.fontSize = "0.72rem";
         unitSpan.style.color = "var(--subtext-color)";
         unitSpan.textContent = "kg";
 
@@ -2915,13 +3708,24 @@ JSON 응답 형식:
         btnRow.style.display = "flex";
         btnRow.style.gap = "4px";
 
+        const editDbBtn = document.createElement("button");
+        editDbBtn.className = "icon-btn";
+        editDbBtn.style.padding = "5px 7px";
+        editDbBtn.title = "DB 장비 정보·무게 편집 및 저장";
+        editDbBtn.textContent = "✏️";
+        editDbBtn.onclick = () => openDbEditModal(idx);
+        btnRow.appendChild(editDbBtn);
+
         const addBtn = document.createElement("button");
         addBtn.className = "btn btn-primary";
-        addBtn.style.padding = "5px 10px";
-        addBtn.style.fontSize = "0.76rem";
+        addBtn.style.padding = "5px 9px";
+        addBtn.style.fontSize = "0.75rem";
         addBtn.textContent = "+ 담기";
         addBtn.onclick = () => {
-          const customW = parseFloat(weightInput.value) || Number(weight) || 0.30;
+          const customW = parseFloat(weightInput.value) || Number(weight) || 0.25;
+          if (Math.abs(customW - Number(weight)) > 0.001) {
+            saveQuickDbWeight(idx, customW);
+          }
           addPongdangItem(idx, customW, false);
         };
         btnRow.appendChild(addBtn);
@@ -2930,7 +3734,7 @@ JSON 응답 형식:
           const delCustomBtn = document.createElement("button");
           delCustomBtn.className = "icon-btn del-btn";
           delCustomBtn.style.padding = "4px 6px";
-          delCustomBtn.title = "신규등록 DB에서 삭제";
+          delCustomBtn.title = "삭제";
           delCustomBtn.textContent = "🗑️";
           delCustomBtn.onclick = () => deleteCustomDbItem(customIdx);
           btnRow.appendChild(delCustomBtn);
@@ -2946,17 +3750,110 @@ JSON 응답 형식:
       });
     }
 
+    function saveQuickDbWeight(dbIdx, newWeight) {
+      const db = getCombinedPongdangDb();
+      const row = db[dbIdx];
+      if (!row) return;
+      const isCustom = row[11];
+      const customIdx = row[12];
+      const overrideKey = row[13];
+
+      if (isCustom) {
+        const customArr = loadCustomPongdangDb();
+        if (customArr[customIdx]) {
+          customArr[customIdx][5] = Number(newWeight.toFixed(2));
+          saveCustomPongdangDb(customArr);
+        }
+      } else {
+        const overrides = loadPongdangOverrides();
+        overrides[overrideKey] = Object.assign({}, overrides[overrideKey] || {}, {
+          weight: Number(newWeight.toFixed(2))
+        });
+        savePongdangOverrides(overrides);
+      }
+      showToast(`💾 DB 무게(${newWeight.toFixed(2)}kg)가 저장되었습니다!`);
+    }
+
+    function openDbEditModal(dbIdx) {
+      const db = getCombinedPongdangDb();
+      const row = db[dbIdx];
+      if (!row) return;
+      document.getElementById("db-edit-idx").value = dbIdx;
+      document.getElementById("db-edit-name").value = row[0] || "";
+      document.getElementById("db-edit-brand").value = row[1] || "";
+      document.getElementById("db-edit-subcat").value = row[3] || "";
+      document.getElementById("db-edit-appcat").value = row[4] || "핵심 장비";
+      document.getElementById("db-edit-weight").value = Number(row[5] || 0.25).toFixed(2);
+      document.getElementById("db-edit-bag").value = row[6] || "위탁";
+      document.getElementById("db-edit-price").value = row[8] || 0;
+      document.getElementById("db-edit-modal").classList.add("active");
+    }
+
+    function closeDbEditModal() {
+      document.getElementById("db-edit-modal").classList.remove("active");
+    }
+
+    function saveDbEditModal() {
+      const dbIdx = parseInt(document.getElementById("db-edit-idx").value, 10);
+      const db = getCombinedPongdangDb();
+      const row = db[dbIdx];
+      if (!row) return;
+
+      const fullName = (document.getElementById("db-edit-name").value || "").trim() || row[0];
+      const brand = (document.getElementById("db-edit-brand").value || "").trim() || row[1];
+      const subCat = (document.getElementById("db-edit-subcat").value || "").trim() || row[3];
+      const appCat = document.getElementById("db-edit-appcat").value || row[4];
+      const weight = parseFloat(document.getElementById("db-edit-weight").value) || 0.25;
+      const bag = document.getElementById("db-edit-bag").value || "위탁";
+      const price = parseInt(document.getElementById("db-edit-price").value, 10) || 0;
+
+      const isCustom = row[11];
+      const customIdx = row[12];
+      const overrideKey = row[13];
+
+      if (isCustom) {
+        const customArr = loadCustomPongdangDb();
+        if (customArr[customIdx]) {
+          customArr[customIdx][0] = fullName;
+          customArr[customIdx][1] = brand;
+          customArr[customIdx][3] = subCat;
+          customArr[customIdx][4] = appCat;
+          customArr[customIdx][5] = Number(weight.toFixed(2));
+          customArr[customIdx][6] = bag;
+          customArr[customIdx][8] = price;
+          saveCustomPongdangDb(customArr);
+        }
+      } else {
+        const overrides = loadPongdangOverrides();
+        overrides[overrideKey] = {
+          fullName,
+          brand,
+          subCat,
+          appCat,
+          weight: Number(weight.toFixed(2)),
+          bag,
+          price
+        };
+        savePongdangOverrides(overrides);
+      }
+
+      closeDbEditModal();
+      populatePongSubCats();
+      populatePongBrands();
+      renderPongdangResults();
+      showToast(`💾 '${fullName}' DB 정보가 수정·저장되었습니다!`);
+    }
+
     function addPongdangItem(dbIdx, customWeight, asExcluded) {
       const db = getCombinedPongdangDb();
       const row = db[dbIdx];
       if (!row) return;
       const [fullName, brand, mainCat, subCat, appCat, weight, bag, fixed] = row;
-      const finalW = customWeight !== undefined ? customWeight : (Number(weight) || 0.30);
+      const finalW = customWeight !== undefined ? customWeight : (Number(weight) || 0.25);
 
-      // 짐싸기(패킹 리스트)에는 가격을 절대 넣지 않고 장비명·분류·무게만 깔끔하게 추가
       items.push({
         name: fullName,
-        desc: subCat ? `${mainCat} · ${subCat}` : "퐁당닷컴 장비 DB",
+        desc: subCat ? `${mainCat} · ${subCat}` : "장비 DB",
         cat: appCat || "핵심 장비",
         weight: finalW,
         bag: bag || "위탁",
@@ -2966,7 +3863,7 @@ JSON 응답 형식:
       });
       syncCurrentTourToStorage();
       renderDetail();
-      showToast(`➕ '${fullName}' (${finalW.toFixed(2)}kg) 짐싸기 목록에 추가됨!`);
+      showToast(`➕ '${fullName}' (${finalW.toFixed(2)}kg) 추가됨!`);
     }
 
     // --- 신규 장비 DB 직접 추가 모달 로직 ---
@@ -3035,7 +3932,7 @@ JSON 응답 형식:
       const thumb = (document.getElementById("db-new-thumb-url").value || "").trim();
 
       const fullName = rawName.startsWith("[") ? rawName : `[${brand}] ${rawName}`;
-      const newRow = [fullName, brand, mainCat, subCat, appCat, weight, bag, fixed, price, thumb];
+      const newRow = [fullName, brand, mainCat, subCat, appCat, weight, bag, fixed, price, thumb, ""];
 
       const customArr = loadCustomPongdangDb();
       customArr.unshift(newRow);
@@ -3058,29 +3955,29 @@ JSON 응답 형식:
 
       closeNewDbItemModal();
       const db = getCombinedPongdangDb();
-      document.getElementById("pong-total-badge").textContent = `총 ${db.length.toLocaleString()}종`;
+      document.getElementById("pong-total-badge").textContent = `${db.length.toLocaleString()}종`;
       populatePongSubCats();
       populatePongBrands();
       renderPongdangResults();
-      showToast(alsoAddToPacking ? `✅ '${fullName}' DB 등록 및 짐싸기 추가 완료!` : `✅ '${fullName}' 장비가 DB에 등록되었습니다!`);
+      showToast(alsoAddToPacking ? `✅ DB 등록 및 짐싸기 추가 완료!` : `✅ 장비가 DB에 등록되었습니다!`);
     }
 
     function deleteCustomDbItem(customIdx) {
       const customArr = loadCustomPongdangDb();
       if (!customArr[customIdx]) return;
-      if (confirm(`'${customArr[customIdx][0]}' 항목을 신규등록 DB에서 삭제할까요?`)) {
+      if (confirm(`'${customArr[customIdx][0]}' 항목을 DB에서 삭제할까요?`)) {
         customArr.splice(customIdx, 1);
         saveCustomPongdangDb(customArr);
         const db = getCombinedPongdangDb();
-        document.getElementById("pong-total-badge").textContent = `총 ${db.length.toLocaleString()}종`;
+        document.getElementById("pong-total-badge").textContent = `${db.length.toLocaleString()}종`;
         populatePongSubCats();
         populatePongBrands();
         renderPongdangResults();
-        showToast("🗑️ 신규등록 장비가 DB에서 삭제되었습니다.");
+        showToast("🗑️ 삭제되었습니다.");
       }
     }
 
-    // 빠른 물품 추가 입력창 자동완성 (퐁당닷컴 DB 연동)
+    // 빠른 물품 추가 입력창 자동완성
     function onQuickNameInput() {
       const box = document.getElementById("quick-suggest-box");
       const val = (document.getElementById("quick-name").value || "").trim().toLowerCase();
@@ -3133,19 +4030,17 @@ JSON 응답 형식:
 
     // --- 인터랙티브 스프링 리프트 & 물결(Ripple) 효과 핸들러 ---
     (function setupInteractiveAnimations() {
-      const INTERACTIVE_SELECTOR = ".btn, .icon-btn, .cat-add-btn, .info-edit-btn, .pong-chip, .bag-option span, .tour-card";
+      const INTERACTIVE_SELECTOR = ".btn, .icon-btn, .circle-icon-btn, .cat-add-btn, .info-edit-btn, .pong-chip, .spot-chip, .bag-option span, .tour-card, .gear-drawer-btn";
       document.addEventListener("pointerdown", (e) => {
         const target = e.target.closest(INTERACTIVE_SELECTOR);
         if (!target) return;
 
-        // 스프링 팝 애니메이션 트리거
         target.classList.remove("spring-pop-active");
-        void target.offsetWidth; // reflow
+        void target.offsetWidth;
         target.classList.add("spring-pop-active");
         setTimeout(() => target.classList.remove("spring-pop-active"), 380);
 
-        // 터치 물결(Ripple) 생성 (.btn 계열)
-        if (target.matches(".btn, .cat-add-btn, .info-edit-btn, .pong-chip")) {
+        if (target.matches(".btn, .cat-add-btn, .info-edit-btn, .pong-chip, .gear-drawer-btn")) {
           const rect = target.getBoundingClientRect();
           const size = Math.max(rect.width, rect.height) * 1.2;
           const wave = document.createElement("span");
@@ -3160,24 +4055,25 @@ JSON 응답 형식:
       }, { passive: true });
     })();
 
-    // --- FastAPI 백엔드 하이브리드 연동 (온라인 FastAPI 서버 + 오프라인 APK 자동 폴백) ---
+    // --- FastAPI 백엔드 하이브리드 연동 ---
     async function checkFastApiStatus() {
-      const badge = document.getElementById("engine-status-badge");
+      const badge = document.getElementById("fastapi-engine-badge");
       try {
         const res = await fetch("/api/status", { method: "GET" });
         if (res.ok) {
           const data = await res.json();
           if (badge && data.engine === "FastAPI") {
-            badge.textContent = `⚡ FastAPI Connected (${(data.total_db_count || 6448).toLocaleString()} DB)`;
+            badge.textContent = `⚡ FastAPI`;
           }
-          // FastAPI 서버의 투어 목록이 있으면 동기화
           const toursRes = await fetch("/api/tours");
           if (toursRes.ok) {
             const tData = await toursRes.json();
             if (Array.isArray(tData.tours) && tData.tours.length > 0) {
               savedTours = tData.tours;
               localStorage.setItem(TOURS_STORAGE_KEY, JSON.stringify(savedTours));
-              renderHome();
+              if (document.getElementById("home-view").style.display !== "none") {
+                renderHome();
+              }
             } else if (savedTours.length > 0) {
               await fetch("/api/tours", {
                 method: "POST",
@@ -3188,12 +4084,10 @@ JSON 응답 형식:
           }
         }
       } catch (e) {
-        // 모바일 APK / 오프라인 모드에서는 내장 로컬 엔진으로 동작
-        if (badge) badge.textContent = "⚡ FastAPI UI v2.0";
+        if (badge) badge.textContent = "⚡ FastAPI";
       }
     }
 
-    // saveAllTours 호출 시 FastAPI 백엔드로도 비동기 백업
     const _origSaveAllTours = saveAllTours;
     saveAllTours = function () {
       _origSaveAllTours();
@@ -3204,7 +4098,7 @@ JSON 응답 형식:
       }).catch(() => {});
     };
 
-    renderHome();
+    initAppEntry();
     checkFastApiStatus();
 
     if ("serviceWorker" in navigator) {

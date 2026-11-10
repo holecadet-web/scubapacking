@@ -17,6 +17,7 @@ BASE_DIR = Path(__file__).resolve().parent
 WWW_DIR = BASE_DIR / "www"
 PONGDANG_JSON_PATH = BASE_DIR / "pongdang_scuba_db.json"
 CUSTOM_DB_PATH = BASE_DIR / "custom_pongdang_db.json"
+OVERRIDES_DB_PATH = BASE_DIR / "pongdang_overrides.json"
 TOURS_DATA_PATH = BASE_DIR / "tours_data.json"
 
 app = FastAPI(
@@ -173,6 +174,28 @@ async def add_custom_pongdang_item(req: NewDbEquipmentRequest) -> Dict[str, Any]
         json.dump(custom_items, f, ensure_ascii=False, indent=2)
 
     return {"status": "ok", "item": new_item}
+
+
+class DbOverridesRequest(BaseModel):
+    overrides: Dict[str, Any]
+
+
+@app.get("/api/pongdang/overrides")
+async def get_pongdang_overrides() -> Dict[str, Any]:
+    if OVERRIDES_DB_PATH.exists():
+        try:
+            with open(OVERRIDES_DB_PATH, "r", encoding="utf-8") as f:
+                return {"overrides": json.load(f)}
+        except Exception:
+            pass
+    return {"overrides": {}}
+
+
+@app.post("/api/pongdang/overrides")
+async def save_pongdang_overrides(req: DbOverridesRequest) -> Dict[str, Any]:
+    with open(OVERRIDES_DB_PATH, "w", encoding="utf-8") as f:
+        json.dump(req.overrides, f, ensure_ascii=False, indent=2)
+    return {"status": "ok", "count": len(req.overrides)}
 
 
 @app.get("/api/tours")
